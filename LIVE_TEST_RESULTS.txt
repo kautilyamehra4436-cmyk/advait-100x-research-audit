@@ -1,3 +1,4 @@
 LOCAL OFFLINE MOCK RUN — 2026-11-23
-8/8 PASS: allowlist, approval, unknown outcome, missing evidence, step budget, ledger tamper, ledger order, denied action not recorded.
-Limits: mock-only; no live integrations, Android, performance, crypto, sandbox, concurrency or durable checkpoints.
+10/10 PASS: allowlist, approval required, approved action allowed, unknown outcome reconciliation, missing evidence, step budget, call budget, ledger tamper, ledger order, denied action not recorded.
+GitHub Actions run #5: completed SUCCESS; job python-tests; run ID 45232798304; head commit 7199fe948a799e1e3de2f9a0e1b494556f976c81. Step "Run python test_harness.py" completed successfully.
+Limits: mock-only; not live integration, Android, performance, crypto/signature, sandbox, concurrency, durable checkpoint, or real business-task testing. Hash-chain is not tamper-proof against a writer who recomputes hashes.
