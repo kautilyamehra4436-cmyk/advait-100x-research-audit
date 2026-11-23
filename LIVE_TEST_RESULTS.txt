@@ -1,0 +1,3 @@
+LOCAL OFFLINE MOCK RUN — 2026-11-23
+8/8 PASS: allowlist, approval, unknown outcome, missing evidence, step budget, ledger tamper, ledger order, denied action not recorded.
+Limits: mock-only; no live integrations, Android, performance, crypto, sandbox, concurrency or durable checkpoints.
