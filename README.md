@@ -1,12 +1,19 @@
 # Advait 100X Research Audit
 
-Research checkpoint, cross-system audit matrix and offline mock test harness.
+Research checkpoint and offline mock harness plus the first bounded execution engine.
 
-**Status:** partial research audit, evidence-limited. No 100X performance or global novelty claim is proven.
+**Research status:** partial; no 100X performance or global novelty claim is proven.
+**Engine status:** v0.1 offline reference core; no live web/bounty/payment integrations.
 
-Run locally:
+Run:
 ```bash
 python test_harness.py
+python -m unittest -v test_advait_engine.py
+python advait_engine.py
 ```
 
-Tests use mocks only (no network, credentials or external side effects). See `MASTER_AUDIT.md` for evidence, limitations, risks, proposed controls and gaps. GitHub Actions workflow is in `.github/workflows/tests.yml`.
+The reference engine has task state, allowlist, exact-payload approval binding for high-risk actions, step/call/time/payload limits, adapter interface, evidence-gated completion, reconciliation for unknown outcomes/exceptions, and a hash-linked event ledger.
+
+Phone guidance: `PHONE_RUN.md`. Build checkpoint: `ENGINE_STATUS.md`. Benchmark proposal: `BENCHMARK_PLAN.md`. Research findings/limitations: `MASTER_AUDIT.md` and `SOURCE_AUDIT_ADDENDUM.md`.
+
+All tests are offline and use mock adapters. No account credentials, network actions, bounty submissions, money movement, or irreversible actions are performed.
