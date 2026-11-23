@@ -1,0 +1,6 @@
+invoice_id,vendor,amount,po_ref,po_amount,po_vendor
+INV-001,North Traders,1200.00,PO-01,1200.00,North Traders
+INV-002,ABC Supply,985.00,,985.00,ABC Supply
+INV-002,ABC Supply,985.00,PO-02,950.00,ABC Supplies
+INV-004,Vendor X,ten,PO-04,100.00,Vendor X
+INV-005,,40.00,PO-05,40.00,Vendor Y
