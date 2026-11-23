@@ -13,4 +13,5 @@ jobs:
           python-version: "3.x"
       - run: python test_harness.py
       - run: python -m unittest -v test_advait_engine.py
+      - run: python -m unittest -v test_b2b_reconcile.py
       - run: python advait_engine.py
