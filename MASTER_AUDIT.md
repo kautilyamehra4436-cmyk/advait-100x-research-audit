@@ -47,4 +47,4 @@ Goal/constraints parser; capability registry; discovery adapters; benchmark harn
 Pin commits/file hashes; line-numbered audit; inspect security tests/issues/releases; deep OpenHands review. No exhaustive audit, 100X superiority, or global novelty established.
 
 ## Local mock tests
-8/8 passed in local sandbox (2026-11-23). Tested allowlist, approval, unknown outcome, evidence requirement, step cap, ledger tamper/reordering, denied-action record prevention. Not integration tests: no real APIs, Android, performance, signatures, sandbox escape, concurrency, or durable checkpoints.
+10/10 passed in local sandbox (2026-11-23). Tested allowlist, approval required/approved, unknown outcome reconciliation, evidence requirement, step/call caps, ledger tamper/reordering, denied-action record prevention. Not integration tests: no real APIs, Android, performance, signatures, sandbox escape, concurrency, or durable checkpoints.
