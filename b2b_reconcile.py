@@ -14,7 +14,7 @@ REQUIRED = ("invoice_id", "vendor", "amount")
 OUTPUT_FINDINGS = ("row_number", "invoice_id", "rule", "severity", "field", "observed", "expected", "detail")
 
 def norm_text(value: str) -> str:
-    return re.sub(r"\\s+", " ", (value or "").strip()).casefold()
+    return re.sub(r"\s+", " ", (value or "").strip()).casefold()
 
 def parse_amount(value: str):
     raw = (value or "").strip().replace(",", "").replace("₹", "").replace("$", "")
