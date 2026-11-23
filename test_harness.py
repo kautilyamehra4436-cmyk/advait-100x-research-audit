@@ -54,7 +54,9 @@ def test_irreversible_action_requires_approval():
  try: Policy(["payments"],["transfer"]).authorize("payments","transfer")
  except PolicyDenied: return
  raise AssertionError("approval required")
-def test_unknown_outcome_no_blind_retry():
+def test_approval_allows_authorized_action():
+ p=Policy(["payments"],["transfer"]); p.authorize("payments","transfer",approved=True)
+def test_unknown_outcome_requires_reconciliation():
  e=Engine(Policy(["mock"]),Budget(),Ledger())
  assert e.execute("mock","send",ToolResult(Outcome.UNKNOWN))=="needs_reconciliation"
 def test_success_without_evidence_not_verified():
@@ -65,6 +67,11 @@ def test_step_budget_enforced():
  try: b.step()
  except BudgetExceeded: return
  raise AssertionError("step cap should stop")
+def test_call_budget_enforced():
+ b=Budget(max_calls=1); b.call()
+ try: b.call()
+ except BudgetExceeded: return
+ raise AssertionError("call cap should stop")
 def test_ledger_tamper_detection():
  l=Ledger(); l.record({"v":"ok"}); l.record({"v":"verified"})
  assert l.valid(); l.events[0]["event"]["v"]="changed"; assert not l.valid()
