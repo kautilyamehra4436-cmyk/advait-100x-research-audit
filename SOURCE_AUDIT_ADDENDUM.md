@@ -48,7 +48,7 @@ Research date: 2026-11-23. Commit IDs pin reviewed snapshots; URLs use main bran
 7. Self-evolution candidate code cannot edit its policy/approval rules; candidate runs in isolation and promotion/rollback requires external owner authority.
 
 ## GitHub Actions verified
-Workflow `Offline tests`, run ID `45232080774`, head commit `499f83393fcac21d10cda4e60df5804644c6bceb`: completed, conclusion **success**. Job `python-tests`: checkout, setup Python, `python test_harness.py` all completed successfully. Link: https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit/actions/runs/45232080774
+Latest workflow run #5, run ID `45232798304`, head commit `7199fe948a799e1e3de2f9a0e1b494556f976c81`: completed, conclusion **success**. Job `python-tests`: checkout, setup Python, and `python test_harness.py` all completed successfully. Link: https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit/actions/runs/45232798304
 
 ## Test harness caveat
 These are unit tests of a toy/mock policy model, not the real Advait engine or third-party projects. Passing does not establish system security or business-task capability. The hash-chain test only catches modification while original chain hashes remain unchanged.
