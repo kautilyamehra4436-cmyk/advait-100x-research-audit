@@ -10,13 +10,13 @@
 ## GitHub Actions secret names
 In repository Settings → Secrets and variables → Actions, add values only after obtaining the exact credentials from each provider's merchant dashboard/onboarding pack:
 
-- `RAZORPAY_KEY_ID`
-- `RAZORPAY_KEY_SECRET`
-- `RAZORPAY_WEBHOOK_SECRET`
-- `PNB_IPG_MERCHANT_ID`
+- `RAZORPAY_TEST_KEY_ID`
+- `RAZORPAY_TEST_KEY_SECRET`
+- `RAZORPAY_TEST_WEBHOOK_SECRET`
+- `PNB_IPG_UAT_MERCHANT_ID`
 - `PNB_IPG_UAT_CREDENTIALS` (only if PNB supplies an approved UAT credential bundle; otherwise use the exact field mapping in its integration kit)
 
-These are names only. This repository change does not create or populate GitHub secrets. Never put secret values in source files, issues, chat, logs, or test fixtures.
+These are test/UAT names only. Keep Live credentials under separately named secrets and do not load them in test workflows. These are names only. This repository change does not create or populate GitHub secrets. Never put secret values in source files, issues, chat, logs, or test fixtures.
 
 ## Required before live integration
 1. Confirm Razorpay account's approved mode, webhook URL, enabled payment methods, and settlement bank account.
