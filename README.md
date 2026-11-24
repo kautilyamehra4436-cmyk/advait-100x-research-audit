@@ -20,6 +20,7 @@ The reference engine has task state, allowlist, exact-payload approval binding f
 B2B documents:
 - `B2B_ENGINE_BLUEPRINT.md` — modules, boundaries, first product hypothesis, experiment and acceptance criteria.
 - `B2B_DISCOVERY_LOG.md` — evidence snapshot, candidates, current status, next research tasks.
+- `B2B_DAILY_REPORT_2026-11-24.md` — latest dated report with new demand signals, verified local tests, CI verification limits, and next action.
 
 Phone guidance: `PHONE_RUN.md`. Build checkpoint: `ENGINE_STATUS.md`. Benchmark proposal: `BENCHMARK_PLAN.md`. Research findings/limitations: `MASTER_AUDIT.md` and `SOURCE_AUDIT_ADDENDUM.md`.
 
