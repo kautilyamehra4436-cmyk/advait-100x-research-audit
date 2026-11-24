@@ -11,11 +11,11 @@ Included:
 - Step, call, time, and payload budgets.
 - Adapter interface with unknown/invalid output and exception reconciliation.
 - Independent evidence-verifier hook: adapter-reported success alone cannot mark a task DONE.
-- Tamper-evident hash-linked event ledger with strict canonical JSON validation.
+- Tamper-evident hash-linked in-memory ledger with strict canonical JSON validation.\n- Optional SQLite event ledger: atomic transactions, strict canonical JSON, reopen/persistence, tamper checks, symlink rejection, and rollback tests.
 - Offline regression tests.
 
 Not included / not proven:
-- No authenticated owner provider is deployed or configured.
+- No authenticated owner provider is deployed or configured.\n- SQLite event ledger is not encrypted or externally anchored; it is for operational metadata only, not credentials or source financial/legal records.
 - No independent production evidence verifier is deployed.
 - No real web/bounty/browser/account/payment adapters.
 - No autonomous bounty discovery or payment collection.

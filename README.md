@@ -15,9 +15,9 @@ python b2b_reconcile.py b2b_sample_input.csv --out-prefix sample_report
 python advait_engine.py
 ```
 
-The reference engine includes task state, allowlist, exact-task owner-verifier hook for high-risk actions, step/call/time/payload limits, adapter interface, independent evidence-verifier hook, reconciliation for unknown or unverifiable outcomes, and a tamper-evident hash-linked event ledger.
+The reference engine includes task state, allowlist, exact-task owner-verifier hook for high-risk actions, step/call/time/payload limits, adapter interface, independent evidence-verifier hook, reconciliation for unknown or unverifiable outcomes, a tamper-evident hash-linked in-memory ledger, and an optional phone-local SQLite ledger with atomic commits.
 
-**Fail-closed behavior:** without an injected authenticated owner verifier, HIGH-risk tasks cannot execute. Without an independent evidence verifier, an adapter's claim of success cannot move a task to DONE; it remains NEEDS_RECONCILIATION. The repository ships neither verifier nor live adapters.
+**Fail-closed behavior:** without an injected authenticated owner verifier, HIGH-risk tasks cannot execute. Without an independent evidence verifier, an adapter's claim of success cannot move a task to DONE; it remains NEEDS_RECONCILIATION. The repository ships neither verifier nor live adapters. SQLite persistence is optional and unencrypted; do not store credentials, tokens, or sensitive financial/legal source records in it.
 
 B2B documents:
 - `B2B_ENGINE_BLUEPRINT.md` — modules, boundaries, product hypothesis, experiment and acceptance criteria.
