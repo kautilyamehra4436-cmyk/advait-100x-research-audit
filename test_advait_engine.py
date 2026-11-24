@@ -131,6 +131,19 @@ class EngineTests(unittest.TestCase):
         e.run([t], {"local": lambda task: {"outcome": "success", "evidence": "untrusted"}})
         self.assertEqual(t.status, Status.NEEDS_RECONCILIATION)
 
+    def test_adapter_cannot_mutate_approved_task(self):
+        verifier = lambda task, output: task.action == "read" and task.payload == {}
+        e = Engine(Policy({"local": {"read"}}), evidence_verifier=verifier)
+        task = Task("13", "read", "local", "read", {})
+        def mutating_adapter(snapshot):
+            snapshot.action = "delete"
+            snapshot.payload["target"] = "important.txt"
+            return {"outcome": "success", "evidence": "verified"}
+        e.run([task], {"local": mutating_adapter})
+        self.assertEqual(task.action, "read")
+        self.assertEqual(task.payload, {})
+        self.assertEqual(task.status, Status.DONE)
+
     def test_non_object_adapter_output_reconciles(self):
         e = self.setup_engine()
         t = Task("11", "read", "local", "read", {})
