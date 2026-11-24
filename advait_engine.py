@@ -2,7 +2,7 @@
 No network adapters are included. External actions must be injected and policy-gated.
 """
 from __future__ import annotations
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass
 from enum import Enum
 from hashlib import sha256
 import json, time
@@ -36,20 +36,29 @@ class Limits:
     max_payload_bytes: int=65536
 
 class Policy:
-    def __init__(self, allowlist: dict[str, set[str]]|None=None):
+    """Allowlist plus externally authenticated, exact-action approval.
+
+    A locally computable digest is NOT owner authentication. High-risk work is
+    denied unless the host injects an approval_verifier backed by an authenticated
+    owner channel. This offline engine intentionally supplies no such verifier.
+    """
+    def __init__(self, allowlist: dict[str, set[str]]|None=None,
+                 approval_verifier: Callable[[Task, str], bool]|None=None):
         self.allowlist=allowlist or {}
+        self.approval_verifier=approval_verifier
+
     def check(self, task: Task, approval: str|None=None):
         if task.tool not in self.allowlist or task.action not in self.allowlist[task.tool]:
             raise PermissionError("Tool/action is not allowlisted")
         if task.risk is Risk.HIGH:
-            expected=self.approval_token(task)
-            if approval != expected:
-                raise PermissionError("Exact-action approval required")
-    @staticmethod
-    def approval_token(task: Task)->str:
-        # User approval token binds to exact task identity and payload.
-        raw=json.dumps({"id":task.task_id,"tool":task.tool,"action":task.action,"payload":task.payload},sort_keys=True)
-        return sha256(raw.encode()).hexdigest()[:12]
+            if self.approval_verifier is None:
+                raise PermissionError("Authenticated owner approval provider unavailable; fail-closed")
+            try:
+                valid = bool(self.approval_verifier(task, approval or ""))
+            except Exception:
+                valid = False
+            if not valid:
+                raise PermissionError("Authenticated exact-action owner approval required")
 
 class Ledger:
     def __init__(self): self.entries=[]
@@ -85,7 +94,7 @@ class Engine:
             self.steps+=1
             try: self.policy.check(task, approvals.get(task.task_id))
             except PermissionError as e:
-                task.status=Status.NEEDS_APPROVAL if "approval" in str(e) else Status.FAILED
+                task.status=Status.NEEDS_APPROVAL if "approval" in str(e).lower() else Status.FAILED
                 task.result=str(e); self.ledger.append({"type":"policy_denied","task":task.task_id,"reason":str(e)}); continue
             adapter=adapters.get(task.tool)
             if adapter is None:
@@ -116,7 +125,6 @@ def demo():
            Task("T2","Create a file (approval-gated)","local","write_file",{"name":"example.txt","content":"demo"},Risk.HIGH)]
     engine=Engine(Policy({"local":{"calculate","write_file"}}))
     adapters={"local":lambda t: {"outcome":"success","evidence":"computed result: 4" if t.action=="calculate" else "dry-run only"}}
-    # No approval supplied; high-risk task is held.
     engine.run(tasks,adapters)
     print("Status:",engine.summary(tasks))
     print("Ledger integrity:",engine.ledger.verify())
