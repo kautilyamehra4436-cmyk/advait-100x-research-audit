@@ -1,5 +1,7 @@
 import unittest
 from advait_engine import Engine,Policy,Limits,Ledger,Task,Risk,Status
+from atc_handoff import from_atc_candidate, to_task, validate
+
 class EngineTests(unittest.TestCase):
  def setup_engine(self,allow={"local":{"read","write"}}):
   return Engine(Policy(allow),Limits(max_steps=5,max_calls=5,max_seconds=2))
@@ -7,19 +9,22 @@ class EngineTests(unittest.TestCase):
   e=self.setup_engine(); t=Task("1","x","bad","read",{})
   e.run([t],{"bad":lambda t:{"outcome":"success","evidence":"ok"}})
   self.assertEqual(t.status,Status.FAILED)
- def test_high_risk_requires_exact_approval(self):
+ def test_high_risk_fails_closed_without_authenticated_provider(self):
   e=self.setup_engine(); t=Task("2","write","local","write",{"path":"a"},Risk.HIGH)
   e.run([t],{"local":lambda t:{"outcome":"success","evidence":"ok"}})
   self.assertEqual(t.status,Status.NEEDS_APPROVAL)
- def test_exact_approval(self):
-  e=self.setup_engine(); t=Task("3","write","local","write",{"path":"a"},Risk.HIGH)
-  token=Policy.approval_token(t)
-  e.run([t],{"local":lambda t:{"outcome":"success","evidence":"proof"}},{"3":token})
+  self.assertEqual(t.attempts,0)
+ def test_authenticated_provider_can_approve_exact_task(self):
+  verifier=lambda task, credential: credential=="verified-owner-session" and task.payload=={"path":"a"}
+  e=Engine(Policy({"local":{"write"}},approval_verifier=verifier),Limits(max_seconds=2))
+  t=Task("3","write","local","write",{"path":"a"},Risk.HIGH)
+  e.run([t],{"local":lambda t:{"outcome":"success","evidence":"proof"}},{"3":"verified-owner-session"})
   self.assertEqual(t.status,Status.DONE)
- def test_changed_payload_invalidates_approval(self):
-  e=self.setup_engine(); t=Task("4","write","local","write",{"path":"a"},Risk.HIGH)
-  token=Policy.approval_token(t); t.payload["path"]="b"
-  e.run([t],{"local":lambda t:{"outcome":"success","evidence":"proof"}},{"4":token})
+ def test_wrong_or_stale_approval_denied(self):
+  verifier=lambda task, credential: credential=="verified-owner-session" and task.payload=={"path":"a"}
+  e=Engine(Policy({"local":{"write"}},approval_verifier=verifier),Limits(max_seconds=2))
+  t=Task("4","write","local","write",{"path":"b"},Risk.HIGH)
+  e.run([t],{"local":lambda t:{"outcome":"success","evidence":"proof"}},{"4":"verified-owner-session"})
   self.assertEqual(t.status,Status.NEEDS_APPROVAL)
  def test_no_evidence_not_done(self):
   e=self.setup_engine(); t=Task("5","read","local","read",{})
@@ -48,4 +53,28 @@ class EngineTests(unittest.TestCase):
   l=Ledger(); l.append({"ok":1}); l.append({"ok":2})
   self.assertTrue(l.verify()); l.entries[0]["event"]["ok"]=9
   self.assertFalse(l.verify())
+
+class HandoffTests(unittest.TestCase):
+ def sample(self):
+  return from_atc_candidate(task_id="ATC-1",title="Review opportunity",tool="local",action="review",payload={"source":"user-approved"},risk="low")
+ def test_round_trip(self):
+  env=self.sample(); task=to_task(env)
+  self.assertEqual(task.task_id,"ATC-1"); self.assertEqual(task.payload,{"source":"user-approved"})
+ def test_tamper_detected(self):
+  env=self.sample(); env["payload"]["source"]="changed"
+  with self.assertRaises(ValueError): validate(env)
+ def test_unknown_schema_rejected(self):
+  env=self.sample(); env["schema_version"]="v99"
+  with self.assertRaises(ValueError): validate(env)
+ def test_auto_execute_state_rejected(self):
+  env=self.sample(); env["state"]="AUTHORIZED"
+  with self.assertRaises(ValueError): validate(env)
+ def test_atc_provenance_field_accepted(self):
+  from atc_handoff import seal, validate, to_task
+  body={"schema_version":"advait.task.v1","task_id":"ATC-2","title":"Reviewed candidate","tool":"local","action":"review","payload":{"x":1},"risk":"low","state":"REVIEWED_NOT_AUTHORIZED","source_atc_record":"ATC-REC-1"}
+  env=seal(body); validate(env); self.assertEqual(to_task(env).task_id,"ATC-2")
+ def test_unknown_fields_rejected(self):
+  env=self.sample(); env["extra"]="not-allowed"
+  with self.assertRaises(ValueError): validate(env)
+
 if __name__=="__main__": unittest.main(verbosity=2)
