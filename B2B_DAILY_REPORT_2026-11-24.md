@@ -65,3 +65,8 @@ Build and test a **synthetic invoice-to-CSV intake/evidence workflow** (no real 
 
 ## Comparison note
 The previous discovery log dated 2026-11-23 had invoice reconciliation ranked first but only broad marketplace signals. Today’s new, current invoice/PDF postings strengthen that candidate and product/inventory cleanup; no revenue or customer conversion evidence is new.
+
+## This report's repository commits (verified after writing)
+- Report file: `a6b5a07f28c1` — https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit/commit/a6b5a07f28c1ad9f4378c617deb45232e8b48a8d
+- Discovery log: `e6e459780b81` — https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit/commit/e6e459780b81b6041a119eec7a2f7b4078d42e52
+- README link: `34a1534ce2a6` — https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit/commit/34a1534ce2a6351b1afdea5a564155403227d51b
