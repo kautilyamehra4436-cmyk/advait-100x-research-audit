@@ -8,6 +8,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import copy
+import os
+import sqlite3
 from enum import Enum
 from hashlib import sha256
 import json
@@ -119,6 +121,100 @@ class Ledger:
     def export_json(self):
         return json.dumps(self.entries, indent=2, sort_keys=True,
                           ensure_ascii=False, allow_nan=False)
+
+
+class SQLiteLedger:
+    """Optional durable local event ledger using Python's standard sqlite3.
+
+    This stores operational events, not secrets or legal/financial source records.
+    It is not encrypted and its hash chain is not externally anchored.
+    """
+    def __init__(self, path: str):
+        if not isinstance(path, str) or not path:
+            raise ValueError("database path is required")
+        if path != ":memory:" and os.path.islink(path):
+            raise ValueError("database path must not be a symlink")
+        self.path = path
+        self.connection = sqlite3.connect(path, timeout=5.0, isolation_level=None)
+        self.connection.execute("PRAGMA foreign_keys=ON")
+        self.connection.execute("PRAGMA synchronous=FULL")
+        self.connection.execute("PRAGMA busy_timeout=5000")
+        self.connection.execute(
+            "CREATE TABLE IF NOT EXISTS ledger ("
+            "seq INTEGER PRIMARY KEY AUTOINCREMENT, "
+            "previous_hash TEXT NOT NULL, "
+            "event_json TEXT NOT NULL, "
+            "entry_hash TEXT NOT NULL UNIQUE)"
+        )
+        if path != ":memory:":
+            try:
+                os.chmod(path, 0o600)
+            except OSError:
+                self.connection.close()
+                raise
+
+    @staticmethod
+    def _canonical(value):
+        return json.dumps(value, sort_keys=True, separators=(",", ":"),
+                          ensure_ascii=False, allow_nan=False)
+
+    def append(self, event: dict):
+        event_json = self._canonical(event)
+        self.connection.execute("BEGIN IMMEDIATE")
+        try:
+            row = self.connection.execute(
+                "SELECT entry_hash FROM ledger ORDER BY seq DESC LIMIT 1"
+            ).fetchone()
+            previous = row[0] if row else "0" * 64
+            body = {"previous": previous, "event": json.loads(event_json)}
+            digest = sha256(self._canonical(body).encode("utf-8")).hexdigest()
+            self.connection.execute(
+                "INSERT INTO ledger(previous_hash,event_json,entry_hash) VALUES(?,?,?)",
+                (previous, event_json, digest),
+            )
+            self.connection.execute("COMMIT")
+        except Exception:
+            self.connection.execute("ROLLBACK")
+            raise
+
+    def verify(self):
+        previous = "0" * 64
+        try:
+            rows = self.connection.execute(
+                "SELECT previous_hash,event_json,entry_hash FROM ledger ORDER BY seq"
+            ).fetchall()
+            for stored_previous, event_json, stored_hash in rows:
+                if stored_previous != previous:
+                    return False
+                event = json.loads(event_json)
+                body = {"previous": previous, "event": event}
+                expected = sha256(self._canonical(body).encode("utf-8")).hexdigest()
+                if expected != stored_hash:
+                    return False
+                previous = stored_hash
+            return True
+        except (sqlite3.Error, TypeError, ValueError, KeyError):
+            return False
+
+    def export_json(self):
+        rows = self.connection.execute(
+            "SELECT previous_hash,event_json,entry_hash FROM ledger ORDER BY seq"
+        ).fetchall()
+        entries = [
+            {"previous": previous, "event": json.loads(event_json), "hash": digest}
+            for previous, event_json, digest in rows
+        ]
+        return json.dumps(entries, indent=2, sort_keys=True,
+                          ensure_ascii=False, allow_nan=False)
+
+    def close(self):
+        self.connection.close()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc, traceback):
+        self.close()
 
 
 class Engine:
