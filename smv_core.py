@@ -38,10 +38,10 @@ def verify_razorpay_webhook(raw_body: bytes, signature: str, secret: str) -> boo
 def load_config() -> dict[str, str]:
     """Read secrets from environment; never print or persist their values."""
     names = (
-        "RAZORPAY_KEY_ID",
-        "RAZORPAY_KEY_SECRET",
-        "RAZORPAY_WEBHOOK_SECRET",
-        "PNB_IPG_MERCHANT_ID",
+        "RAZORPAY_TEST_KEY_ID",
+        "RAZORPAY_TEST_KEY_SECRET",
+        "RAZORPAY_TEST_WEBHOOK_SECRET",
+        "PNB_IPG_UAT_MERCHANT_ID",
         "PNB_IPG_UAT_CREDENTIALS",
     )
     return {name: os.environ.get(name, "") for name in names}
