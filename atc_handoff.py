@@ -21,7 +21,8 @@ def seal(envelope: dict) -> dict:
     return result
 
 def validate(envelope: dict) -> None:
-    if not isinstance(envelope, dict) or set(envelope) != REQUIRED:
+    allowed = (REQUIRED, REQUIRED | {"source_atc_record"})
+    if not isinstance(envelope, dict) or set(envelope) not in allowed:
         raise ValueError("handoff fields do not match advait.task.v1")
     if envelope["schema_version"] != SCHEMA_VERSION:
         raise ValueError("unsupported handoff schema")
