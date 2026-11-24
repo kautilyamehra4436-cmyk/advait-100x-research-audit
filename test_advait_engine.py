@@ -1,6 +1,9 @@
 import math
+import os
+import sqlite3
+import tempfile
 import unittest
-from advait_engine import Engine, Policy, Limits, Ledger, Task, Risk, Status
+from advait_engine import Engine, Policy, Limits, Ledger, SQLiteLedger, Task, Risk, Status
 from atc_handoff import from_atc_candidate, to_task, validate
 
 
@@ -169,6 +172,70 @@ class EngineTests(unittest.TestCase):
         ledger = Ledger()
         with self.assertRaises(ValueError):
             ledger.append({"not_finite": math.nan})
+
+
+class SQLiteLedgerTests(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory(prefix="advait_sqlite_")
+        self.path = os.path.join(self.tmp.name, "events.db")
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def test_persists_and_verifies_after_reopen(self):
+        ledger = SQLiteLedger(self.path)
+        ledger.append({"task": "A1", "state": "done"})
+        ledger.append({"task": "A2", "state": "pending"})
+        self.assertTrue(ledger.verify())
+        ledger.close()
+        reopened = SQLiteLedger(self.path)
+        self.assertTrue(reopened.verify())
+        self.assertEqual(len(__import__("json").loads(reopened.export_json())), 2)
+        reopened.close()
+
+    def test_tamper_detected(self):
+        ledger = SQLiteLedger(self.path)
+        ledger.append({"task": "A1"})
+        ledger.connection.execute("UPDATE ledger SET event_json='{}' WHERE seq=1")
+        self.assertFalse(ledger.verify())
+        ledger.close()
+
+    def test_invalid_event_rejected_without_partial_row(self):
+        ledger = SQLiteLedger(self.path)
+        with self.assertRaises(ValueError):
+            ledger.append({"bad": math.nan})
+        count = ledger.connection.execute("SELECT COUNT(*) FROM ledger").fetchone()[0]
+        self.assertEqual(count, 0)
+        self.assertTrue(ledger.verify())
+        ledger.close()
+
+    def test_failed_insert_rolls_back(self):
+        ledger = SQLiteLedger(self.path)
+        ledger.connection.execute(
+            "CREATE TRIGGER stop_insert BEFORE INSERT ON ledger "
+            "BEGIN SELECT RAISE(ABORT, 'test rollback'); END"
+        )
+        with self.assertRaises(sqlite3.IntegrityError):
+            ledger.append({"task": "A1"})
+        count = ledger.connection.execute("SELECT COUNT(*) FROM ledger").fetchone()[0]
+        self.assertEqual(count, 0)
+        ledger.connection.execute("DROP TRIGGER stop_insert")
+        ledger.append({"task": "A2"})
+        self.assertTrue(ledger.verify())
+        ledger.close()
+
+    def test_database_symlink_rejected(self):
+        target = os.path.join(self.tmp.name, "target.db")
+        with open(target, "wb") as stream:
+            stream.write(b"")
+        link = os.path.join(self.tmp.name, "link.db")
+        try:
+            os.symlink(target, link)
+        except (OSError, NotImplementedError):
+            self.skipTest("symlinks unavailable on this platform")
+        with self.assertRaises(ValueError):
+            SQLiteLedger(link)
+
 
 
 class HandoffTests(unittest.TestCase):
