@@ -1,0 +1,37 @@
+name: Advait 100X Engine Regression
+
+on:
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "advait_engine.py"
+      - "test_advait_engine.py"
+      - "atc_handoff.py"
+      - ".github/workflows/engine-regression.yml"
+  push:
+    branches: ["main"]
+    paths:
+      - "advait_engine.py"
+      - "test_advait_engine.py"
+      - "atc_handoff.py"
+      - ".github/workflows/engine-regression.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  engine-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Compile engine modules
+        run: python -m py_compile advait_engine.py atc_handoff.py
+      - name: Run engine and handoff tests
+        run: python -m unittest -v test_advait_engine.py
+      - name: Run existing harness
+        run: python test_harness.py
+      - name: Run B2B reconciliation tests
+        run: python -m unittest -v test_b2b_reconcile.py
