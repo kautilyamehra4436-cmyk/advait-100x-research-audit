@@ -69,6 +69,10 @@ class HandoffTests(unittest.TestCase):
  def test_auto_execute_state_rejected(self):
   env=self.sample(); env["state"]="AUTHORIZED"
   with self.assertRaises(ValueError): validate(env)
+ def test_atc_provenance_field_accepted(self):
+  from atc_handoff import seal, validate, to_task
+  body={"schema_version":"advait.task.v1","task_id":"ATC-2","title":"Reviewed candidate","tool":"local","action":"review","payload":{"x":1},"risk":"low","state":"REVIEWED_NOT_AUTHORIZED","source_atc_record":"ATC-REC-1"}
+  env=seal(body); validate(env); self.assertEqual(to_task(env).task_id,"ATC-2")
  def test_unknown_fields_rejected(self):
   env=self.sample(); env["extra"]="not-allowed"
   with self.assertRaises(ValueError): validate(env)
