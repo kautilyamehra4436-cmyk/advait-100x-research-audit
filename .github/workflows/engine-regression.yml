@@ -7,6 +7,10 @@ on:
       - "advait_engine.py"
       - "test_advait_engine.py"
       - "atc_handoff.py"
+      - "phone_runtime_check.py"
+      - "soak_test.py"
+      - "README.md"
+      - "PHONE_RUN.md"
       - ".github/workflows/engine-regression.yml"
   push:
     branches: ["main"]
@@ -14,6 +18,10 @@ on:
       - "advait_engine.py"
       - "test_advait_engine.py"
       - "atc_handoff.py"
+      - "phone_runtime_check.py"
+      - "soak_test.py"
+      - "README.md"
+      - "PHONE_RUN.md"
       - ".github/workflows/engine-regression.yml"
 
 permissions:
@@ -27,10 +35,14 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Compile engine modules
-        run: python -m py_compile advait_engine.py atc_handoff.py
+      - name: Compile engine and phone tools
+        run: python -m py_compile advait_engine.py atc_handoff.py phone_runtime_check.py soak_test.py
       - name: Run engine and handoff tests
         run: python -m unittest -v test_advait_engine.py
+      - name: Run phone runtime smoke check
+        run: python phone_runtime_check.py
+      - name: Run short SQLite soak smoke
+        run: python soak_test.py --hours 0.001 --interval-seconds 0.1 --max-iterations 3 --db "$RUNNER_TEMP/advait-soak.db"
       - name: Run existing harness
         run: python test_harness.py
       - name: Run B2B reconciliation tests

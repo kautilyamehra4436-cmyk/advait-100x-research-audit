@@ -13,11 +13,15 @@ python -m unittest -v test_advait_engine.py
 python -m unittest -v test_b2b_reconcile.py
 python b2b_reconcile.py b2b_sample_input.csv --out-prefix sample_report
 python advait_engine.py
+python phone_runtime_check.py
+python soak_test.py --hours 24 --interval-seconds 60 --db advait_soak.db
 ```
 
 The reference engine includes task state, allowlist, exact-task owner-verifier hook for high-risk actions, step/call/time/payload limits, adapter interface, independent evidence-verifier hook, reconciliation for unknown or unverifiable outcomes, a tamper-evident hash-linked in-memory ledger, and an optional phone-local SQLite ledger with atomic commits.
 
 **Fail-closed behavior:** without an injected authenticated owner verifier, HIGH-risk tasks cannot execute. Without an independent evidence verifier, an adapter's claim of success cannot move a task to DONE; it remains NEEDS_RECONCILIATION. The repository ships neither verifier nor live adapters. SQLite persistence is optional and unencrypted; do not store credentials, tokens, or sensitive financial/legal source records in it.
+
+**Phone validation:** `phone_runtime_check.py` runs offline capability checks. `soak_test.py` runs a low-load SQLite-ledger stability test and records each tick. A short CI smoke run is not a 24-hour or Android test; the 24-hour command must be run on the target phone and the result inspected.
 
 B2B documents:
 - `B2B_ENGINE_BLUEPRINT.md` — modules, boundaries, product hypothesis, experiment and acceptance criteria.
