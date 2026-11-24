@@ -30,3 +30,27 @@ Pricing is not decided. Competitor listing prices are only reference points; a p
 
 ## Evidence discipline
 No customer has been contacted. No paid pilot, revenue, conversion, or accuracy result exists. All opportunity scores/pricing remain hypotheses until tests.
+
+
+## Update — 2026-11-24 (new public signals)
+
+### New evidence
+- Freelancer India direct listing **Verified Invoice Data Entry**, project 40827088: PDF invoices/receipts → analysis-ready Excel with source verification; listing showed ₹750–₹1,250/hour and 6 days remaining at capture. URL: https://www.freelancer.in/projects/data-analysis/verified-invoice-data-entry
+- Freelancer India data-cleansing page showed multiple active requests: invoice PDF entry, paper/photo product-inventory digitization, and e-commerce product CSV cleanup. Some listings displayed 25–42 bids, indicating substantial competition. URL: https://www.freelancer.in/jobs/data-cleansing
+- These are current listings, not confirmed awarded contracts or payment. Confidence: medium-high for listing existence at capture; medium for category demand; low for market size/conversion/revenue.
+
+### Ranking revision (compared with 2026-11-23)
+1. Invoice PDF extraction + source verification + exceptions report — sharpened/strengthened by multiple fresh listings; PDF/OCR is currently a prototype gap.
+2. CSV/Excel cleaning and reconciliation — still relevant, but crowded.
+3. Product/inventory/catalogue cleanup — moved above supplier comparison due new direct listings.
+4. Supplier quote comparison/procurement tracker — unchanged; prior survey signal, no new direct buyer listing found today.
+5. B2B lead research/enrichment — deprioritized due high competition, privacy and platform-term risk.
+6. Recurring reporting automation — no new direct signal today.
+
+### Prototype re-test (2026-11-24)
+- Local unit tests: 9/9 PASS.
+- Synthetic sample: 5 rows, 7 flags; original input preserved.
+- CI: workflow file includes test command, but actual run data remains unverified this day.
+- PDF/OCR, XLSX, real data, accuracy metrics, performance benchmark, client outreach and revenue remain pending/not done.
+
+Daily report: `B2B_DAILY_REPORT_2026-11-24.md`.
