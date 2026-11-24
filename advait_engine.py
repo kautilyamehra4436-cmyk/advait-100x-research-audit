@@ -7,6 +7,7 @@ until an injected evidence_verifier independently accepts its evidence.
 from __future__ import annotations
 
 from dataclasses import dataclass
+import copy
 from enum import Enum
 from hashlib import sha256
 import json
@@ -208,7 +209,9 @@ class Engine:
             task.attempts += 1
             self.calls += 1
             try:
-                output = adapter(task)
+                # Adapters receive an isolated snapshot; they cannot mutate the
+                # policy-approved task object or its payload after authorization.
+                output = adapter(copy.deepcopy(task))
                 if not isinstance(output, dict):
                     task.status = Status.NEEDS_RECONCILIATION
                     task.result = "adapter_output_not_object"
