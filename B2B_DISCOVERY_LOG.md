@@ -54,3 +54,27 @@ No customer has been contacted. No paid pilot, revenue, conversion, or accuracy 
 - PDF/OCR, XLSX, real data, accuracy metrics, performance benchmark, client outreach and revenue remain pending/not done.
 
 Daily report: `B2B_DAILY_REPORT_2026-11-24.md`.
+
+
+## Update — 2026-11-25 (new demand signals and reconciliation evidence)
+
+### New direct marketplace signals
+- Freelancer India project 40827432, **Comprehensive Invoice Data Entry**: open at capture; ₹12,500–₹37,500; paid on delivery; seven days remaining; one proposal; average bid ₹25,000; asks for PDF/image invoice header and line-item extraction, source verification and completion log. Client profile showed zero reviews. URL: https://www.freelancer.in/projects/data-analysis/comprehensive-invoice-data-entry
+- Upwork **Invoice & PO Processing Automation Specialist**: surfaced as a $4,750 fixed-price ongoing project, 50+ proposals and two interviews. Direct page fetch returned 403; details are search-result evidence only. URL: https://www.upwork.com/freelance-jobs/apply/Invoice-Processing-Automation-Specialist_~022122307797336200846/
+- Upwork **300 Invoice Records**: surfaced as a $5 fixed-price request for 300 supplier invoices, 50+ proposals and one hire; listing also describes repeat monthly need. Treat as low-budget/competition signal, not viable price benchmark. Direct page fetch returned 403. URL: https://www.upwork.com/freelance-jobs/apply/Data-Entry-Specialist-and-Excel-Data-Entry-Task-300-Invoice-Records_~022121706458693663693/
+
+### New source added (published 2026-09-09; not newly published)
+- Zoho Indian Merchant Payments Survey 2026, 700+ Indian businesses: 46% cited reconciliation as a challenge; 61% spent 1–3 hours/day and 20% spent 3–6 hours; 56% cited payment failures; 78% said they would switch gateway for desired AI capabilities. Vendor-sponsored survey; generalization is medium confidence. URL: https://www.zoho.com/payments/academy/industry-trends/indian-merchant-payments-survey-2026.html
+
+### Ranking change vs 2026-11-24
+1. Invoice + PO line-item validation and exception report — remains #1, sharpened by new direct listings.
+2. Payment-to-invoice reconciliation exception audit (read-only) — added as a distinct candidate from Zoho survey evidence; no payment execution or bank portal access.
+3. Inventory/product PDF-to-sheet conversion — retained; no stronger new evidence today.
+4. Generic CSV/Excel cleanup — retained but price competition is reinforced by the $5/300-invoice listing.
+5. Supplier quote comparison — no new direct buyer signal.
+6. B2B lead research — deprioritized due privacy/freshness/platform risks.
+
+### Current execution truth
+- Existing B2B code remains CSV-only. No PDF/OCR, XLSX, bank/gateway integration or line-item extraction.
+- Latest verified main CI run remains #68 on 2026-11-24: 10 harness + 31 engine + 9 B2B tests passed; no new run in this report cycle.
+- No 20-case benchmark, client contact, bid, sale, payment, contract or revenue occurred.
