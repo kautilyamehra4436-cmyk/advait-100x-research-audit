@@ -24,7 +24,7 @@ Job logs show:
 - bounded engine: 31 tests PASS;
 - B2B reconciliation: 9/9 PASS;
 - engine demo completed; ledger integrity reported true; high-risk task remained held because authenticated owner-approval provider was unavailable.
-Total: 50 automated tests passed in that CI run. This is GitHub-hosted CI evidence, not a test on the owner's Android phone or a live client workflow. No new test run was executed in this report cycle.
+Total: 50 automated tests passed in run #80 (10 harness + 31 engine + 9 B2B). Logs for run #80 show all three suites passing and the demo completing with ledger integrity true; the high-risk task remained held because the authenticated owner-approval provider was unavailable. Runs #78 and #79, triggered by the report and discovery-log commits, also completed successfully. These are GitHub-hosted CI results, not tests on the owner's Android phone or a live client workflow. No production code changed in this report cycle.
 
 ## 3. New public demand signals
 ### NEW — Freelancer India: invoice line-item extraction
