@@ -76,5 +76,5 @@ Daily report: `B2B_DAILY_REPORT_2026-11-24.md`.
 
 ### Current execution truth
 - Existing B2B code remains CSV-only. No PDF/OCR, XLSX, bank/gateway integration or line-item extraction.
-- Latest verified main CI run remains #68 on 2026-11-24: 10 harness + 31 engine + 9 B2B tests passed; no new run in this report cycle.
+- GitHub Actions runs #78, #79 and #80, triggered by the 2026-11-25 report/discovery/README commits, completed successfully. Latest verified run #80 (commit 14d984f14d46) logs show 10 harness + 31 engine + 9 B2B tests passed; demo ledger integrity true and high-risk task held without authenticated owner approval. No production code changed.
 - No 20-case benchmark, client contact, bid, sale, payment, contract or revenue occurred.
