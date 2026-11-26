@@ -67,3 +67,12 @@ No customer was contacted, no bid was submitted, no private customer data was pr
 3. Add a shared schema contract for Opportunity, Task, Evidence, Approval, Delivery and Financial Event.
 4. Build the 20+ labelled synthetic invoice/PO benchmark and extend CSV worker only after baseline correctness is measured.
 5. Prepare the phone run package; user-side install and device validation remain required.
+
+
+## Follow-up — SMV rebased foundation merged
+The stale SMV PR #6 was closed and superseded by PR #8:
+- PR #8: https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit/pull/8
+- Merge commit: 0f23d4e47702f8d094af27cddd0e48077227c297
+- CI run 45841894611 passed the full offline suite, including test_smv.py.
+- Added strict normalized event validation, Razorpay raw-body HMAC helper, fail-closed provider verifier injection, duplicate-vs-conflict detection, and protection against unverified event-ID poisoning.
+- No production webhook receiver, PNB official UAT verifier, bank settlement adapter, live credentials or money movement was added.
