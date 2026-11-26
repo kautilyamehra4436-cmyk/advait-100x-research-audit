@@ -9,7 +9,7 @@
 | Repository | Main commit SHA inspected | Files | Tree entries | Role |
 |---|---|---:|---:|---|
 | [advait-100x-research-audit](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit) | `e6b52df9f7e9a2e8690217ace813e2e29b65b244` | 62 | 68 | Canonical blueprint, research, B2B engine, execution reference and SMV |
-| [my-brain](https://github.com/kautilyamehra4436-cmyk/my-brain) | `497b41780ad2634ca6498460e96fe3eb739c83d6` | 134 | 144 | Central Brain, ATC, queue, worker, governed runtime and B2B adapter |
+| [my-brain](https://github.com/kautilyamehra4436-cmyk/my-brain) | `a47ab5d2e1778ca3f5c44edbbe16d179db30c181` | 134 | 144 | Central Brain, ATC, queue, worker, governed runtime and B2B adapter |
 | [advait_os](https://github.com/kautilyamehra4436-cmyk/advait_os) | `07f24f281fb89b189384112ed35530e3108b9d85` | 6 | 8 | Local filesystem/security gate |
 | [advait_pure_sharp](https://github.com/kautilyamehra4436-cmyk/advait_pure_sharp) | `9e5927935ae3f2520e606213473b61ff87596277` | 11 | 15 | Governance, Master Operating Algorithm, Command Centre and architecture proposals |
 
