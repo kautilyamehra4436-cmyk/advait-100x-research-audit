@@ -149,6 +149,8 @@ def _write_new_text(path: Path, content: str) -> Path:
 def write_board(board: dict, output_dir: str | Path) -> tuple[Path, Path]:
     """Write a new private board pair; never overwrite an earlier run."""
     output = Path(output_dir).expanduser()
+    if output.parent.is_symlink():
+        raise PermissionError("report_parent_symlink_blocked")
     if output.is_symlink():
         raise PermissionError("report_directory_symlink_blocked")
     output.mkdir(parents=True, exist_ok=True, mode=0o700)
