@@ -5,7 +5,7 @@ Canonical design: UNIFIED_MASTER_BLUEPRINT.md
 ## Repository baselines
 | Repository | Main baseline SHA | Role |
 |---|---|---|
-| my-brain | f27ca720f1c1be0fa6e2ea5e5e2916f48cf338b3 | Central Brain / ATC |
+| my-brain | 497b41780ad2634ca6498460e96fe3eb739c83d6 | Central Brain / ATC |
 | advait_os | 07f24f281fb89b189384112ed35530e3108b9d85 | Security Gate |
 | advait_pure_sharp | 55098ab2188f324260ca233966fc8f4c6334e478 | Governance / Living Fabric / PanchTatva |
 | advait-100x-research-audit | 67a1595bddab2b538d3d562e032d3a0de291878b | Execution / B2B / Research / Master Hub |
@@ -47,7 +47,7 @@ Canonical design: UNIFIED_MASTER_BLUEPRINT.md
 
 ## 2026-11-27 verified synchronization
 
-Current recursive-tree snapshot: 207 files / 227 tree entries, no truncated trees. See `CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md` for the complete path inventory and exact main SHAs.
+Current recursive-tree snapshot: 213 files / 235 tree entries, no truncated trees. See `CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md` for the complete path inventory and exact main SHAs.
 
 - My Brain PR #35 merged: governed runtime now uses the durable leased queue; worker terminal transitions require the active lease owner and an unexpired lease; the ATC smoke path uses the managed V3 bridge. CI run 45906541842 passed.
 - My Brain PR #36 synchronized README/status/integration docs with the managed V3 runtime. CI run 45907097099 passed.
@@ -58,3 +58,10 @@ Current recursive-tree snapshot: 207 files / 227 tree entries, no truncated tree
 - The B2B worker is CSV-only and not yet integrated as a Brain adapter; no labelled production accuracy, customer pilot or revenue is verified.
 - Advait OS Gate remains a separate offline security component; authenticated identity and Brain integration are pending.
 - No LLM runtime, Android/Termux validation, persistent scheduler, 24-hour operation, live payment or external customer execution is verified.
+
+
+## 2026-11-27 B2B integration evidence
+
+- My Brain PR #37 merged: pinned 100X submodule, separate financial artifact store, B2B adapter registration in GovernedSelfBuildRuntimeV3 and explicit local consent/confirmation gates.
+- CI run [45908960326](https://github.com/kautilyamehra4436-cmyk/my-brain/actions/runs/45908960326) passed 131 tests, compile and end-to-end synthetic integration smoke: 5 rows, 7 review flags, source rows absent from operational queue.
+- The vault is permission-restricted but not encrypted at rest; explicit acknowledgement is required. Local owner flags are not authentication. Real customer data remains blocked pending encryption and owner identity.
