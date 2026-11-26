@@ -5,10 +5,10 @@ Canonical design: UNIFIED_MASTER_BLUEPRINT.md
 ## Repository baselines
 | Repository | Main baseline SHA | Role |
 |---|---|---|
-| my-brain | 068a1cd2190c7665c9d25dc0c8ea3c73fb3f4b5c | Central Brain / ATC |
-| advait_os | eeb4ce2801360b2af09b44decdf8e260118eff48 | Security Gate |
-| advait_pure_sharp | ad78d8c7e84ffc7b77db7be65b05d9cc76089226 | Governance / Living Fabric / PanchTatva |
-| advait-100x-research-audit | ccfca945d87766f6e9a96c976fe0fc5ee2e1e3e6 | Execution / B2B / Research / Master Hub |
+| my-brain | f27ca720f1c1be0fa6e2ea5e5e2916f48cf338b3 | Central Brain / ATC |
+| advait_os | 07f24f281fb89b189384112ed35530e3108b9d85 | Security Gate |
+| advait_pure_sharp | 55098ab2188f324260ca233966fc8f4c6334e478 | Governance / Living Fabric / PanchTatva |
+| advait-100x-research-audit | 67a1595bddab2b538d3d562e032d3a0de291878b | Execution / B2B / Research / Master Hub |
 
 ## Module register
 | Module | Source | State | Integration rule |
@@ -47,9 +47,11 @@ Canonical design: UNIFIED_MASTER_BLUEPRINT.md
 
 ## 2026-11-27 verified synchronization
 
-Current recursive-tree snapshot: 206 files / 226 tree entries, no truncated trees. See `CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md` for the complete path inventory and exact main SHAs.
+Current recursive-tree snapshot: 207 files / 227 tree entries, no truncated trees. See `CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md` for the complete path inventory and exact main SHAs.
 
 - My Brain PR #35 merged: governed runtime now uses the durable leased queue; worker terminal transitions require the active lease owner and an unexpired lease; the ATC smoke path uses the managed V3 bridge. CI run 45906541842 passed.
+- My Brain PR #36 synchronized README/status/integration docs with the managed V3 runtime. CI run 45907097099 passed.
+- Advait OS PR #4 and Pure Sharp PR #4 synchronized README/integration pointers; Pure Sharp Command Centre records the new Work Register and activity checkpoint.
 - My Brain PRs #33/#34: legacy TaskQueue and ProviderCallLedger SQLite lifecycle fixes merged.
 - 100X PR #20: SMV SQLite connection lifecycle fix merged and CI passed.
 - 100X PR #21: phone runtime diagnostic connection lifecycle fix merged; regression test added and CI run 45906684654 passed.
