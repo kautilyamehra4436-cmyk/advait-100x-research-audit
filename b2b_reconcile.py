@@ -151,7 +151,14 @@ def reconcile_text(csv_text: str):
         "Limit: flags are review suggestions, not accounting/tax conclusions.\n"
     )
     normalized_csv = _serialize_csv(fields, normalized)
-    exceptions_csv = _serialize_csv(OUTPUT_FINDINGS, findings)
+    safe_findings = []
+    for finding in findings:
+        safe = dict(finding)
+        for field, value in safe.items():
+            if isinstance(value, str) and value.lstrip(" \u00a0").startswith(("=", "+", "-", "@", "\t", "\r")):
+                safe[field] = "'" + value
+        safe_findings.append(safe)
+    exceptions_csv = _serialize_csv(OUTPUT_FINDINGS, safe_findings)
     output_bytes = (
         len(normalized_csv.encode("utf-8"))
         + len(exceptions_csv.encode("utf-8"))
