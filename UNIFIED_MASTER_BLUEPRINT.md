@@ -54,7 +54,7 @@ Allowed case states: REJECTED, PARKED, NEEDS_OWNER, READY_FOR_TEST, TEST_FAILED,
 ## 3. My Brain: thinking, memory and planning
 My Brain is the central thinking and memory layer, not an executor by itself.
 - ATC v1.2 creates draft plans using deterministic rules and heuristic strategy scores.
-- The SQLite task queue stores plan-only work; a queue entry is not execution.
+- The SQLite task queue stores plan-only work; a queue entry is not execution. My Brain PR #5 additionally hardens completion: a task cannot be marked done without an injected verifier accepting explicit evidence; only the evidence digest is persisted. This is a verifier hook, not a deployed production verifier.
 - Zero-cost guard exists but global wiring at every adapter boundary is not verified.
 - ATC risk keyword detection can miss or over-flag; it is advisory, not a security boundary.
 - Reflection must challenge assumptions, identify missing evidence, compare alternatives and state what would disprove a recommendation.
