@@ -106,7 +106,7 @@ The existing worker does not yet implement PDF/OCR, XLSX multi-sheet output, PO/
 Commercial pipeline: public demand evidence → shortlist → synthetic sample → measured QA report → owner-reviewed offer → owner-approved individualized outreach → scoped pilot → delivery/acceptance → invoice/payment reconciliation → post-mortem. Never bid or contact a prospect without owner approval. A marketplace budget is not realized income. Track time, revisions, false positives/negatives, conversion and realized profit.
 
 ## 8. Sovereign Money Vault
-Separate payment-provider events, internal accounting ledger, bank credentials and owner approvals. Credentials never enter repository files or ordinary logs. Razorpay and PNB are intended integrations, not verified live connections. PR #6 was open and unmerged at last inspection. Do not enable live keys or real transfers as part of documentation consolidation.
+Separate payment-provider events, internal accounting ledger, bank credentials and owner approvals. Credentials never enter repository files or ordinary logs. Razorpay and PNB are intended integrations, not verified live connections. The original PR #6 was superseded and closed; the rebased, hardened SMV foundation in PR #8 was merged on 2026-11-26. Do not enable live keys or real transfers as part of documentation consolidation.
 
 Before production: test-mode fixtures, server-side webhook signature verification, idempotency, replay protection, amount/currency/order matching, refund/dispute handling and independent reconciliation. PNB linkage must use an officially supported, owner-configured channel. AI never receives withdrawal or transfer authority.
 
@@ -163,7 +163,7 @@ Verified repository metadata:
 - 100X report records GitHub Actions run #87 with 50/50 tests; this is hosted CI, not phone runtime.
 - PanchTatva report records 3/3 regression tests and 10/10 simulated checks; not proof of intelligence or device performance.
 - ATC is explicitly a rule-based planner with no LLM, live research or execution.
-- No production payment adapter, PNB integration, authenticated owner provider, deployed independent evidence verifier, Android runtime, 24-hour operation, live customer delivery or realized revenue is verified.
+- The SMV offline payment-event ledger foundation is merged, but no production webhook receiver, PNB provider verifier, live payment adapter, authenticated owner provider, deployed independent evidence verifier, Android runtime, 24-hour operation, live customer delivery or realized revenue is verified.
 
 Coverage: recursive trees were retrieved for all four main branches. Detailed review covered key README, governance, integration, planner, queue, gate, architecture, business, audit and test documents; this is not a line-by-line audit of every source file or historical branch.
 
