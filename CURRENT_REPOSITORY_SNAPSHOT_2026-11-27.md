@@ -2,27 +2,38 @@
 
 **Snapshot date:** 2026-11-27  
 **Source:** GitHub recursive trees for the four repositories' `main` branches.  
-**Coverage:** 207 files, 227 tree entries, no truncated trees. This is a complete path inventory at the recorded commits, not a claim that every source line, external setting, historical branch or runtime behavior has been audited.
+**Coverage:** 213 files, 235 tree entries, no truncated trees. Gitlinks are counted as tree entries separately from blob files. This is a complete path inventory at the recorded commits, not a line-by-line semantic audit of every source line, historical branch, external setting or runtime environment.
 
 ## Main-branch source baselines inspected
 
 | Repository | Main commit SHA inspected | Files | Tree entries | Role |
 |---|---|---:|---:|---|
-| [advait-100x-research-audit](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit) | `67a1595bddab2b538d3d562e032d3a0de291878b` | 62 | 68 | Canonical blueprint, research, B2B, execution reference and SMV |
-| [my-brain](https://github.com/kautilyamehra4436-cmyk/my-brain) | `f27ca720f1c1be0fa6e2ea5e5e2916f48cf338b3` | 128 | 136 | Central Brain, ATC, task queue, worker and governed local runtime |
+| [advait-100x-research-audit](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit) | `e6b52df9f7e9a2e8690217ace813e2e29b65b244` | 62 | 68 | Canonical blueprint, research, B2B engine, execution reference and SMV |
+| [my-brain](https://github.com/kautilyamehra4436-cmyk/my-brain) | `497b41780ad2634ca6498460e96fe3eb739c83d6` | 134 | 144 | Central Brain, ATC, queue, worker, governed runtime and B2B adapter |
 | [advait_os](https://github.com/kautilyamehra4436-cmyk/advait_os) | `07f24f281fb89b189384112ed35530e3108b9d85` | 6 | 8 | Local filesystem/security gate |
-| [advait_pure_sharp](https://github.com/kautilyamehra4436-cmyk/advait_pure_sharp) | `55098ab2188f324260ca233966fc8f4c6334e478` | 11 | 15 | Governance, Master Operating Algorithm, Command Centre and architecture proposals |
+| [advait_pure_sharp](https://github.com/kautilyamehra4436-cmyk/advait_pure_sharp) | `9e5927935ae3f2520e606213473b61ff87596277` | 11 | 15 | Governance, Master Operating Algorithm, Command Centre and architecture proposals |
 
-**Snapshot commit note:** the 100X SHA above is the source commit inspected before this snapshot refresh is committed; merging this document update advances the 100X main SHA. The other three SHAs are their inspected main commits at capture time.
+**Snapshot commit note:** the 100X SHA above is the source commit inspected before this snapshot refresh is committed; merging this document update advances the 100X main SHA.
+
+## Pinned cross-repository source links
+
+| Parent repository | Gitlink path | Pinned source commit |
+|---|---|---|
+| my-brain | `vendor/advait_b2b` | `e6b52df9f7e9a2e8690217ace813e2e29b65b244` |
+
+My Brain pins the B2B implementation as a Git submodule; no source copy or runtime network fetch is used. CI checks out this exact revision.
 
 ## Verified integration state at this checkpoint
 
-- **My Brain / ATC:** ATC v1.2 remains a deterministic planner, not an LLM. The managed ATC bridge routes an explicitly selected local allowlisted operation through `GovernedSelfBuildRuntimeV3` and `ManagedTaskQueueV3`. Completion/failure is fenced by active lease owner and expiry. PR #35 runtime integration CI [45906541842](https://github.com/kautilyamehra4436-cmyk/my-brain/actions/runs/45906541842) passed. PR #36 status/docs synchronization CI [45907097099](https://github.com/kautilyamehra4436-cmyk/my-brain/actions/runs/45907097099) passed. This is bounded local execution, not external business execution.
-- **SQLite resource lifecycle:** My Brain PRs #33/#34 fixed legacy TaskQueue and ProviderCallLedger connection closure. 100X PR #20 fixed SMV connection closure; PR #21 fixed the phone runtime diagnostic's SQLite handles and added a close regression test. 100X CI [45906684654](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit/actions/runs/45906684654) passed.
-- **B2B reconciliation:** CSV-only deterministic reconciliation code and tests exist. Labelled real-world accuracy, XLSX/PDF/OCR support, customer pilot, outreach and revenue remain unverified/not enabled.
+- **My Brain / ATC:** ATC v1.2 remains a deterministic planner, not an LLM. The managed ATC bridge routes explicitly selected local allowlisted operations through `GovernedSelfBuildRuntimeV3` and `ManagedTaskQueueV3`. Completion/failure is fenced by active lease owner and expiry. PR #35 runtime integration CI [45906541842](https://github.com/kautilyamehra4436-cmyk/my-brain/actions/runs/45906541842) passed.
+- **B2B CSV integration:** My Brain PR #37 pins the 100X reconciler as a submodule and adds a governed adapter. CI [45908960326](https://github.com/kautilyamehra4436-cmyk/my-brain/actions/runs/45908960326) passed 131 unit tests, compilation and the end-to-end synthetic sample smoke. The sample processed 5 rows and generated 7 review flags; source rows were not stored in the operational task queue. No real customer data was processed.
+- **Financial record storage:** B2B input/output artifacts are held in a separate file vault with restrictive OS permissions and symlink checks, not in operational SQLite. It is **not encrypted at rest**; explicit acknowledgement is required. Do not stage sensitive customer data on a shared/untrusted device until encryption/Android Keystore is implemented.
+- **Owner flags:** local consent/confirmation flags are manual intent checks, not authenticated owner identity. No production identity provider is deployed.
+- **SQLite resource lifecycle:** My Brain PRs #33/#34 fixed legacy TaskQueue and ProviderCallLedger connection closure. 100X PR #20 fixed SMV connection closure; PR #21 fixed phone diagnostic SQLite handles. 100X CI [45906684654](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit/actions/runs/45906684654) passed.
+- **B2B limits:** CSV only; 1 MiB input, 10,000 rows, 100 columns and 4 MiB output. No XLSX/PDF/OCR, accounting/tax conclusion, customer outreach, invoice submission or payment movement.
 - **SMV:** Offline payment-event ledger foundation only. No live webhook receiver, PNB verifier, payout/withdrawal/transfer, bank settlement adapter or production payment collection is enabled.
-- **Advait OS Gate:** Separate offline filesystem/security gate. Its README and integration pointer now describe scope; no production authenticated owner identity provider and no proven runtime integration into My Brain.
-- **Pure Sharp governance:** README, integration pointer and Command Centre now reflect the current cross-project state. Living Fabric/AELI remains an architecture proposal; PanchTatva C10 is a scenario harness, not proof of intelligence or autonomy.
+- **Advait OS Gate:** Separate offline filesystem/security gate. No production authenticated owner identity provider and no proven runtime integration into My Brain.
+- **Pure Sharp governance:** Living Fabric/AELI remains an architecture proposal; PanchTatva C10 is a scenario harness, not proof of intelligence or autonomy.
 - **Operations:** No verified Android/Termux deployment, persistent scheduler, 24-hour runtime, live customer delivery, realized revenue or ₹10,000/day earnings.
 
 ## Canonical ownership and integration sequence
@@ -31,12 +42,12 @@
 2. `my-brain` owns ATC planning, zero-cost policy implementation, queue, worker and governed local runtime.
 3. `advait_os` owns the local filesystem/security gate; integrate only through a reviewed versioned contract.
 4. `advait-100x-research-audit` owns the cross-project blueprint/evidence hub and specialist B2B, research, execution-reference and SMV modules.
-5. Do not copy specialist implementations into competing repositories. Use versioned contracts, tests, owner/risk gates and evidence.
+5. Do not copy specialist implementations into competing repositories. Use pinned versioned source, contracts, tests, owner/risk gates and evidence.
 
 ## Known integration gaps
 
 - No LLM reasoning/provider call has been verified in the Advait runtime; OpenRouter `:free` is policy-only until a real manual run is evidenced.
-- B2B CSV reconciliation and SMV are not yet exposed as governed My Brain adapters.
+- B2B is code-integrated and synthetic-tested, but the financial file vault is not encrypted at rest and no real customer data has been processed.
 - Advait OS Gate is not yet wired into the worker's path/data operations.
 - Global zero-cost enforcement across every future adapter is not proven.
 - Independent production evidence verification and authenticated owner identity are not deployed.
@@ -113,7 +124,7 @@ tests/test_phone_runtime_check_connection_lifecycle.py
 tests/test_relationship_intelligence.py
 ```
 
-### 2. my-brain — 128 files / 136 tree entries
+### 2. my-brain — 134 files / 144 tree entries
 
 ```text
 .github/workflows/advait-ai-developer-ci.yml
@@ -132,8 +143,10 @@ tests/test_relationship_intelligence.py
 .github/workflows/advait-self-build-worker-v1.yml
 .github/workflows/advait-self-build-worker-v2.yml
 .github/workflows/atc-tests.yml
+.github/workflows/b2b-adapter-integration-v1.yml
 .github/workflows/legacy-task-queue-regression.yml
 .gitignore
+.gitmodules
 CHANGELOG.md
 INTEGRATIONS.md
 LICENSE
@@ -153,7 +166,9 @@ core/atc_worker_bridge_managed_v1.py
 core/atc_worker_bridge_managed_v2.py
 core/atc_worker_bridge_managed_v3.py
 core/atc_worker_bridge_v1.py
+core/b2b_reconciliation_adapter_v1.py
 core/engineering_lessons_v1.py
+core/financial_record_vault_v1.py
 core/governed_ai_developer_v1.py
 core/governed_ai_developer_v2.py
 core/governed_self_build_factory_v1.py
@@ -210,6 +225,7 @@ rules.md
 scripts/advait_ai_developer_v1.py
 scripts/advait_ai_developer_v2.py
 scripts/advait_atc_worker_bridge_v1.py
+scripts/advait_b2b_integration_smoke_v1.py
 scripts/advait_discover_open_source_v1.py
 scripts/advait_governed_self_build_v3.py
 scripts/advait_self_build_worker_v1.py
@@ -226,6 +242,7 @@ tests/__init__.py
 tests/test_atc_handoff.py
 tests/test_atc_planner.py
 tests/test_atc_worker_bridge_v1.py
+tests/test_b2b_reconciliation_adapter_v1.py
 tests/test_foundation_resource_governance_v1.py
 tests/test_foundation_runtime_migration_v2.py
 tests/test_governed_ai_developer_v1.py
