@@ -130,7 +130,11 @@ def score_opportunity(
     return {"category": category, "score": score, "decision": decision, "reason": "rank only; owner approval required before commitments"}
 
 
-def build_opportunity_report(\n    items: Iterable[Opportunity],\n    owner_profile: dict | None = None,\n    evidence_verifier: Callable[[Opportunity], bool] | None = None,\n) -> dict:
+def build_opportunity_report(
+    items: Iterable[Opportunity],
+    owner_profile: dict | None = None,
+    evidence_verifier: Callable[[Opportunity], bool] | None = None,
+) -> dict:
     rows = []
     category_counts = Counter()
     unknown_items = []
