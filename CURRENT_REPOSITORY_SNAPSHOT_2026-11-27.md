@@ -1,26 +1,28 @@
 # Advait — Current Four-Repository Snapshot
 
 **Snapshot date:** 2026-11-27  
-**Source:** GitHub recursive trees for each repository's `main` branch.  
-**Coverage:** 206 files, 226 tree entries, no truncated trees. This is a complete path inventory at the recorded commits, not a claim that every source line, external setting, historical branch, or runtime behavior has been audited.
+**Source:** GitHub recursive trees for the four repositories' `main` branches.  
+**Coverage:** 207 files, 227 tree entries, no truncated trees. This is a complete path inventory at the recorded commits, not a claim that every source line, external setting, historical branch or runtime behavior has been audited.
 
-## Main-branch baselines
+## Main-branch source baselines inspected
 
-| Repository | Main commit SHA | Files | Tree entries | Role |
+| Repository | Main commit SHA inspected | Files | Tree entries | Role |
 |---|---|---:|---:|---|
-| [advait-100x-research-audit](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit) | `ccfca945d87766f6e9a96c976fe0fc5ee2e1e3e6` | 61 | 67 | Canonical blueprint, research, B2B, execution reference and SMV |
-| [my-brain](https://github.com/kautilyamehra4436-cmyk/my-brain) | `068a1cd2190c7665c9d25dc0c8ea3c73fb3f4b5c` | 128 | 136 | Central Brain, ATC, task queue, worker and governed local runtime |
-| [advait_os](https://github.com/kautilyamehra4436-cmyk/advait_os) | `eeb4ce2801360b2af09b44decdf8e260118eff48` | 6 | 8 | Local filesystem/security gate |
-| [advait_pure_sharp](https://github.com/kautilyamehra4436-cmyk/advait_pure_sharp) | `ad78d8c7e84ffc7b77db7be65b05d9cc76089226` | 11 | 15 | Governance, Master Operating Algorithm, Command Centre and architecture proposals |
+| [advait-100x-research-audit](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit) | `67a1595bddab2b538d3d562e032d3a0de291878b` | 62 | 68 | Canonical blueprint, research, B2B, execution reference and SMV |
+| [my-brain](https://github.com/kautilyamehra4436-cmyk/my-brain) | `f27ca720f1c1be0fa6e2ea5e5e2916f48cf338b3` | 128 | 136 | Central Brain, ATC, task queue, worker and governed local runtime |
+| [advait_os](https://github.com/kautilyamehra4436-cmyk/advait_os) | `07f24f281fb89b189384112ed35530e3108b9d85` | 6 | 8 | Local filesystem/security gate |
+| [advait_pure_sharp](https://github.com/kautilyamehra4436-cmyk/advait_pure_sharp) | `55098ab2188f324260ca233966fc8f4c6334e478` | 11 | 15 | Governance, Master Operating Algorithm, Command Centre and architecture proposals |
+
+**Snapshot commit note:** the 100X SHA above is the source commit inspected before this snapshot refresh is committed; merging this document update advances the 100X main SHA. The other three SHAs are their inspected main commits at capture time.
 
 ## Verified integration state at this checkpoint
 
-- **My Brain / ATC:** ATC v1.2 remains a deterministic planner, not an LLM. The managed ATC bridge now routes an explicitly selected local allowlisted operation through `GovernedSelfBuildRuntimeV3` and `ManagedTaskQueueV3`. Completion/failure is fenced by active lease owner and expiry. Main CI run [45906541842](https://github.com/kautilyamehra4436-cmyk/my-brain/actions/runs/45906541842) passed after PR #35 merged. This is bounded local execution, not external business execution.
-- **SQLite resource lifecycle:** My Brain PRs #33/#34 fixed legacy TaskQueue and ProviderCallLedger connection closure. 100X PR #20 fixed SMV connection closure; PR #21 fixed the phone runtime diagnostic's SQLite handles and added a close regression test. 100X CI run [45906684654](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit/actions/runs/45906684654) passed.
-- **B2B reconciliation:** CSV-only deterministic reconciliation code and tests exist. CI exercises the tests. Labelled real-world accuracy, XLSX/PDF/OCR support, customer pilot, outreach and revenue remain unverified/not enabled.
+- **My Brain / ATC:** ATC v1.2 remains a deterministic planner, not an LLM. The managed ATC bridge routes an explicitly selected local allowlisted operation through `GovernedSelfBuildRuntimeV3` and `ManagedTaskQueueV3`. Completion/failure is fenced by active lease owner and expiry. PR #35 runtime integration CI [45906541842](https://github.com/kautilyamehra4436-cmyk/my-brain/actions/runs/45906541842) passed. PR #36 status/docs synchronization CI [45907097099](https://github.com/kautilyamehra4436-cmyk/my-brain/actions/runs/45907097099) passed. This is bounded local execution, not external business execution.
+- **SQLite resource lifecycle:** My Brain PRs #33/#34 fixed legacy TaskQueue and ProviderCallLedger connection closure. 100X PR #20 fixed SMV connection closure; PR #21 fixed the phone runtime diagnostic's SQLite handles and added a close regression test. 100X CI [45906684654](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit/actions/runs/45906684654) passed.
+- **B2B reconciliation:** CSV-only deterministic reconciliation code and tests exist. Labelled real-world accuracy, XLSX/PDF/OCR support, customer pilot, outreach and revenue remain unverified/not enabled.
 - **SMV:** Offline payment-event ledger foundation only. No live webhook receiver, PNB verifier, payout/withdrawal/transfer, bank settlement adapter or production payment collection is enabled.
-- **Advait OS Gate:** Separate offline filesystem/security gate. No production authenticated owner identity provider and no proven runtime integration into My Brain.
-- **Pure Sharp governance:** Master Operating Algorithm and Command Centre define owner authority and workflow. Living Fabric/AELI remains an architecture proposal; PanchTatva C10 is a scenario harness, not proof of intelligence or autonomy.
+- **Advait OS Gate:** Separate offline filesystem/security gate. Its README and integration pointer now describe scope; no production authenticated owner identity provider and no proven runtime integration into My Brain.
+- **Pure Sharp governance:** README, integration pointer and Command Centre now reflect the current cross-project state. Living Fabric/AELI remains an architecture proposal; PanchTatva C10 is a scenario harness, not proof of intelligence or autonomy.
 - **Operations:** No verified Android/Termux deployment, persistent scheduler, 24-hour runtime, live customer delivery, realized revenue or ₹10,000/day earnings.
 
 ## Canonical ownership and integration sequence
@@ -38,12 +40,13 @@
 - Advait OS Gate is not yet wired into the worker's path/data operations.
 - Global zero-cost enforcement across every future adapter is not proven.
 - Independent production evidence verification and authenticated owner identity are not deployed.
+- Lease heartbeat/renewal and multi-process stress testing remain pending; stale-owner fencing alone is not a complete concurrency/soak proof.
 - No scheduler, background host, Android endurance run or 24-hour operation is verified.
 - No real customer outreach, contract, payment movement or revenue is enabled.
 
 ## Full current file inventory
 
-### 1. advait-100x-research-audit — 61 files / 67 tree entries
+### 1. advait-100x-research-audit — 62 files / 68 tree entries
 
 ```text
 .devcontainer/devcontainer.json
@@ -62,6 +65,7 @@ BENCHMARK_PLAN.md
 CEO_CONTROL_BOARD_SETUP.md
 CODESPACES_LIVE_SERVER.md
 CONSOLIDATION_EXECUTION_REPORT_2026-11-26.md
+CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md
 ENGINE_STATUS.md
 ENGINE_TEST_RESULTS.md
 FULL_PROJECT_ATLAS.md
