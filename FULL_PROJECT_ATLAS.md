@@ -3,13 +3,13 @@
 **Purpose:** One authoritative map for the central Brain to understand all four accessible Advait repositories, their blueprints, code, tests, dependencies, status and unresolved work.
 
 ## Snapshot scope and truth boundary
-Recursive Git trees were fetched from each repository's `main` branch; none reported truncation. This inventory is superseded by [CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md](CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md), which records **207 files and 227 tree entries** across the four current main branches. It is not a claim that every historical branch, hidden GitHub setting, external account or every source line has been audited. The detailed document/code review covered the key blueprints, integration pointers, policies, queue, gates, business, server, SCEE and tests.
+Recursive Git trees were fetched from each repository's `main` branch; none reported truncation. This inventory is superseded by [CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md](CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md), which records **213 files and 235 tree entries** across the four current main branches. It is not a claim that every historical branch, hidden GitHub setting, external account or every source line has been audited. The detailed document/code review covered the key blueprints, integration pointers, policies, queue, gates, business, server, SCEE and tests.
 
 ## Canonical repositories
 | Repository | Visibility | Main SHA inspected | Primary role |
 |---|---|---|---|
 | [advait-100x-research-audit](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit) | Public | `e6b52df9f7e9a2e8690217ace813e2e29b65b244` | Canonical cross-project hub, bounded execution, B2B, research, server, SCEE, SMV and tests |
-| [my-brain](https://github.com/kautilyamehra4436-cmyk/my-brain) | Public | `497b41780ad2634ca6498460e96fe3eb739c83d6` | Central Brain / ATC planning, task queue, memory conventions and zero-cost policy |
+| [my-brain](https://github.com/kautilyamehra4436-cmyk/my-brain) | Public | `a47ab5d2e1778ca3f5c44edbbe16d179db30c181` | Central Brain / ATC, governed local worker, task queue, zero-cost policy and pinned B2B adapter |
 | [advait_os](https://github.com/kautilyamehra4436-cmyk/advait_os) | Private | `07f24f281fb89b189384112ed35530e3108b9d85` | Filesystem/security Gate, fail-closed HIGH/CRITICAL actions |
 | [advait_pure_sharp](https://github.com/kautilyamehra4436-cmyk/advait_pure_sharp) | Private | `9e5927935ae3f2520e606213473b61ff87596277` | Governance, Master Operating Algorithm, Command Centre, Living Fabric/AELI and PanchTatva C10 |
 
@@ -112,3 +112,6 @@ The 2026-11-27 snapshot's source baselines were refreshed after My Brain PR #36 
 ## 2026-11-27 B2B integration checkpoint
 
 My Brain PR #37 pins the 100X B2B CSV reconciler as a submodule and routes it through a governed local adapter and separate unencrypted-at-rest financial artifact store. Synthetic integration CI passed 131 tests and a 5-row / 7-flag sample. See the current snapshot for precise limits and remaining security requirements.
+
+
+B2B integration status: My Brain PR #37 pins the 100X CSV reconciler as a submodule and runs it through a governed local adapter. CI passed 131 tests and a synthetic 5-row / 7-flag smoke. Financial artifact storage is separate but not encrypted at rest; real customer data remains blocked.
