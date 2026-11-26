@@ -13,14 +13,14 @@ No claim of consciousness, general autonomy, guaranteed revenue, 24/7 uptime, li
 
 | Component | Source repository | Responsibility | Current verified boundary |
 |---|---|---|---|
-| My Brain / ATC | my-brain | Goal interpretation, planning, reflection, memory conventions | ATC v1.2 merged; deterministic rule-based planner, not LLM or executor |
+| My Brain / ATC + Worker | my-brain | Goal interpretation, planning, task queue, bounded handler dispatch and memory conventions | ATC v1.2 is deterministic, not an LLM; bounded worker v0.1 is merged and CI-tested with synthetic allowlisted handlers; no default real-world adapters, production verifier or Android runtime |
 | Governance / Soul / Command Centre | advait_pure_sharp | Owner authority, mission, policies, project navigation | Documents exist; conflicting drafts need reconciliation |
 | Living Fabric / AELI | advait_pure_sharp | Proposed routing and coordination contract | Architecture proposal, not deployed orchestrator |
 | Advait OS Gate | advait_os | Local filesystem gate and fail-closed high-risk decisions | v0.2 code and tests; no production identity provider |
 | Bounded Execution Core | advait-100x-research-audit | Allowlist, budgets, risk checks, evidence-verifier contract, ledger | Offline reference implementation; no live adapters |
 | B2B Worker | advait-100x-research-audit | CSV reconciliation and exception output | CSV-only worker; no PDF/OCR or XLSX multi-sheet pipeline |
 | PanchTatva C10 | advait_pure_sharp | Scenario and regression harness | 10 simulated scenarios; not proof of intelligence |
-| SMV | 100X blueprint hub / PR #6 | Payment events, financial ledger and owner-controlled money architecture | PR #6 open at last inspection; no live payment or PNB integration proven |
+| SMV | 100X blueprint hub / PR #8 | Payment events, financial ledger and owner-controlled money architecture | Offline foundation merged; no production webhook receiver, live payment or PNB integration proven |
 | Research and Evidence Ledger | 100X | Sources, confidence, tests, benchmarks and decisions | Research logs and reports exist |
 | Owner Command Centre | my-brain docs + this blueprint | Approvals, opportunity portfolio, queue, spend and status | Documentation only; no deployed dashboard verified |
 
@@ -52,9 +52,11 @@ Lifecycle:
 Allowed case states: REJECTED, PARKED, NEEDS_OWNER, READY_FOR_TEST, TEST_FAILED, VERIFIED_READY, AUTHORIZED, DELIVERED_PENDING_ACCEPTANCE, ACCEPTED_PENDING_PAYMENT, PAID_RECONCILED, CLOSED. A worker cannot declare success without evidence.
 
 ## 3. My Brain: thinking, memory and planning
-My Brain is the central thinking and memory layer, not an executor by itself.
+My Brain is the central thinking, memory, planning and bounded task-dispatch layer. It is not yet a general-purpose autonomous agent or production business executor.
 - ATC v1.2 creates draft plans using deterministic rules and heuristic strategy scores.
-- The SQLite task queue stores plan-only work; a queue entry is not execution. My Brain PR #5 additionally hardens completion: a task cannot be marked done without an injected verifier accepting explicit evidence; only the evidence digest is persisted. This is a verifier hook, not a deployed production verifier.
+- The SQLite task queue stores tasks; a queue entry is not execution. It can preserve plan-only tasks while the bounded worker claims only explicitly marked `bounded_adapter` tasks.
+- My Brain bounded worker v0.1 is merged: it runs at most one host-allowlisted handler per invocation, checks the zero-cost/quota gate, requires an injected exact-action owner verifier for HIGH/CRITICAL tasks and an injected evidence verifier before completion. Nine synthetic worker tests pass in GitHub CI.
+- No default real-world adapter, authenticated owner provider, production independent verifier, sandbox or Android runtime is shipped. Host-registered handler code is trusted code and must be reviewed; this worker is not a sandbox.
 - Zero-cost guard exists but global wiring at every adapter boundary is not verified.
 - ATC risk keyword detection can miss or over-flag; it is advisory, not a security boundary.
 - Reflection must challenge assumptions, identify missing evidence, compare alternatives and state what would disprove a recommendation.
@@ -77,7 +79,7 @@ Candidate tools are not connected merely because they appear in a list:
 A tool moves through candidate → connected → installed → configured → runtime-tested → approved-for-use. Each transition needs evidence.
 
 ## 5. Security and owner authority
-Authority order: owner policy and current explicit authorization → authenticated security gate → risk/cost policy → planner recommendation → worker suggestion. The planner cannot override the gate. A hash, phrase, local file, repo permission or connector session is not identity proof for money movement.
+Authority order: applicable law/platform/privacy/safety requirements → owner sovereignty and protected safeguards → current explicit owner authorization → authenticated security gate → risk/cost policy → planner recommendation → worker suggestion. The planner cannot override the gate. A hash, phrase, local file, repo permission or connector session is not identity proof for money movement.
 
 Risk classes:
 - LOW: read permitted public data, draft, deterministic local analysis.

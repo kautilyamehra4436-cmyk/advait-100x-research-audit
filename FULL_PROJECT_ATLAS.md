@@ -3,13 +3,13 @@
 **Purpose:** One authoritative map for the central Brain to understand all four accessible Advait repositories, their blueprints, code, tests, dependencies, status and unresolved work.
 
 ## Snapshot scope and truth boundary
-Recursive Git trees were fetched from each repository's `main` branch; none reported truncation. This inventory contains **132 tree entries** (files plus directories). It is not a claim that every historical branch, hidden GitHub setting, external account or every source line has been audited. The detailed document/code review covered the key blueprints, integration pointers, policies, queue, gates, business, server, SCEE and tests.
+Recursive Git trees were fetched from each repository's `main` branch on 2026-11-26 after the My Brain worker merge; none reported truncation. Current tree counts: 65 + 50 + 8 + 15 = 138 entries. This inventory contains **138 tree entries** (files plus directories). It is not a claim that every historical branch, hidden GitHub setting, external account or every source line has been audited. The detailed document/code review covered the key blueprints, integration pointers, policies, queue, gates, business, server, SCEE and tests.
 
 ## Canonical repositories
 | Repository | Visibility | Main SHA inspected | Primary role |
 |---|---|---|---|
-| [advait-100x-research-audit](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit) | Public | `0b6c498c075136b9192123cab70f469629480843` | Canonical cross-project hub, bounded execution, B2B, research, server, SCEE, SMV and tests |
-| [my-brain](https://github.com/kautilyamehra4436-cmyk/my-brain) | Public | `030a7f1b98751f24d6f5e13a15f28cb63d22b48c` | Central Brain / ATC planning, task queue, memory conventions and zero-cost policy |
+| [advait-100x-research-audit](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit) | Public | `4b13a6dab3f95370a994342f4a5b337fae858b2d` | Canonical cross-project hub, bounded execution, B2B, research, server, SCEE, SMV and tests |
+| [my-brain](https://github.com/kautilyamehra4436-cmyk/my-brain) | Public | `e1b02f29a99b0267999b5e1a8cb1f2b653a57411` | Central Brain / ATC planning, evidence-gated queue, bounded allowlisted worker, memory conventions and zero-cost policy |
 | [advait_os](https://github.com/kautilyamehra4436-cmyk/advait_os) | Private | `eeb4ce2801360b2af09b44decdf8e260118eff48` | Filesystem/security Gate, fail-closed HIGH/CRITICAL actions |
 | [advait_pure_sharp](https://github.com/kautilyamehra4436-cmyk/advait_pure_sharp) | Private | `ad78d8c7e84ffc7b77db7be65b05d9cc76089226` | Governance, Master Operating Algorithm, Command Centre, Living Fabric/AELI and PanchTatva C10 |
 
@@ -17,7 +17,7 @@ The owner prefix search returned these four repositories. The separately mention
 
 ## Repository file inventories
 
-### 1. advait-100x-research-audit — 61 entries
+### 1. advait-100x-research-audit — 65 entries
 ```text
 .devcontainer/
 .devcontainer/devcontainer.json
@@ -82,7 +82,7 @@ tests/test_open_source_intelligence.py
 tests/test_relationship_intelligence.py
 ```
 
-### 2. my-brain — 48 entries
+### 2. my-brain — 50 entries
 ```text
 .github/
 .github/workflows/
@@ -104,6 +104,7 @@ core/__init__.py
 core/atc_handoff.py
 core/atc_planner.py
 core/task_queue.py
+core/worker.py
 core/zero_cost_guard.py
 dashboard.md
 docs/
@@ -131,6 +132,7 @@ tests/__init__.py
 tests/test_atc_handoff.py
 tests/test_atc_planner.py
 tests/test_runtime.py
+tests/test_worker.py
 troubleshoot.md
 ```
 
@@ -195,8 +197,8 @@ tests/test_advait_panch_tatva_c10.py
 
 ## Actual implementation map
 
-1. **Central Brain / planner:** `my-brain/core/atc_planner.py`; deterministic planning, not an LLM and not an executor.
-2. **Task queue:** `my-brain/core/task_queue.py`; SQLite WAL queue, atomic claim/complete, injected verifier required for completion. No lease expiry/recovery has been demonstrated in the reviewed code.
+1. **Central Brain / planner:** `my-brain/core/atc_planner.py`; deterministic planning, not an LLM. Bounded task dispatch is provided separately by `my-brain/core/worker.py`.
+2. **Task queue:** `my-brain/core/task_queue.py`; SQLite WAL queue, atomic claim/complete, eligibility-filtered claiming and injected verifier required for completion. No lease expiry/recovery has been demonstrated in the reviewed code.
 3. **Handoff:** `my-brain/core/atc_handoff.py`; SHA-256 integrity digest, not authentication; currently LOW/HIGH only and outputs REVIEWED_NOT_AUTHORIZED.
 4. **Cost policy:** `my-brain/core/zero_cost_guard.py` plus `config.yml`; helper exists, global enforcement at every adapter is not proven.
 5. **Security gate:** `advait_os/advait_gate_v01.py`; fail-closed HIGH/CRITICAL absent injected authenticated exact-action verifier. No verifier is shipped/configured.
@@ -209,7 +211,8 @@ tests/test_advait_panch_tatva_c10.py
 12. **SCEE:** `advait_self_crafting.py`; deterministic candidate scoring/comparison and fail-closed gates; no live code generation, isolated code execution or autonomous research agent.
 13. **CEO board:** `ceo_control_board.py`; local read-only report generator; not a hosted live dashboard.
 14. **PanchTatva C10:** 10 rule-based scenario simulations; no real device, cognitive or business performance benchmark.
-15. **Living Fabric/AELI:** proposed architecture only; no deployed routing graph or worker scheduler.
+15. **Living Fabric/AELI:** proposed architecture only; no deployed routing graph or background scheduler.
+16. **My Brain bounded worker:** `my-brain/core/worker.py`; merged v0.1, one explicitly marked task per call through host-allowlisted handlers; no default real-world adapters, production verifier, sandbox or phone runtime.
 
 ## Non-negotiable common controls
 - Owner is final authority. ₹0 spend is hard policy; no paid API, hosting, subscription, credit or auto-renewal.
