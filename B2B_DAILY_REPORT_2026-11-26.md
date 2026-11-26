@@ -9,16 +9,16 @@
 - B2B_DISCOVERY_LOG.md — नया listing, competitor और procurement research evidence।
 - README.md — latest report link।
 
-आज के verified documentation commits: report e332f7d6baf5, discovery log 69f3f83c32de, README 713ed0bee0cc। तीनों files वापस fetch करके सत्यापित की गईं। GitHub API पर commits की signature status unsigned है; commit existence/branch history verified है, cryptographic author signature नहीं।
+आज के verified documentation commits: report e332f7d6baf5, discovery log 69f3f83c32de, README 713ed0bee0cc; CI status दर्ज करने वाले follow-up commits 5b5ba5b9ed83 और 5980ea3a2502। सभी files वापस fetch करके सत्यापित की गईं। GitHub API पर commits की signature status unsigned है; commit existence/branch history verified है, cryptographic author signature नहीं।
 
 ## 2. Tests और CI — वास्तविक run data
-आज की documentation pushes के बाद GitHub Actions runs #83, #84 और #85 चले और तीनों success हुए। Latest verified workflow:
-- Run #85, ID 45732525610
-- Commit: 713ed0bee0ccd9f16464db8e8483c3bded62233d
-- Created: 26 Nov 2026, 00:58:37 UTC
+आज की documentation pushes के बाद GitHub Actions runs #83–#87 चले और सभी success हुए। Latest verified workflow:
+- Run #87, ID 45732583686
+- Commit: 5980ea3a250264116570184bc6e8d958f035e5cf
+- Created: 26 Nov 2026, 00:59:10 UTC
 - Conclusion: success
-- Actual run: https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit/actions/runs/45732525610
-- Runs #83 and #84 also completed success: https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit/actions
+- Actual run: https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit/actions/runs/45732583686
+- Runs #83–#86 भी success हुए।
 
 Job log में:
 - Base harness: 10/10 PASS
@@ -64,7 +64,7 @@ Search result में 3–6 महीने का monthly data-entry/reconcil
 
 ## 5. Prototype / benchmark
 - Existing b2b_reconcile.py: deterministic CSV checks only.
-- Existing B2B CI suite: latest run #82 में 9/9 PASS.
+- Existing B2B CI suite: latest verified run #87 में 9/9 PASS.
 - PDF/OCR, XLSX multi-sheet export, invoice line-item extraction, PO/GRN matching, GST/tax logic और payment exports implemented नहीं।
 - 20-case synthetic benchmark, precision/recall, false-positive rate, processing-time/memory और Android-device test अभी नहीं हुए।
 - आज कोई code change या benchmark execution नहीं हुआ।
