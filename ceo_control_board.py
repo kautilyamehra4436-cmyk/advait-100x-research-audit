@@ -34,6 +34,9 @@ WORKSTREAMS = [
     ("Android/Termux deployment", "ANDROID_DEPLOYMENT.md", "PHONE_PENDING"),
     ("24-hour target-device soak", "PHONE_24H_SOAK_EVIDENCE.json", "PHONE_PENDING"),
     ("Customer delivery and reconciled revenue", "REVENUE_EVIDENCE.json", "PENDING"),
+    ("Owner-aligned relationship intelligence", "relationship_intelligence.py", "FOUNDATION_PRESENT"),
+    ("Relationship intelligence tests", "tests/test_relationship_intelligence.py", "FOUNDATION_PRESENT"),
+    ("Owner-fit and work-mix report specification", "RELATIONSHIP_INTELLIGENCE.md", "DOCUMENTED"),
 ]
 
 LABELS = {

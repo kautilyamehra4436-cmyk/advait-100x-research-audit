@@ -45,3 +45,5 @@ This repository is the canonical cross-project blueprint and evidence hub. My Br
 - [Queue evidence-gate hardening report](QUEUE_EVIDENCE_HARDENING_REPORT_2026-11-26.md)
 - [Advait CEO Control Board setup and usage](CEO_CONTROL_BOARD_SETUP.md)
 - [CEO Control Board implementation](ceo_control_board.py)
+
+- [Owner-aligned Relationship Intelligence](RELATIONSHIP_INTELLIGENCE.md) — owner-fit scoring, work-mix and unknown-work reporting, defense boundaries.
