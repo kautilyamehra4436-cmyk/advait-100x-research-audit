@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -123,6 +124,47 @@ def render_markdown(board: dict) -> str:
     return "\n".join(lines)
 
 
+def _write_new_text(path: Path, content: str) -> Path:
+    path = Path(path)
+    if path.is_symlink():
+        raise PermissionError("report_symlink_blocked")
+    if not path.parent.exists() or not path.parent.is_dir() or path.parent.is_symlink():
+        raise ValueError("report_parent_must_be_existing_non_symlink_directory")
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL
+    if hasattr(os, "O_NOFOLLOW"):
+        flags |= os.O_NOFOLLOW
+    fd = os.open(str(path), flags, 0o600)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as stream:
+            stream.write(content)
+    except BaseException:
+        try:
+            os.close(fd)
+        except OSError:
+            pass
+        raise
+    return path
+
+
+def write_board(board: dict, output_dir: str | Path) -> tuple[Path, Path]:
+    """Write a new private board pair; never overwrite an earlier run."""
+    output = Path(output_dir).expanduser()
+    if output.parent.is_symlink():
+        raise PermissionError("report_parent_symlink_blocked")
+    if output.is_symlink():
+        raise PermissionError("report_directory_symlink_blocked")
+    output.mkdir(parents=True, exist_ok=True, mode=0o700)
+    if output.is_symlink() or not output.is_dir():
+        raise PermissionError("report_directory_not_safe")
+    json_path = output / "ceo_control_board.json"
+    markdown_path = output / "CEO_CONTROL_BOARD.md"
+    if any(path.exists() or path.is_symlink() for path in (json_path, markdown_path)):
+        raise FileExistsError("refusing_to_overwrite_existing_ceo_board")
+    _write_new_text(json_path, json.dumps(board, ensure_ascii=False, indent=2) + "\n")
+    _write_new_text(markdown_path, render_markdown(board))
+    return json_path, markdown_path
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description="Build a read-only Advait CEO status board")
     parser.add_argument("--root", action="append", required=True, help="Repository checkout root; repeat for multiple repositories")
@@ -130,10 +172,8 @@ def main(argv=None) -> int:
     args = parser.parse_args(argv)
     roots = [Path(item) for item in args.root]
     output = Path(args.output_dir)
-    output.mkdir(parents=True, exist_ok=True)
     board = build_board(roots)
-    (output / "ceo_control_board.json").write_text(json.dumps(board, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    (output / "CEO_CONTROL_BOARD.md").write_text(render_markdown(board), encoding="utf-8")
+    write_board(board, output)
     print(json.dumps({"generated": True, "output_dir": str(output), "summary": board["summary"], "live_status": board["live_status"]}, ensure_ascii=False))
     return 0
 

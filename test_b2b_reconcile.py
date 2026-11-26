@@ -1,6 +1,6 @@
-import tempfile, unittest
+import stat, tempfile, unittest
 from pathlib import Path
-from b2b_reconcile import analyze_rows, reconcile_text, run, MAX_INPUT_BYTES
+from b2b_reconcile import analyze_rows, reconcile_text, run, write_csv, MAX_INPUT_BYTES
 
 
 class ReconcilePrototypeTests(unittest.TestCase):
@@ -75,7 +75,27 @@ class ReconcilePrototypeTests(unittest.TestCase):
             with self.assertRaises(FileExistsError):
                 run(source,Path(d)/"out")
             self.assertTrue(all(p.exists() for p in outputs))
+            self.assertTrue(all(stat.S_IMODE(p.stat().st_mode) == 0o600 for p in outputs))
             self.assertIn("Rows checked: 1",(Path(d)/"out_summary.txt").read_text())
+
+    def test_write_csv_helper_is_private_and_never_overwrites(self):
+        with tempfile.TemporaryDirectory() as d:
+            path = Path(d) / "private.csv"
+            write_csv(path, ["invoice_id", "amount"], [{"invoice_id": "I1", "amount": "10"}])
+            original = path.read_bytes()
+            self.assertEqual(stat.S_IMODE(path.stat().st_mode), 0o600)
+            with self.assertRaises(FileExistsError):
+                write_csv(path, ["invoice_id"], [{"invoice_id": "I2"}])
+            self.assertEqual(path.read_bytes(), original)
+
+    def test_input_symlink_is_rejected(self):
+        with tempfile.TemporaryDirectory() as d:
+            real = Path(d) / "real.csv"
+            real.write_text("invoice_id,vendor,amount\\nI1,A,10\\n", encoding="utf-8")
+            link = Path(d) / "linked.csv"
+            link.symlink_to(real)
+            with self.assertRaisesRegex(ValueError, "non_symlink"):
+                run(link, Path(d) / "out")
 
     def test_required_columns_error(self):
         with tempfile.TemporaryDirectory() as d:
