@@ -1,5 +1,5 @@
 # Advait B2B Business Discovery & Execution Blueprint
-Version: 0.2 | Date: 2026-11-27 | Status: CSV worker implemented; broader product validation pending
+Version: 0.3 | Date: 2026-11-27 | Status: CSV worker integrated into governed My Brain runtime; customer readiness pending
 
 ## Objective
 Advait should own the routine cycle of finding, evaluating, prototyping, validating, and delivering B2B opportunities within owner-defined constraints. The owner should not have to manually hunt for business ideas. Owner approval remains mandatory for financial actions, binding contracts, risky data handling, policy changes, and outbound actions not explicitly pre-authorized.
@@ -72,8 +72,11 @@ These sources demonstrate problem/service signals and competition, not a guarant
 ## Current status
 - Public research snapshot: started; sources collected, not exhaustive.
 - Candidate ranking: provisional; no weighted score validated yet.
-- CSV reconciliation prototype: implemented in `b2b_reconcile.py`; offline CI runs `test_b2b_reconcile.py` successfully.
-- Synthetic tests: implemented and passing in hosted CI; this does not establish accuracy on labelled real-world files.
+- CSV reconciliation API: implemented in `b2b_reconcile.py` as bounded pure-text function; 1 MiB input, 10,000 rows, 100 columns, 4 MiB output; formula-like spreadsheet cells are flagged and escaped.
+- My Brain integration: merged as PR #37 through a pinned Git submodule and governed `B2BReconciliationAdapterV1`; task queue stores only opaque artifact ID and metadata, while source/output files remain in a separate financial artifact store.
+- Synthetic integration CI: 131 tests passed; end-to-end sample processed 5 rows and generated 7 review flags; source rows were not persisted in operational queue. No real customer data was processed.
+- Financial artifact store: restrictive OS permissions and symlink checks, but **not encrypted at rest**. Explicit acknowledgement is required; do not use sensitive customer records until encryption/Android Keystore and authenticated owner identity are implemented.
+- Owner consent/confirmation flags are manual intent checks, not authentication.
 - XLSX multi-sheet, PDF/OCR and customer-system adapters: not implemented/verified.
 - Customer/paid pilot: not run.
-- Repo update: CSV worker and tests are repository code; no production customer integration, outreach, paid pilot or real client work has been performed.
+- Repo update: CSV worker and tests are integrated into My Brain's local governed adapter; no production customer integration, outreach, paid pilot or real client work has been performed.
