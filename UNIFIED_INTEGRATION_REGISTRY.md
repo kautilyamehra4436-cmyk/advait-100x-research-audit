@@ -1,21 +1,22 @@
 # ADVAIT Unified Integration Registry
-Date: 2026-11-26
+Date: 2026-11-26 (revalidated after My Brain worker merge)
 Canonical design: UNIFIED_MASTER_BLUEPRINT.md
 
 ## Repository baselines
 | Repository | Main baseline SHA | Role |
 |---|---|---|
-| my-brain | 797f3ee2b277d891102bf8f2dafb1609a0738a91 | Central Brain / ATC |
-| advait_os | 04552a7db46db45af817a1afa68720684f1d392f | Security Gate |
-| advait_pure_sharp | 2fafd1971340b056f3e37de9c08a5cedc42ad065 | Governance / Living Fabric / PanchTatva |
-| advait-100x-research-audit | c553a0f7235e1b092cae7810b8c97ba4fd640192 | Execution / B2B / Research / Master Hub |
+| my-brain | e1b02f29a99b0267999b5e1a8cb1f2b653a57411 | Central Brain / ATC |
+| advait_os | eeb4ce2801360b2af09b44decdf8e260118eff48 | Security Gate |
+| advait_pure_sharp | ad78d8c7e84ffc7b77db7be65b05d9cc76089226 | Governance / Living Fabric / PanchTatva |
+| advait-100x-research-audit | 4b13a6dab3f95370a994342f4a5b337fae858b2d | Execution / B2B / Research / Master Hub |
 
 ## Module register
 | Module | Source | State | Integration rule |
 |---|---|---|---|
 | SOUL / Governance | my-brain + pure_sharp | Docs | One owner-authority hierarchy; canonical conflicts recorded |
 | ATC Planner v1.2 | my-brain/core | Merged, rule-based | Drafts only; no external execution |
-| Task Queue | my-brain/core | Local SQLite queue | Stored plan is not execution |
+| Task Queue | my-brain/core | Local SQLite queue | Stores/claims tasks; plan-only entries remain non-executable |
+| Bounded Worker v0.1 | my-brain/core/worker.py | Merged, CI-tested synthetic execution framework | One task per call through host-allowlisted handlers; no default real-world adapters or production verifier |
 | Zero Cost Guard | my-brain/core | Helper exists; global wiring unverified | Fail closed at every cost-bearing boundary |
 | ATC Handoff | my-brain/core | Contract helper | REVIEWED_NOT_AUTHORIZED only |
 | Advait OS Gate v0.2 | advait_os | Offline gate | HIGH/CRITICAL blocked without authenticated verifier |
