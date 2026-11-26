@@ -138,12 +138,12 @@ The latest B2B report on 26 Nov recorded an invoice line-item extraction opportu
 5. Re-fetch all four repositories and regenerate atlas/registry SHAs.
 
 ### Phase B — make My Brain execute bounded work
-6. Write one versioned contract for Opportunity, Task, Evidence, Approval, Result, Delivery and Financial Event; do not duplicate module implementations.
-7. Integrate Personal Algorithm cycle into ATC task lifecycle: observe/context retrieval → interpret/classify → alternatives → plan → approval gate → execute → independent verify → record → improve.
-8. Add a worker loop around the existing queue and bounded engine; include task leases, stale-running recovery, cancellation, bounded retry, idempotency keys and unknown-outcome reconciliation.
-9. Wire ZeroCostGuard and risk policy into every adapter before any network/side effect; add bypass/negative tests.
-10. Implement an independent verifier that validates output against task-specific acceptance criteria; worker cannot self-certify.
-11. Add a read-only status/approval dashboard. External action buttons must require exact owner authorization.
+6. **PENDING —** write one versioned contract for Opportunity, Task, Evidence, Approval, Result, Delivery and Financial Event; do not duplicate module implementations.
+7. **PENDING —** integrate Personal Algorithm cycle into ATC task lifecycle: observe/context retrieval → interpret/classify → alternatives → plan → approval gate → execute → independent verify → record → improve.
+8. **PARTIAL — worker v0.1 merged in My Brain PR #7**; add task leases, stale-running recovery, cancellation, bounded retry, idempotency keys and unknown-outcome reconciliation.
+9. **PARTIAL —** zero-cost guard is checked by worker v0.1; prove global enforcement at every future adapter boundary and add bypass/negative tests.
+10. **PENDING —** deploy an independent verifier that validates output against task-specific acceptance criteria; worker cannot self-certify. Current verifier is injected.
+11. **PENDING —** add a read-only status/approval dashboard. External action buttons must require exact owner authorization.
 
 ### Phase C — prove capability on synthetic fixtures
 12. Run Test 13-R1: crash/restart, stale lease, duplicate claim and recovery.
@@ -217,12 +217,12 @@ At the next session:
 - The Constitution is intentionally marked **proposed** until the owner explicitly accepts it. PR remains draft; no merge or source-policy replacement has occurred.
 
 ### Immediate resume point (updated)
-1. Inspect the final My Brain worker branch CI runs and review the complete diff.
-2. Open/review worker PR; merge only after final CI passes.
-3. Continue with task leases, stale-running recovery, cancellation, idempotency and reconciliation.
+1. **Owner review/acceptance of the proposed Constitution** in hub PR #18.
+2. If accepted, merge PR #18; otherwise record requested amendments and keep it draft.
+3. Continue worker v0.1 hardening: leases, stale-running recovery, cancellation, idempotency and unknown-outcome reconciliation.
 4. Integrate the Personal Algorithm cycle into the worker lifecycle.
-5. Add the first narrow local file/CSV adapter with path, size, privacy and independent-evidence tests.
-6. Owner reviews/accepts the Constitution; then merge hub PR #18.
+5. Reuse the existing hub B2B CSV engine through a versioned adapter contract; do not duplicate its business logic.
+6. Complete Tests 13-R1, 34-R1 and 50-R1 with reproducible evidence.
 7. Prepare Android package and test on the user's phone; do not claim phone readiness before device evidence.
 
 ### Four-repository live tree refresh — verified
