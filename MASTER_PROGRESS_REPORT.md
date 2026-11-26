@@ -204,12 +204,12 @@ At the next session:
 
 ### Bounded worker v0.1 — implementation branch under validation
 - Branch: `brain-bounded-worker-v0-1-2026-11-26`
-- Added `core/worker.py`: one bounded task per invocation; only explicitly host-allowlisted handlers; explicit zero-cost/quota checks; HIGH/CRITICAL require injected exact-action owner verifier; completion requires injected independent evidence verifier.
+- Added and merged `core/worker.py` v0.1 in My Brain PR #7 (merge commit `326b31c84c20a8448a20f83c5bb2dced5cb6fc12`): one bounded task per invocation; only explicitly host-allowlisted handlers; explicit zero-cost/quota checks; HIGH/CRITICAL require injected exact-action owner verifier; completion requires injected independent evidence verifier.
 - Updated queue claiming so a worker can select eligible `bounded_adapter` tasks without consuming ATC `plan_only` entries.
 - Added 9 synthetic worker tests covering successful verified execution, plan-only preservation, idle state, unknown adapter, positive cost, quota exhaustion, high-risk approval, missing verifier and handler failure.
-- Worker CI run [45870665507](https://github.com/kautilyamehra4436-cmyk/my-brain/actions/runs/45870665507) passed unit tests and compile checks for the worker/test commit.
+- Worker CI run [45870665507](https://github.com/kautilyamehra4436-cmyk/my-brain/actions/runs/45870665507) passed unit tests and compile checks for the worker/test commit; final documentation CI runs [45870774841](https://github.com/kautilyamehra4436-cmyk/my-brain/actions/runs/45870774841), [45870778830](https://github.com/kautilyamehra4436-cmyk/my-brain/actions/runs/45870778830) and [45870783708](https://github.com/kautilyamehra4436-cmyk/my-brain/actions/runs/45870783708) all completed successfully.
 - README, status and quickstart were updated on the branch. Latest quickstart commit CI run [45870783708](https://github.com/kautilyamehra4436-cmyk/my-brain/actions/runs/45870783708) passed. Other documentation commit runs were still in progress at this report update.
-- **Boundary:** this is an executable worker framework tested with synthetic in-memory handlers. No real customer-file, browser, email, bounty, network or payment adapter is shipped. It is not yet merged to main or tested on Android.
+- **Boundary:** this is an executable worker framework tested with synthetic in-memory handlers and merged to My Brain main. No real customer-file, browser, email, bounty, network or payment adapter is shipped. It is not tested on Android and does not provide background/24x7 operation.
 
 ### Canonical hub documentation — draft PR
 - Hub PR #18: https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit/pull/18
