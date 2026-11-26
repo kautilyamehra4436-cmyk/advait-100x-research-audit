@@ -11,6 +11,7 @@ from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
 MAX_INPUT_BYTES = 1_048_576
+MAX_OUTPUT_BYTES = 4_194_304
 MAX_ROWS = 10_000
 MAX_COLUMNS = 100
 REQUIRED = ("invoice_id", "vendor", "amount")
@@ -74,7 +75,7 @@ def analyze_rows(rows):
 
 def _serialize_csv(headers, rows):
     stream = io.StringIO(newline="")
-    writer = csv.DictWriter(stream, fieldnames=headers, extrasaction="ignore", lineterminator="\\n")
+    writer = csv.DictWriter(stream, fieldnames=headers, extrasaction="ignore", lineterminator="\n")
     writer.writeheader()
     writer.writerows(rows)
     return stream.getvalue()
@@ -87,7 +88,8 @@ def reconcile_text(csv_text: str):
     encoded = csv_text.encode("utf-8")
     if not encoded or len(encoded) > MAX_INPUT_BYTES:
         raise ValueError("CSV input is empty or exceeds the 1 MiB limit")
-    if "\\x00" in csv_text:
+    csv_text = csv_text.lstrip("\ufeff")
+    if "\x00" in csv_text:
         raise ValueError("CSV contains a NUL character")
 
     reader = csv.DictReader(io.StringIO(csv_text, newline=""))
@@ -124,7 +126,7 @@ def reconcile_text(csv_text: str):
         for field, value in list(copy.items()):
             if field in {"amount", "po_amount"} or not isinstance(value, str):
                 continue
-            if value.lstrip().startswith(("=", "+", "@", "\\t", "\\r")):
+            if value.lstrip(" \u00a0").startswith(("=", "+", "-", "@", "\t", "\r")):
                 findings.append({
                     "row_number": row_number,
                     "invoice_id": (row.get("invoice_id") or "").strip(),
@@ -142,20 +144,29 @@ def reconcile_text(csv_text: str):
     severity_counts = Counter(item["severity"] for item in findings)
     rule_counts = Counter(item["rule"] for item in findings)
     summary = (
-        "Advait CSV Validation Summary\\n"
-        f"Rows checked: {len(rows)}\\nFlags: {len(findings)}\\n"
-        "Severity counts: " + ", ".join(f"{key}={value}" for key, value in sorted(severity_counts.items())) + "\\n"
-        "Rule counts: " + ", ".join(f"{key}={value}" for key, value in sorted(rule_counts.items())) + "\\n"
-        "Limit: flags are review suggestions, not accounting/tax conclusions.\\n"
+        "Advait CSV Validation Summary\n"
+        f"Rows checked: {len(rows)}\nFlags: {len(findings)}\n"
+        "Severity counts: " + ", ".join(f"{key}={value}" for key, value in sorted(severity_counts.items())) + "\n"
+        "Rule counts: " + ", ".join(f"{key}={value}" for key, value in sorted(rule_counts.items())) + "\n"
+        "Limit: flags are review suggestions, not accounting/tax conclusions.\n"
     )
+    normalized_csv = _serialize_csv(fields, normalized)
+    exceptions_csv = _serialize_csv(OUTPUT_FINDINGS, findings)
+    output_bytes = (
+        len(normalized_csv.encode("utf-8"))
+        + len(exceptions_csv.encode("utf-8"))
+        + len(summary.encode("utf-8"))
+    )
+    if output_bytes > MAX_OUTPUT_BYTES:
+        raise ValueError("reconciliation output exceeds the 4 MiB limit")
     return {
         "rows_checked": len(rows),
         "flags": len(findings),
         "severity_counts": dict(sorted(severity_counts.items())),
         "rule_counts": dict(sorted(rule_counts.items())),
         "findings": findings,
-        "normalized_csv": _serialize_csv(fields, normalized),
-        "exceptions_csv": _serialize_csv(OUTPUT_FINDINGS, findings),
+        "normalized_csv": normalized_csv,
+        "exceptions_csv": exceptions_csv,
         "summary": summary,
     }
 
@@ -183,9 +194,13 @@ def run(input_path, output_prefix):
     if any(path.exists() or path.is_symlink() for path in targets):
         raise FileExistsError("refusing to overwrite an existing output artifact")
 
-    clean_path.write_text(report["normalized_csv"], encoding="utf-8-sig")
-    findings_path.write_text(report["exceptions_csv"], encoding="utf-8-sig")
-    summary_path.write_text(report["summary"], encoding="utf-8")
+    for path, content, encoding in (
+        (clean_path, report["normalized_csv"], "utf-8-sig"),
+        (findings_path, report["exceptions_csv"], "utf-8-sig"),
+        (summary_path, report["summary"], "utf-8"),
+    ):
+        with path.open("x", encoding=encoding, newline="") as stream:
+            stream.write(content)
     return report["findings"], (clean_path, findings_path, summary_path)
 
 def main(argv=None):
