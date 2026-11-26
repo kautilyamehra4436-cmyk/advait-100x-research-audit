@@ -26,6 +26,8 @@ jobs:
         run: python scripts/scee_live_smoke.py
       - name: Live HTTP smoke test
         run: python scripts/live_server_smoke.py
+      - name: Phone runtime SQLite lifecycle regression
+        run: python -m unittest -v tests.test_phone_runtime_check_connection_lifecycle
       - name: Phone-compatible runtime check
         run: python phone_runtime_check.py
       - name: SQLite ledger soak smoke test

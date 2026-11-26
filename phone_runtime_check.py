@@ -7,9 +7,21 @@ import json
 import os
 import platform
 import sqlite3
+from contextlib import closing
 import sys
 import tempfile
 from pathlib import Path
+
+
+def sqlite_roundtrip(db_path):
+    """Verify persistence and close both SQLite handles deterministically."""
+    with closing(sqlite3.connect(str(db_path))) as con:
+        with con:
+            con.execute("CREATE TABLE probe(value TEXT NOT NULL)")
+            con.execute("INSERT INTO probe(value) VALUES(?)", ("persisted",))
+    with closing(sqlite3.connect(str(db_path))) as con:
+        value = con.execute("SELECT value FROM probe").fetchone()[0]
+    return value == "persisted"
 
 
 def main():
@@ -67,12 +79,7 @@ def main():
 
         db = root / "runtime.db"
         try:
-            with sqlite3.connect(str(db)) as con:
-                con.execute("CREATE TABLE probe(value TEXT NOT NULL)")
-                con.execute("INSERT INTO probe(value) VALUES(?)", ("persisted",))
-            with sqlite3.connect(str(db)) as con:
-                value = con.execute("SELECT value FROM probe").fetchone()[0]
-            record("sqlite_commit_reopen", value == "persisted")
+            record("sqlite_commit_reopen", sqlite_roundtrip(db))
         except Exception as exc:
             record("sqlite_commit_reopen", False, type(exc).__name__)
 
