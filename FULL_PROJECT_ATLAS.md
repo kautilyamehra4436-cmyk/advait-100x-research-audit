@@ -3,21 +3,21 @@
 **Purpose:** One authoritative map for the central Brain to understand all four accessible Advait repositories, their blueprints, code, tests, dependencies, status and unresolved work.
 
 ## Snapshot scope and truth boundary
-Recursive Git trees were fetched from each repository's `main` branch; none reported truncation. This inventory is superseded by [CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md](CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md), which records **206 files and 226 tree entries** across the four current main branches. It is not a claim that every historical branch, hidden GitHub setting, external account or every source line has been audited. The detailed document/code review covered the key blueprints, integration pointers, policies, queue, gates, business, server, SCEE and tests.
+Recursive Git trees were fetched from each repository's `main` branch; none reported truncation. This inventory is superseded by [CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md](CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md), which records **207 files and 227 tree entries** across the four current main branches. It is not a claim that every historical branch, hidden GitHub setting, external account or every source line has been audited. The detailed document/code review covered the key blueprints, integration pointers, policies, queue, gates, business, server, SCEE and tests.
 
 ## Canonical repositories
 | Repository | Visibility | Main SHA inspected | Primary role |
 |---|---|---|---|
-| [advait-100x-research-audit](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit) | Public | `ccfca945d87766f6e9a96c976fe0fc5ee2e1e3e6` | Canonical cross-project hub, bounded execution, B2B, research, server, SCEE, SMV and tests |
-| [my-brain](https://github.com/kautilyamehra4436-cmyk/my-brain) | Public | `068a1cd2190c7665c9d25dc0c8ea3c73fb3f4b5c` | Central Brain / ATC planning, task queue, memory conventions and zero-cost policy |
-| [advait_os](https://github.com/kautilyamehra4436-cmyk/advait_os) | Private | `eeb4ce2801360b2af09b44decdf8e260118eff48` | Filesystem/security Gate, fail-closed HIGH/CRITICAL actions |
-| [advait_pure_sharp](https://github.com/kautilyamehra4436-cmyk/advait_pure_sharp) | Private | `ad78d8c7e84ffc7b77db7be65b05d9cc76089226` | Governance, Master Operating Algorithm, Command Centre, Living Fabric/AELI and PanchTatva C10 |
+| [advait-100x-research-audit](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit) | Public | `67a1595bddab2b538d3d562e032d3a0de291878b` | Canonical cross-project hub, bounded execution, B2B, research, server, SCEE, SMV and tests |
+| [my-brain](https://github.com/kautilyamehra4436-cmyk/my-brain) | Public | `f27ca720f1c1be0fa6e2ea5e5e2916f48cf338b3` | Central Brain / ATC planning, task queue, memory conventions and zero-cost policy |
+| [advait_os](https://github.com/kautilyamehra4436-cmyk/advait_os) | Private | `07f24f281fb89b189384112ed35530e3108b9d85` | Filesystem/security Gate, fail-closed HIGH/CRITICAL actions |
+| [advait_pure_sharp](https://github.com/kautilyamehra4436-cmyk/advait_pure_sharp) | Private | `55098ab2188f324260ca233966fc8f4c6334e478` | Governance, Master Operating Algorithm, Command Centre, Living Fabric/AELI and PanchTatva C10 |
 
 The owner prefix search returned these four repositories. The separately mentioned “PanchTatva C10” is a module in `advait_pure_sharp`, not a fifth repository under that exact name.
 
 ## Repository file inventories
 
-The detailed, current inventory is maintained in [CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md](CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md). The earlier inline inventories below are retained in the prior snapshot's history and should not be used as current file counts.
+The detailed, current inventory is maintained in [CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md](CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md) (207 files / 227 tree entries at capture time). The earlier inline inventories below are retained in the prior snapshot's history and should not be used as current file counts.
 
 ## Blueprint and policy index
 
@@ -104,3 +104,6 @@ Do not mark the assignment complete merely because this document exists. The rev
 ## 2026-11-27 synchronization checkpoint
 
 See [CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md](CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md) for current main SHAs, exact file inventory, verified integration state and remaining gaps. This replaces the 2026-11-26 repository baselines; it does not assert a line-by-line audit of every source file.
+
+
+The 2026-11-27 snapshot's source baselines were refreshed after My Brain PR #36 and documentation updates in Advait OS and Pure Sharp. See the linked snapshot for exact capture SHAs and the self-update note.

@@ -158,10 +158,12 @@ Phase 6: controlled research and evolution with tests, owner-reviewed promotion 
 ## 15. Consolidation checkpoint — 2026-11-27
 
 Verified repository metadata:
-- Current main commits: 100X `ccfca945d87766f6e9a96c976fe0fc5ee2e1e3e6`; My Brain `068a1cd2190c7665c9d25dc0c8ea3c73fb3f4b5c`; Advait OS `eeb4ce2801360b2af09b44decdf8e260118eff48`; Pure Sharp `ad78d8c7e84ffc7b77db7be65b05d9cc76089226`.
-- Recursive trees contain 206 files / 226 entries; none of the four trees was truncated. Full paths are recorded in `CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md`.
+- Current main commits: 100X source baseline `67a1595bddab2b538d3d562e032d3a0de291878b`; My Brain `f27ca720f1c1be0fa6e2ea5e5e2916f48cf338b3`; Advait OS `07f24f281fb89b189384112ed35530e3108b9d85`; Pure Sharp `55098ab2188f324260ca233966fc8f4c6334e478`.
+- Recursive trees contain 207 files / 227 entries; none of the four trees was truncated. Full paths are recorded in `CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md`.
 - My Brain PR #35 is merged. `GovernedSelfBuildRuntimeV3` uses `ManagedTaskQueueV3`; worker completion/failure is fenced by the active lease owner and expiry; the ATC integration smoke uses the managed V3 bridge. CI run [45906541842](https://github.com/kautilyamehra4436-cmyk/my-brain/actions/runs/45906541842) passed.
 - My Brain PRs #33/#34 closed the SQLite connection lifecycle gaps in legacy TaskQueue and ProviderCallLedger.
+- My Brain PR #36 synchronized the README, status and ATC integration map; CI run [45907097099](https://github.com/kautilyamehra4436-cmyk/my-brain/actions/runs/45907097099) passed.
+- Advait OS PR #4 updated the Gate README/integration pointer. Pure Sharp PR #4 updated its README, integration pointer and Command Centre Work Register/activity log.
 - 100X PR #20 fixed SMV SQLite connection closure. PR #21 fixed the phone diagnostic's SQLite handles and added a regression test. CI run [45906684654](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit/actions/runs/45906684654) passed.
 - B2B reconciliation code is CSV-only and its CI tests pass; labelled real-world accuracy, XLSX/PDF/OCR, Brain adapter integration, customer pilot and revenue remain unverified.
 - ATC remains a deterministic planner, not an LLM. The managed bridge executes only explicitly selected, zero-cost, local allowlisted operations.
