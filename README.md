@@ -49,3 +49,5 @@ This repository is the canonical cross-project blueprint and evidence hub. My Br
 - [Owner-aligned Relationship Intelligence](RELATIONSHIP_INTELLIGENCE.md) — owner-fit scoring, work-mix and unknown-work reporting, defense boundaries.
 
 - [Open-Source Maker & Customer Intelligence](OPEN_SOURCE_MAKER_CUSTOMER_INTELLIGENCE.md) — tool purpose, maker/customer matching, license/security review gates.
+- [Advait Sovereign Server Blueprint](ADVAIT_SOVEREIGN_SERVER_BLUEPRINT.md) — local-first server architecture and safety gates.
+- [Live server-tool scan](reports/ADVAIT_SERVER_TOOL_LIVE_SCAN_2026-11-26.md) — public GitHub metadata and README review.
