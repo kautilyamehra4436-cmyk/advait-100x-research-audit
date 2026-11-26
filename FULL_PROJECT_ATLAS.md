@@ -8,16 +8,16 @@ Recursive Git trees were fetched from each repository's `main` branch; none repo
 ## Canonical repositories
 | Repository | Visibility | Main SHA inspected | Primary role |
 |---|---|---|---|
-| [advait-100x-research-audit](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit) | Public | `67a1595bddab2b538d3d562e032d3a0de291878b` | Canonical cross-project hub, bounded execution, B2B, research, server, SCEE, SMV and tests |
-| [my-brain](https://github.com/kautilyamehra4436-cmyk/my-brain) | Public | `f27ca720f1c1be0fa6e2ea5e5e2916f48cf338b3` | Central Brain / ATC planning, task queue, memory conventions and zero-cost policy |
+| [advait-100x-research-audit](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit) | Public | `e6b52df9f7e9a2e8690217ace813e2e29b65b244` | Canonical cross-project hub, bounded execution, B2B, research, server, SCEE, SMV and tests |
+| [my-brain](https://github.com/kautilyamehra4436-cmyk/my-brain) | Public | `497b41780ad2634ca6498460e96fe3eb739c83d6` | Central Brain / ATC planning, task queue, memory conventions and zero-cost policy |
 | [advait_os](https://github.com/kautilyamehra4436-cmyk/advait_os) | Private | `07f24f281fb89b189384112ed35530e3108b9d85` | Filesystem/security Gate, fail-closed HIGH/CRITICAL actions |
-| [advait_pure_sharp](https://github.com/kautilyamehra4436-cmyk/advait_pure_sharp) | Private | `55098ab2188f324260ca233966fc8f4c6334e478` | Governance, Master Operating Algorithm, Command Centre, Living Fabric/AELI and PanchTatva C10 |
+| [advait_pure_sharp](https://github.com/kautilyamehra4436-cmyk/advait_pure_sharp) | Private | `9e5927935ae3f2520e606213473b61ff87596277` | Governance, Master Operating Algorithm, Command Centre, Living Fabric/AELI and PanchTatva C10 |
 
 The owner prefix search returned these four repositories. The separately mentioned “PanchTatva C10” is a module in `advait_pure_sharp`, not a fifth repository under that exact name.
 
 ## Repository file inventories
 
-The detailed, current inventory is maintained in [CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md](CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md) (207 files / 227 tree entries at capture time). The earlier inline inventories below are retained in the prior snapshot's history and should not be used as current file counts.
+The detailed, current inventory is maintained in [CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md](CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md) (213 files / 235 tree entries at capture time). The earlier inline inventories below are retained in the prior snapshot's history and should not be used as current file counts.
 
 ## Blueprint and policy index
 
@@ -107,3 +107,8 @@ See [CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md](CURRENT_REPOSITORY_SNAPSHOT_2026
 
 
 The 2026-11-27 snapshot's source baselines were refreshed after My Brain PR #36 and documentation updates in Advait OS and Pure Sharp. See the linked snapshot for exact capture SHAs and the self-update note.
+
+
+## 2026-11-27 B2B integration checkpoint
+
+My Brain PR #37 pins the 100X B2B CSV reconciler as a submodule and routes it through a governed local adapter and separate unencrypted-at-rest financial artifact store. Synthetic integration CI passed 131 tests and a 5-row / 7-flag sample. See the current snapshot for precise limits and remaining security requirements.
