@@ -10,7 +10,7 @@ from __future__ import annotations
 from collections import Counter
 from dataclasses import dataclass, asdict
 from datetime import datetime, timezone
-from typing import Iterable
+from typing import Callable, Iterable
 
 WORK_CATEGORIES = {
     "digital_operations": ("website updates", "data entry", "catalog", "spreadsheet", "admin"),
@@ -82,7 +82,7 @@ def _bounded_score(value: int) -> int:
     return value
 
 
-def score_opportunity(item: Opportunity, owner_profile: dict | None = None) -> dict:
+def score_opportunity(\n    item: Opportunity,\n    owner_profile: dict | None = None,\n    evidence_verifier: Callable[[Opportunity], bool] | None = None,\n) -> dict:
     profile = owner_profile or DEFAULT_OWNER_PROFILE
     weights = profile.get("scoring_weights", DEFAULT_OWNER_PROFILE["scoring_weights"])
     if set(weights) != set(DEFAULT_OWNER_PROFILE["scoring_weights"]):
@@ -118,13 +118,13 @@ def score_opportunity(item: Opportunity, owner_profile: dict | None = None) -> d
     return {"category": category, "score": score, "decision": decision, "reason": "rank only; owner approval required before commitments"}
 
 
-def build_opportunity_report(items: Iterable[Opportunity], owner_profile: dict | None = None) -> dict:
+def build_opportunity_report(\n    items: Iterable[Opportunity],\n    owner_profile: dict | None = None,\n    evidence_verifier: Callable[[Opportunity], bool] | None = None,\n) -> dict:
     rows = []
     category_counts = Counter()
     unknown_items = []
     decisions = Counter()
     for item in items:
-        result = score_opportunity(item, owner_profile)
+        result = score_opportunity(item, owner_profile, evidence_verifier)
         row = {**asdict(item), **result}
         rows.append(row)
         category_counts[result["category"]] += 1
