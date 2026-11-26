@@ -28,6 +28,7 @@ def request(url: str, method: str = "GET", token: str | None = None):
 
 def main() -> int:
     env = os.environ.copy()
+    env["PYTHONUNBUFFERED"] = "1"
     env.update({
         "ADVAIT_SERVER_HOST": "127.0.0.1",
         "ADVAIT_SERVER_PORT": "0",
