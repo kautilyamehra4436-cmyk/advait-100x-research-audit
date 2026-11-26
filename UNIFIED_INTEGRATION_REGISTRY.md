@@ -1,29 +1,29 @@
 # ADVAIT Unified Integration Registry
-Date: 2026-11-26
+Date: 2026-11-27
 Canonical design: UNIFIED_MASTER_BLUEPRINT.md
 
 ## Repository baselines
 | Repository | Main baseline SHA | Role |
 |---|---|---|
-| my-brain | 797f3ee2b277d891102bf8f2dafb1609a0738a91 | Central Brain / ATC |
-| advait_os | 04552a7db46db45af817a1afa68720684f1d392f | Security Gate |
-| advait_pure_sharp | 2fafd1971340b056f3e37de9c08a5cedc42ad065 | Governance / Living Fabric / PanchTatva |
-| advait-100x-research-audit | c553a0f7235e1b092cae7810b8c97ba4fd640192 | Execution / B2B / Research / Master Hub |
+| my-brain | 068a1cd2190c7665c9d25dc0c8ea3c73fb3f4b5c | Central Brain / ATC |
+| advait_os | eeb4ce2801360b2af09b44decdf8e260118eff48 | Security Gate |
+| advait_pure_sharp | ad78d8c7e84ffc7b77db7be65b05d9cc76089226 | Governance / Living Fabric / PanchTatva |
+| advait-100x-research-audit | ccfca945d87766f6e9a96c976fe0fc5ee2e1e3e6 | Execution / B2B / Research / Master Hub |
 
 ## Module register
 | Module | Source | State | Integration rule |
 |---|---|---|---|
 | SOUL / Governance | my-brain + pure_sharp | Docs | One owner-authority hierarchy; canonical conflicts recorded |
 | ATC Planner v1.2 | my-brain/core | Merged, rule-based | Drafts only; no external execution |
-| Task Queue | my-brain/core | Local SQLite queue | Stored plan is not execution |
+| Task Queue | my-brain/core | ManagedTaskQueueV3 wired to governed runtime | Lease owner + expiry fence completion/failure; local allowlisted tasks only |
 | Zero Cost Guard | my-brain/core | Helper exists; global wiring unverified | Fail closed at every cost-bearing boundary |
-| ATC Handoff | my-brain/core | Contract helper | REVIEWED_NOT_AUTHORIZED only |
+| ATC Handoff | my-brain/core | Managed V3 bridge to governed runtime | Explicit local allowlisted operation only; no external action |
 | Advait OS Gate v0.2 | advait_os | Offline gate | HIGH/CRITICAL blocked without authenticated verifier |
 | Bounded Execution Core v0.2 | 100X | Offline reference | No live adapters; independent verifier not deployed |
 | B2B Reconciliation | 100X | CSV worker | CSV-only; benchmark expansion required |
 | PanchTatva C10 | pure_sharp | Scenario harness | Simulated checks only |
 | Living Fabric / AELI | pure_sharp | Architecture proposal | Not a deployed orchestrator |
-| SMV | 100X PR #8 | Merged offline foundation | Synthetic tests; no live payment, webhook server or PNB verifier |
+| SMV | 100X PR #8, #20 | Merged offline foundation; SQLite closure regression passed | No live payment, webhook receiver, payout, bank settlement or PNB verifier |
 | PNB adapter | Intended | Not implemented/verified | Official supported route; owner configured |
 | PDF/OCR/XLSX worker | 100X blueprint | Not implemented | Synthetic benchmark first |
 | Android runtime | My Brain integration register | Candidate | User installation and device test required |
@@ -43,3 +43,16 @@ Canonical design: UNIFIED_MASTER_BLUEPRINT.md
 4. Keep specialized code in its source repository; integrate through versioned contracts, not copy-paste duplication.
 5. Every capability needs an owner, input/output schema, risk class, cost envelope, evidence, tests, rollback and status label.
 6. Never label candidate/planned as connected, implemented, deployed or verified.
+
+
+## 2026-11-27 verified synchronization
+
+Current recursive-tree snapshot: 206 files / 226 tree entries, no truncated trees. See `CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md` for the complete path inventory and exact main SHAs.
+
+- My Brain PR #35 merged: governed runtime now uses the durable leased queue; worker terminal transitions require the active lease owner and an unexpired lease; the ATC smoke path uses the managed V3 bridge. CI run 45906541842 passed.
+- My Brain PRs #33/#34: legacy TaskQueue and ProviderCallLedger SQLite lifecycle fixes merged.
+- 100X PR #20: SMV SQLite connection lifecycle fix merged and CI passed.
+- 100X PR #21: phone runtime diagnostic connection lifecycle fix merged; regression test added and CI run 45906684654 passed.
+- The B2B worker is CSV-only and not yet integrated as a Brain adapter; no labelled production accuracy, customer pilot or revenue is verified.
+- Advait OS Gate remains a separate offline security component; authenticated identity and Brain integration are pending.
+- No LLM runtime, Android/Termux validation, persistent scheduler, 24-hour operation, live payment or external customer execution is verified.
