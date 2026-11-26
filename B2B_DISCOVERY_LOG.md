@@ -78,3 +78,33 @@ Daily report: `B2B_DAILY_REPORT_2026-11-24.md`.
 - Existing B2B code remains CSV-only. No PDF/OCR, XLSX, bank/gateway integration or line-item extraction.
 - GitHub Actions runs #78, #79 and #80, triggered by the 2026-11-25 report/discovery/README commits, completed successfully. Latest verified run #80 (commit 14d984f14d46) logs show 10 harness + 31 engine + 9 B2B tests passed; demo ledger integrity true and high-risk task held without authenticated owner approval. No production code changed.
 - No 20-case benchmark, client contact, bid, sale, payment, contract or revenue occurred.
+
+
+## Update — 2026-11-26 (new invoice demand and competitive landscape)
+
+### Genuinely new dated marketplace signal
+- Freelancer India project 40825963, PDF Invoice Data Extraction: https://www.vn.freelancer.com/projects/data-analysis/pdf-invoice-data-extraction — page showed Open, posted 1 day ago, ₹12,500–₹37,500 paid on delivery, 68 proposals, average bid ₹16,076; requests every invoice/receipt line item (qty, unit price, tax, subtotal, grand total) in supplier-specific Excel sheets. Client in Thane, payment method verified, profile showed 0 reviews. Confidence high for displayed listing details at capture; no award/payment evidence. Competition is high.
+
+### New competitor evidence in this audit (not a newly launched product claim)
+- NexumFlow: https://nexumflow.ai/ publicly markets end-to-end Indian AP automation: invoice capture, line-item extraction, GST/TDS checks, PO/GRN matching, exception workflows and ERP integrations. Vendor page claims 97% field-level accuracy and 50,000+ invoices; these metrics are vendor claims, not independently verified. Confidence high for advertised features, low for independent performance proof.
+- Implication: avoid attempting a broad enterprise AP/ERP suite. Potential narrow wedge: low-cost, file-based, read-only batch QA for small distributors/traders with source-row evidence and Excel exception reports. This remains a hypothesis.
+
+### Newly logged background report (older publication)
+- Financial Express / India SME Forum + Amazon Business report, published 7 Aug 2026: https://www.financialexpress.com/business/news/less-than-a-fifth-of-indias-msme-procurement-spend-is-digital-india-sme-forum-amazon-business-report/4313089/lite/ — article reports 27,045 MSME responses, 17.6% procurement spend digitized, fewer than 4% fully integrated and 49.7% expecting AI-led procurement adoption within two years. Newly added to our ledger, not new publication. Confidence medium; survey/proprietary extrapolation and stated intention are not actual adoption.
+
+### Additional newly surfaced but not date-new signal
+- Upwork Proforma and Invoice Reconciliation: https://www.upwork.com/freelance-jobs/apply/Proforma-and-Invoice-Reconciliation_~022120717106615064058/ — search result showed a 3–6 month monthly engagement at $6/hour, 50+ proposals and one hire. Direct page returned 403; confidence low-to-medium and details are search-result only. Not a newly posted listing.
+
+### Ranking vs 2026-11-25
+1. Invoice + PO line-item validation / exception report — remains #1; fresh direct demand, but high competition and established enterprise competitors.
+2. Small-distributor invoice batch QA (CSV/Excel-first, read-only) — newly sharpened narrow-market hypothesis; buyer validation pending.
+3. Payment-to-invoice reconciliation exception audit — retained from Zoho survey and recurring job signals; exports only, no bank/payment actions.
+4. Inventory/product digitization — retained; no new direct signal today.
+5. Generic CSV cleanup — lower due commoditization/price pressure.
+6. Enterprise AP/ERP integration — deprioritized under phone-first/no-paid-hosting constraint and strong incumbents.
+
+### Execution truth
+- No production code change, local benchmark, Android test or new CI run on 26 Nov.
+- Latest verified Actions run #82 (ID 45519961015), commit 581e94e2af8b, completed 25 Nov with success. Logs show 10 harness PASS + 31 engine tests PASS + 9 B2B tests PASS (50 total); demo ledger integrity true and high-risk task fail-closed without authenticated owner approval. Run: https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit/actions/runs/45519961015.
+- PDF/OCR, XLSX, line-item/PO matching, 20-case benchmark, precision/recall and phone runtime remain pending.
+- No outreach, bid, contract, client data processing, payment or revenue occurred.
