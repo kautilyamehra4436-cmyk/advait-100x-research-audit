@@ -190,3 +190,37 @@ At the next session:
 ## 11. CHANGE LOG
 
 - 2026-11-26 — Initial consolidated checkpoint drafted from current hub reports, four-repository atlas, Unified Master Blueprint, Integration Registry, Master Operating Algorithm, ChatGPT 0.1, My Brain governance/runtime files, Advait OS Gate and specialist blueprints. This document does not claim phone execution or autonomous worker deployment.
+
+## 12. LIVE FOLLOW-UP AFTER INITIAL CHECKPOINT
+
+### My Brain money-policy correction — merged
+- My Brain PR #6 merged successfully: https://github.com/kautilyamehra4436-cmyk/my-brain/pull/6
+- Merge commit: `7aeb540c91c357be26744d4b77c63d5aa1ba214f`
+- Corrected `integrations/registry.json`: `approval_required_for_any_money=true`; hard-zero spend remains active.
+- Added a regression test for the money approval policy.
+- Refreshed `status.md` with current capability boundaries.
+- Fixed `RUNTIME_QUICKSTART.md` so the queue completion example supplies evidence and an injected verifier.
+- CI run [45870295058](https://github.com/kautilyamehra4436-cmyk/my-brain/actions/runs/45870295058) passed; latest main run [45870375847](https://github.com/kautilyamehra4436-cmyk/my-brain/actions/runs/45870375847) also passed.
+
+### Bounded worker v0.1 — implementation branch under validation
+- Branch: `brain-bounded-worker-v0-1-2026-11-26`
+- Added `core/worker.py`: one bounded task per invocation; only explicitly host-allowlisted handlers; explicit zero-cost/quota checks; HIGH/CRITICAL require injected exact-action owner verifier; completion requires injected independent evidence verifier.
+- Updated queue claiming so a worker can select eligible `bounded_adapter` tasks without consuming ATC `plan_only` entries.
+- Added 9 synthetic worker tests covering successful verified execution, plan-only preservation, idle state, unknown adapter, positive cost, quota exhaustion, high-risk approval, missing verifier and handler failure.
+- Worker CI run [45870665507](https://github.com/kautilyamehra4436-cmyk/my-brain/actions/runs/45870665507) passed unit tests and compile checks for the worker/test commit.
+- README, status and quickstart were updated on the branch. Latest quickstart commit CI run [45870783708](https://github.com/kautilyamehra4436-cmyk/my-brain/actions/runs/45870783708) passed. Other documentation commit runs were still in progress at this report update.
+- **Boundary:** this is an executable worker framework tested with synthetic in-memory handlers. No real customer-file, browser, email, bounty, network or payment adapter is shipped. It is not yet merged to main or tested on Android.
+
+### Canonical hub documentation — draft PR
+- Hub PR #18: https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit/pull/18
+- Adds `ADVAIT_CONSTITUTION.md`, this `MASTER_PROGRESS_REPORT.md`, and README navigation.
+- The Constitution is intentionally marked **proposed** until the owner explicitly accepts it. PR remains draft; no merge or source-policy replacement has occurred.
+
+### Immediate resume point (updated)
+1. Inspect the final My Brain worker branch CI runs and review the complete diff.
+2. Open/review worker PR; merge only after final CI passes.
+3. Continue with task leases, stale-running recovery, cancellation, idempotency and reconciliation.
+4. Integrate the Personal Algorithm cycle into the worker lifecycle.
+5. Add the first narrow local file/CSV adapter with path, size, privacy and independent-evidence tests.
+6. Owner reviews/accepts the Constitution; then merge hub PR #18.
+7. Prepare Android package and test on the user's phone; do not claim phone readiness before device evidence.
