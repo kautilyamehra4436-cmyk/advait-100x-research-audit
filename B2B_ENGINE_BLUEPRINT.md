@@ -1,5 +1,5 @@
 # Advait B2B Business Discovery & Execution Blueprint
-Version: 0.3 | Date: 2026-11-27 | Status: CSV worker integrated into governed My Brain runtime; customer readiness pending
+Version: 0.4 | Date: 2026-11-27 | Status: CSV worker integrated into governed My Brain runtime; customer readiness pending
 
 ## Objective
 Advait should own the routine cycle of finding, evaluating, prototyping, validating, and delivering B2B opportunities within owner-defined constraints. The owner should not have to manually hunt for business ideas. Owner approval remains mandatory for financial actions, binding contracts, risky data handling, policy changes, and outbound actions not explicitly pre-authorized.
@@ -51,23 +51,23 @@ Differentiation hypothesis: evidence trail for every flagged row; no silent dele
 - Freelancer.in search page surfaced current examples of spreadsheet cleanup, invoice extraction, inventory cleanup and consolidation tasks: https://www.freelancer.in/jobs/data-cleansing/
 These sources demonstrate problem/service signals and competition, not a guaranteed buyer or income.
 
-## First validation experiment
-1. Create a synthetic dataset (never use real sensitive documents) containing duplicate invoice IDs, mismatched vendor names, missing PO, amount discrepancy, inconsistent dates, and unreadable/uncertain fields.
-2. Implement a deterministic CSV/XLSX validation prototype without paid APIs.
-3. Test against labelled expected results; report precision/recall for flags, false positives/negatives, and processing time.
-4. Generate a sample deliverable: untouched source, cleaned copy, exception sheet, evidence/source-row reference, QA report.
-5. Research public buyer signals and gather at least 10 prospects with relevance evidence (no contact or outreach yet).
-6. Draft a short offer and sample; owner reviews before any outreach.
-7. Only after owner approval, test one small paid pilot; record actual conversion, time, revisions, and profit.
+## First validation experiment — current state
+1. Synthetic sample data is stored in the repository; CI processes 5 rows and verifies the result (7 review flags).
+2. A bounded pure-text CSV API is implemented; it has 1 MiB input, 10,000-row, 100-column and 4 MiB output limits. Formula-like spreadsheet cells are flagged and escaped.
+3. Unit/regression tests and end-to-end adapter smoke pass. Formal precision/recall, false-positive/negative rates and a 20+ case labelled benchmark have **not** been measured.
+4. CI generates normalized CSV, exceptions CSV and summary artifacts in a temporary vault; no real customer deliverable has been produced.
+5. Public buyer signals have been collected, but a verified 10-prospect shortlist is not complete.
+6. No outreach has been sent; offer drafting and owner approval remain pending.
+7. No paid pilot, customer acceptance or revenue has occurred.
 
-## Acceptance criteria for prototype
+## Acceptance criteria and verification boundary
 - Source file remains unchanged.
 - Every flag maps to source row and rule.
 - No silent deletion or automatic financial correction.
 - Unknown/ambiguous fields stay flagged.
 - Reproducible results for same input.
-- Unit tests cover duplicates, missing values, mismatches, amount/date normalization, false positives, and malformed input.
-- Test report separates verified behavior from limitations.
+- Verified tests cover duplicate IDs, missing required values/PO reference, vendor/amount mismatch, invalid amount, malformed row width, duplicate headers, formula injection and output no-overwrite. Date normalization and formal false-positive/negative metrics remain pending.
+- Test report separates verified behavior from limitations. Current integration CI: 131 full My Brain tests and 5-row / 7-flag synthetic B2B smoke.
 
 ## Current status
 - Public research snapshot: started; sources collected, not exhaustive.
