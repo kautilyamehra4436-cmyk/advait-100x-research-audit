@@ -5,7 +5,7 @@ This tool flags potential issues; it does not make accounting/tax decisions or
 silently alter source data. The original CSV is never overwritten.
 """
 from __future__ import annotations
-import argparse, csv, io, re, sys
+import argparse, csv, io, os, re, sys
 from collections import Counter
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
@@ -178,14 +178,38 @@ def reconcile_text(csv_text: str):
     }
 
 
+def _write_new_file(path, content, *, encoding="utf-8", newline=None):
+    path = Path(path)
+    if path.is_symlink():
+        raise PermissionError("output_symlink_blocked")
+    if not path.parent.exists() or not path.parent.is_dir() or path.parent.is_symlink():
+        raise ValueError("output_directory_must_be_existing_non_symlink_directory")
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL
+    if hasattr(os, "O_NOFOLLOW"):
+        flags |= os.O_NOFOLLOW
+    fd = os.open(str(path), flags, 0o600)
+    try:
+        with os.fdopen(fd, "w", encoding=encoding, newline=newline) as stream:
+            stream.write(content)
+    except BaseException:
+        try:
+            os.close(fd)
+        except OSError:
+            pass
+        raise
+    return path
+
+
 def write_csv(path, headers, rows):
-    with open(path, "w", newline="", encoding="utf-8-sig") as f:
-        writer = csv.DictWriter(f, fieldnames=headers, extrasaction="ignore")
-        writer.writeheader()
-        writer.writerows(rows)
+    """Create a private CSV output without ever overwriting an existing file."""
+    content = _serialize_csv(headers, rows)
+    return _write_new_file(path, content, encoding="utf-8-sig", newline="")
+
 
 def run(input_path, output_prefix):
     input_path, prefix = Path(input_path), Path(output_prefix)
+    if input_path.is_symlink() or not input_path.is_file():
+        raise ValueError("input_must_be_existing_non_symlink_file")
     raw = input_path.read_bytes()
     if len(raw) > MAX_INPUT_BYTES:
         raise ValueError("CSV input exceeds the 1 MiB limit")
@@ -206,8 +230,7 @@ def run(input_path, output_prefix):
         (findings_path, report["exceptions_csv"], "utf-8-sig"),
         (summary_path, report["summary"], "utf-8"),
     ):
-        with path.open("x", encoding=encoding, newline="") as stream:
-            stream.write(content)
+        _write_new_file(path, content, encoding=encoding, newline="")
     return report["findings"], (clean_path, findings_path, summary_path)
 
 def main(argv=None):
