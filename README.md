@@ -43,3 +43,5 @@ This repository is the canonical cross-project blueprint and evidence hub. My Br
 
 - [Live consolidation execution report](CONSOLIDATION_EXECUTION_REPORT_2026-11-26.md)
 - [Queue evidence-gate hardening report](QUEUE_EVIDENCE_HARDENING_REPORT_2026-11-26.md)
+- [Advait CEO Control Board setup and usage](CEO_CONTROL_BOARD_SETUP.md)
+- [CEO Control Board implementation](ceo_control_board.py)
