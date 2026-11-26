@@ -1,0 +1,192 @@
+{
+  "snapshot_date": "2026-11-26",
+  "inventory": {
+    "recursive_tree_entries": 132,
+    "truncated": false,
+    "scope": "four accessible repositories; main branches only"
+  },
+  "repositories": [
+    {
+      "name": "advait-100x-research-audit",
+      "visibility": "public",
+      "main_sha": "0b6c498c075136b9192123cab70f469629480843",
+      "role": "canonical hub; execution/B2B/research/server/SCEE/SMV"
+    },
+    {
+      "name": "my-brain",
+      "visibility": "public",
+      "main_sha": "030a7f1b98751f24d6f5e13a15f28cb63d22b48c",
+      "role": "central planner/queue/policy"
+    },
+    {
+      "name": "advait_os",
+      "visibility": "private",
+      "main_sha": "eeb4ce2801360b2af09b44decdf8e260118eff48",
+      "role": "security and filesystem gate"
+    },
+    {
+      "name": "advait_pure_sharp",
+      "visibility": "private",
+      "main_sha": "ad78d8c7e84ffc7b77db7be65b05d9cc76089226",
+      "role": "governance/master algorithm/command centre/Living Fabric/PanchTatva"
+    }
+  ],
+  "canonical_docs": [
+    "UNIFIED_MASTER_BLUEPRINT.md",
+    "UNIFIED_INTEGRATION_REGISTRY.md",
+    "MASTER_AUDIT.md",
+    "SOURCE_AUDIT_ADDENDUM.md",
+    "B2B_ENGINE_BLUEPRINT.md",
+    "OPEN_SOURCE_MAKER_CUSTOMER_INTELLIGENCE.md",
+    "RELATIONSHIP_INTELLIGENCE.md",
+    "ADVAIT_SOVEREIGN_SERVER_BLUEPRINT.md",
+    "ADVAIT_SELF_CRAFTING_EVOLUTION_ENGINE.md",
+    "SMV_SETUP.md",
+    "CEO_CONTROL_BOARD_SETUP.md",
+    "MASTER_OPERATING_ALGORITHM.md",
+    "ADVAIT_COMMAND_CENTRE.md",
+    "ADVAIT_LIVING_FABRIC_ARCHITECTURE.md",
+    "GATE_SECURITY_V02.md",
+    "SOUL.md",
+    "authorization.md",
+    "security.md",
+    "config.yml"
+  ],
+  "core_modules": [
+    {
+      "id": "brain.atc",
+      "repo": "my-brain",
+      "path": "core/atc_planner.py",
+      "state": "implemented_rule_based_planner"
+    },
+    {
+      "id": "brain.queue",
+      "repo": "my-brain",
+      "path": "core/task_queue.py",
+      "state": "sqlite_queue_verifier_hook_no_worker"
+    },
+    {
+      "id": "brain.handoff",
+      "repo": "my-brain",
+      "path": "core/atc_handoff.py",
+      "state": "draft_only_integrity_not_authentication"
+    },
+    {
+      "id": "brain.zero_cost",
+      "repo": "my-brain",
+      "path": "core/zero_cost_guard.py",
+      "state": "helper_global_wiring_unverified"
+    },
+    {
+      "id": "os.security_gate",
+      "repo": "advait_os",
+      "path": "advait_gate_v01.py",
+      "state": "fail_closed_no_production_verifier"
+    },
+    {
+      "id": "execution.core",
+      "repo": "advait-100x-research-audit",
+      "path": "advait_engine.py",
+      "state": "offline_bounded_reference"
+    },
+    {
+      "id": "business.csv_reconcile",
+      "repo": "advait-100x-research-audit",
+      "path": "b2b_reconcile.py",
+      "state": "csv_worker"
+    },
+    {
+      "id": "research.open_source",
+      "repo": "advait-100x-research-audit",
+      "path": "open_source_intelligence.py",
+      "state": "offline_analysis"
+    },
+    {
+      "id": "research.relationship",
+      "repo": "advait-100x-research-audit",
+      "path": "relationship_intelligence.py",
+      "state": "offline_analysis"
+    },
+    {
+      "id": "money.smv",
+      "repo": "advait-100x-research-audit",
+      "path": "smv_core.py",
+      "state": "offline_payment_event_ledger_no_money_movement"
+    },
+    {
+      "id": "server.control_plane",
+      "repo": "advait-100x-research-audit",
+      "path": "advait_sovereign_server.py",
+      "state": "local_read_only_foundation_not_deployed"
+    },
+    {
+      "id": "evolution.scee",
+      "repo": "advait-100x-research-audit",
+      "path": "advait_self_crafting.py",
+      "state": "deterministic_candidate_assessor_not_autonomous_research"
+    },
+    {
+      "id": "dashboard.ceo",
+      "repo": "advait-100x-research-audit",
+      "path": "ceo_control_board.py",
+      "state": "local_read_only_report_generator"
+    },
+    {
+      "id": "simulation.panch_tatva",
+      "repo": "advait_pure_sharp",
+      "path": "advait_panch_tatva_c10.py",
+      "state": "10_rule_based_scenarios_simulation_only"
+    },
+    {
+      "id": "architecture.living_fabric",
+      "repo": "advait_pure_sharp",
+      "path": "ADVAIT_LIVING_FABRIC_ARCHITECTURE.md",
+      "state": "proposal_not_deployed"
+    }
+  ],
+  "required_gates": [
+    "owner_authority",
+    "hard_zero_spend",
+    "risk_taxonomy",
+    "authenticated_exact_action_verifier",
+    "independent_evidence_verifier",
+    "license_and_security_review",
+    "rollback",
+    "reproducible_tests"
+  ],
+  "known_gaps": [
+    "no independent LLM runtime attached to My Brain",
+    "no live continuous public discovery",
+    "no customer outreach/delivery",
+    "no live Razorpay or PNB production integration",
+    "no production owner identity provider",
+    "no Android/Termux verification",
+    "no 24-hour runtime",
+    "no autonomous cross-repository reasoning"
+  ],
+  "reading_order": [
+    "FULL_PROJECT_ATLAS.md",
+    "ADVait_BRAIN_CONTEXT.md",
+    "UNIFIED_MASTER_BLUEPRINT.md",
+    "UNIFIED_INTEGRATION_REGISTRY.md",
+    "my-brain/SOUL.md",
+    "my-brain/config.yml",
+    "my-brain/authorization.md",
+    "my-brain/security.md",
+    "my-brain/core/atc_planner.py",
+    "my-brain/core/task_queue.py",
+    "my-brain/core/atc_handoff.py",
+    "advait_os/GATE_SECURITY_V02.md",
+    "advait_os/advait_gate_v01.py",
+    "advait_pure_sharp/MASTER_OPERATING_ALGORITHM.md",
+    "advait_pure_sharp/ADVAIT_LIVING_FABRIC_ARCHITECTURE.md",
+    "B2B_ENGINE_BLUEPRINT.md",
+    "OPEN_SOURCE_MAKER_CUSTOMER_INTELLIGENCE.md",
+    "RELATIONSHIP_INTELLIGENCE.md",
+    "SMV_SETUP.md",
+    "ADVAIT_SOVEREIGN_SERVER_BLUEPRINT.md",
+    "ADVAIT_SELF_CRAFTING_EVOLUTION_ENGINE.md",
+    "CEO_CONTROL_BOARD_SETUP.md"
+  ],
+  "review_status": "PENDING_CONNECTED_REASONING_RUNTIME"
+}
