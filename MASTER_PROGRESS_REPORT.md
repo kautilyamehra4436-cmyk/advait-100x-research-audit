@@ -131,11 +131,11 @@ The latest B2B report on 26 Nov recorded an invoice line-item extraction opportu
 ## 8. NEXT WORK — ORDERED EXECUTION BACKLOG
 
 ### Phase A — governance and resumability
-1. Owner review/acceptance of `ADVAIT_CONSTITUTION.md`.
-2. Merge this report and Constitution via reviewed PR; keep source docs intact.
-3. Update README canonical navigation.
-4. Refresh My Brain stale status and fix money-approval registry contradiction with tests.
-5. Re-fetch all four repositories and regenerate atlas/registry SHAs.
+1. **PENDING — owner review/acceptance** of `ADVAIT_CONSTITUTION.md`.
+2. **PENDING — merge hub PR #18** after owner accepts the proposed Constitution; keep source docs intact.
+3. **PREPARED IN PR #18 —** README canonical navigation.
+4. **DONE — My Brain PR #6 merged:** money-approval registry corrected, regression test added, stale status refreshed and quickstart verifier example fixed.
+5. **DONE ON PR #18 BRANCH —** all four repositories re-fetched; Atlas/Registry refreshed to current SHAs and 138 tree entries. Merge remains pending PR #18.
 
 ### Phase B — make My Brain execute bounded work
 6. **PENDING —** write one versioned contract for Opportunity, Task, Evidence, Approval, Result, Delivery and Financial Event; do not duplicate module implementations.
