@@ -197,7 +197,7 @@ tests/test_advait_panch_tatva_c10.py
 
 ## Actual implementation map
 
-1. **Central Brain / planner:** `my-brain/core/atc_planner.py`; deterministic planning, not an LLM and not an executor.
+1. **Central Brain / planner:** `my-brain/core/atc_planner.py`; deterministic planning, not an LLM. Bounded task dispatch is provided separately by `my-brain/core/worker.py`.
 2. **Task queue:** `my-brain/core/task_queue.py`; SQLite WAL queue, atomic claim/complete, eligibility-filtered claiming and injected verifier required for completion. No lease expiry/recovery has been demonstrated in the reviewed code.
 3. **Handoff:** `my-brain/core/atc_handoff.py`; SHA-256 integrity digest, not authentication; currently LOW/HIGH only and outputs REVIEWED_NOT_AUTHORIZED.
 4. **Cost policy:** `my-brain/core/zero_cost_guard.py` plus `config.yml`; helper exists, global enforcement at every adapter is not proven.
