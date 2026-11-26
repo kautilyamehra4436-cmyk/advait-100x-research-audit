@@ -1,7 +1,9 @@
 import hashlib
 import hmac
+import sqlite3
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 from smv_core import MoneyLedger, PaymentEvent, verify_razorpay_webhook
@@ -16,6 +18,35 @@ class SMVTests(unittest.TestCase):
         )
         values.update(changes)
         return PaymentEvent(**values)
+
+    def test_every_sqlite_connection_is_closed_after_use(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            original_connect = sqlite3.connect
+            handles = []
+
+            def tracked_connect(*args, **kwargs):
+                conn = original_connect(*args, **kwargs)
+                handles.append(conn)
+                return conn
+
+            def assert_all_closed():
+                self.assertGreaterEqual(len(handles), 1)
+                for conn in handles:
+                    with self.assertRaises(sqlite3.ProgrammingError):
+                        conn.execute("SELECT 1")
+
+            with patch("smv_core.sqlite3.connect", side_effect=tracked_connect):
+                ledger = MoneyLedger(Path(tmp) / "ledger.db")
+                assert_all_closed()
+
+                self.assertEqual(
+                    ledger.record(self.make_event(), lambda _: True),
+                    "CREDITED_TO_LEDGER",
+                )
+                assert_all_closed()
+
+                self.assertEqual(ledger.income_total_minor(), 12500)
+                assert_all_closed()
 
     def test_razorpay_hmac_valid_and_invalid(self):
         body = b'{"event":"payment.captured"}'

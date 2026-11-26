@@ -10,6 +10,7 @@ import hmac
 import os
 import re
 import sqlite3
+from contextlib import contextmanager
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
@@ -92,11 +93,27 @@ class MoneyLedger:
                 )
             """)
 
-    def _connect(self) -> sqlite3.Connection:
+    @contextmanager
+    def _connect(self):
+        """Commit/rollback and always close each SQLite connection.
+
+        sqlite3.Connection's own context manager handles transactions only;
+        it does not close the connection. Keep the lifecycle explicit here.
+        """
         conn = sqlite3.connect(self.db_path, timeout=5.0)
-        conn.execute("PRAGMA foreign_keys = ON")
-        conn.execute("PRAGMA busy_timeout = 5000")
-        return conn
+        try:
+            conn.execute("PRAGMA foreign_keys = ON")
+            conn.execute("PRAGMA busy_timeout = 5000")
+            yield conn
+            conn.commit()
+        except BaseException:
+            try:
+                conn.rollback()
+            except sqlite3.Error:
+                pass
+            raise
+        finally:
+            conn.close()
 
     @staticmethod
     def _validate(event: PaymentEvent) -> None:
