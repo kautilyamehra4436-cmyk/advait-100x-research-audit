@@ -18,7 +18,7 @@ No claim of consciousness, general autonomy, guaranteed revenue, 24/7 uptime, li
 | Living Fabric / AELI | advait_pure_sharp | Proposed routing and coordination contract | Architecture proposal, not deployed orchestrator |
 | Advait OS Gate | advait_os | Local filesystem gate and fail-closed high-risk decisions | v0.2 code and tests; no production identity provider |
 | Bounded Execution Core | advait-100x-research-audit | Allowlist, budgets, risk checks, evidence-verifier contract, ledger | Offline reference implementation; no live adapters |
-| B2B Worker | advait-100x-research-audit | CSV reconciliation and exception output | CSV worker and CI tests exist; no labelled real-world accuracy, XLSX/PDF/OCR, Brain adapter or customer pilot |
+| B2B Worker | 100X pinned submodule → My Brain | CSV reconciliation and exception output | Governed local adapter integrated; synthetic CI sample 5 rows / 7 flags; vault unencrypted at rest; no real customer data or pilot |
 | PanchTatva C10 | advait_pure_sharp | Scenario and regression harness | 10 simulated scenarios; not proof of intelligence |
 | SMV | 100X | Payment-event ledger and financial record foundation | Offline ledger; SQLite lifecycle regression passed; no live webhook, payout, bank settlement or PNB integration |
 | Research and Evidence Ledger | 100X | Sources, confidence, tests, benchmarks and decisions | Research logs and reports exist |
@@ -101,7 +101,7 @@ Phone-first means small batches, streaming, bounded memory, resumable checkpoint
 ## 7. Business and earning engine
 Initial candidate retained from the research: small-business invoice/data validation and reconciliation. The first service is CSV-first: deterministic duplicate detection, normalization, field validation, cross-file comparison, exception report with source-row references and a QA summary. Preserve the original; no silent deletion or financial correction. Human confirms tax/legal interpretations.
 
-The existing worker does not yet implement PDF/OCR, XLSX multi-sheet output, PO/GRN matching, GST/tax determination or bank/payment integration.
+The current CSV worker checks duplicate invoice IDs, required fields, invalid amounts, missing PO references, vendor mismatch and amount mismatch. It does not implement GRN matching, date normalization, GST/tax determination, bank/payment integration, XLSX multi-sheet or PDF/OCR.
 
 Commercial pipeline: public demand evidence → shortlist → synthetic sample → measured QA report → owner-reviewed offer → owner-approved individualized outreach → scoped pilot → delivery/acceptance → invoice/payment reconciliation → post-mortem. Never bid or contact a prospect without owner approval. A marketplace budget is not realized income. Track time, revisions, false positives/negatives, conversion and realized profit.
 
@@ -125,7 +125,7 @@ For every claim retain claim ID, exact wording, source URL/publisher, publicatio
 | My Brain ATC | PR #1 merged; historical 38/38 CI tests | fresh CI, queue integration, Android/Termux run |
 | Advait OS Gate | fail-closed code; 15 regression tests reported | fresh CI, platform security review, authenticated verifier design |
 | Bounded execution core | historical 50/50 CI suite reported | fresh CI, adversarial integration, real verifier remains external |
-| B2B worker | historical 9/9 tests | 20+ labelled cases, precision/recall, false-positive/negative, XLSX output |
+| B2B worker | synthetic integration smoke: 5 rows / 7 flags; 131 full My Brain tests passed | Formal labelled dataset, precision/recall and false-positive/negative metrics, XLSX output |
 | PanchTatva C10 | 3/3 structural tests; 10 simulated scenarios | executable decision functions and adversarial fixtures |
 | SMV | PR #6 open | inspect diff; synthetic webhook tests; no real funds |
 | Phone runtime | not verified | user-side Android test with time, memory, battery, heat and offline recovery |
@@ -158,14 +158,15 @@ Phase 6: controlled research and evolution with tests, owner-reviewed promotion 
 ## 15. Consolidation checkpoint — 2026-11-27
 
 Verified repository metadata:
-- Current main commits: 100X source baseline `67a1595bddab2b538d3d562e032d3a0de291878b`; My Brain `f27ca720f1c1be0fa6e2ea5e5e2916f48cf338b3`; Advait OS `07f24f281fb89b189384112ed35530e3108b9d85`; Pure Sharp `55098ab2188f324260ca233966fc8f4c6334e478`.
-- Recursive trees contain 207 files / 227 entries; none of the four trees was truncated. Full paths are recorded in `CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md`.
+- Current main commits: 100X source baseline `e6b52df9f7e9a2e8690217ace813e2e29b65b244`; My Brain `a47ab5d2e1778ca3f5c44edbbe16d179db30c181`; Advait OS `07f24f281fb89b189384112ed35530e3108b9d85`; Pure Sharp `9e5927935ae3f2520e606213473b61ff87596277`.
+- Recursive trees contain 213 files / 235 entries; none of the four trees was truncated. Full paths are recorded in `CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md`.
 - My Brain PR #35 is merged. `GovernedSelfBuildRuntimeV3` uses `ManagedTaskQueueV3`; worker completion/failure is fenced by the active lease owner and expiry; the ATC integration smoke uses the managed V3 bridge. CI run [45906541842](https://github.com/kautilyamehra4436-cmyk/my-brain/actions/runs/45906541842) passed.
 - My Brain PRs #33/#34 closed the SQLite connection lifecycle gaps in legacy TaskQueue and ProviderCallLedger.
 - My Brain PR #36 synchronized the README, status and ATC integration map; CI run [45907097099](https://github.com/kautilyamehra4436-cmyk/my-brain/actions/runs/45907097099) passed.
+- My Brain PR #37 integrated the pinned B2B CSV adapter; CI run [45908960326](https://github.com/kautilyamehra4436-cmyk/my-brain/actions/runs/45908960326) passed 131 tests, compile and synthetic end-to-end smoke (5 rows / 7 flags). The file vault is not encrypted at rest.
 - Advait OS PR #4 updated the Gate README/integration pointer. Pure Sharp PR #4 updated its README, integration pointer and Command Centre Work Register/activity log.
 - 100X PR #20 fixed SMV SQLite connection closure. PR #21 fixed the phone diagnostic's SQLite handles and added a regression test. CI run [45906684654](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit/actions/runs/45906684654) passed.
-- B2B reconciliation code is CSV-only and its CI tests pass; labelled real-world accuracy, XLSX/PDF/OCR, Brain adapter integration, customer pilot and revenue remain unverified.
+- B2B CSV reconciliation is integrated into My Brain through a pinned submodule and separate financial artifact store; CI passed 131 tests and a 5-row/7-flag synthetic smoke. Real customer data, encryption at rest, XLSX/PDF/OCR, customer pilot and revenue remain unverified.
 - ATC remains a deterministic planner, not an LLM. The managed bridge executes only explicitly selected, zero-cost, local allowlisted operations.
 - SMV remains an offline event-ledger foundation; no live webhook receiver, PNB verifier, payout/withdrawal/transfer or bank settlement adapter is enabled.
 - Advait OS Gate remains a separate offline gate; authenticated production owner identity and runtime integration are not verified.
