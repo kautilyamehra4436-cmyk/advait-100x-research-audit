@@ -47,3 +47,5 @@ This repository is the canonical cross-project blueprint and evidence hub. My Br
 - [CEO Control Board implementation](ceo_control_board.py)
 
 - [Owner-aligned Relationship Intelligence](RELATIONSHIP_INTELLIGENCE.md) — owner-fit scoring, work-mix and unknown-work reporting, defense boundaries.
+
+- [Open-Source Maker & Customer Intelligence](OPEN_SOURCE_MAKER_CUSTOMER_INTELLIGENCE.md) — tool purpose, maker/customer matching, license/security review gates.
