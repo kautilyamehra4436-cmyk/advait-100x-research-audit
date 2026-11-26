@@ -8,7 +8,7 @@ The Relationship Intelligence module adapts opportunity ranking to an explicit o
 - Leaves ambiguous or unmatched work as `unknown`.
 - Reports frequency by category, top work types, unknown work, ranked opportunities, and suggested next focus.
 - Scores opportunities using owner fit, verified need, usefulness, feasibility, and relationship value.
-- Requires a source and evidence before assigning a priority score.
+- Requires a source and evidence before assigning a priority score.\n- Additionally requires an injected independent evidence verifier; a non-empty evidence note alone is never accepted. Missing, failing, or exception-throwing verifiers fail closed.
 - Enforces an avoid-list and validates score weights and rating ranges.
 
 ## Defense and privacy
