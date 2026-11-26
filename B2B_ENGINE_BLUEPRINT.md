@@ -1,5 +1,5 @@
 # Advait B2B Business Discovery & Execution Blueprint
-Version: 0.1 | Date: 2026-11-23 | Status: research + design checkpoint
+Version: 0.2 | Date: 2026-11-27 | Status: CSV worker implemented; broader product validation pending
 
 ## Objective
 Advait should own the routine cycle of finding, evaluating, prototyping, validating, and delivering B2B opportunities within owner-defined constraints. The owner should not have to manually hunt for business ideas. Owner approval remains mandatory for financial actions, binding contracts, risky data handling, policy changes, and outbound actions not explicitly pre-authorized.
@@ -72,7 +72,8 @@ These sources demonstrate problem/service signals and competition, not a guarant
 ## Current status
 - Public research snapshot: started; sources collected, not exhaustive.
 - Candidate ranking: provisional; no weighted score validated yet.
-- Prototype: not built yet.
-- Synthetic tests: not run yet.
+- CSV reconciliation prototype: implemented in `b2b_reconcile.py`; offline CI runs `test_b2b_reconcile.py` successfully.
+- Synthetic tests: implemented and passing in hosted CI; this does not establish accuracy on labelled real-world files.
+- XLSX multi-sheet, PDF/OCR and customer-system adapters: not implemented/verified.
 - Customer/paid pilot: not run.
-- Repo update: this blueprint and discovery log are documentation only; no production integrations or real client work.
+- Repo update: CSV worker and tests are repository code; no production customer integration, outreach, paid pilot or real client work has been performed.

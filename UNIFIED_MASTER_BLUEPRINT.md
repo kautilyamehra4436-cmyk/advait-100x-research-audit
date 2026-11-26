@@ -1,5 +1,5 @@
 # ADVAIT SOVEREIGN AI CEO — Unified Master Blueprint
-Version: 1.0-integration | Date: 2026-11-26
+Version: 1.0-integration | Date: 2026-11-27
 Status: Consolidation baseline; runtime and production verification remain staged.
 
 ## Executive mission
@@ -13,14 +13,14 @@ No claim of consciousness, general autonomy, guaranteed revenue, 24/7 uptime, li
 
 | Component | Source repository | Responsibility | Current verified boundary |
 |---|---|---|---|
-| My Brain / ATC | my-brain | Goal interpretation, planning, reflection, memory conventions | ATC v1.2 merged; deterministic rule-based planner, not LLM or executor |
+| My Brain / ATC | my-brain | Goal interpretation, planning, reflection, governed local task execution | ATC v1.2 remains deterministic; managed V3 bridge now connects selected local allowlisted tasks to lease-fenced governed runtime; no LLM or external executor |
 | Governance / Soul / Command Centre | advait_pure_sharp | Owner authority, mission, policies, project navigation | Documents exist; conflicting drafts need reconciliation |
 | Living Fabric / AELI | advait_pure_sharp | Proposed routing and coordination contract | Architecture proposal, not deployed orchestrator |
 | Advait OS Gate | advait_os | Local filesystem gate and fail-closed high-risk decisions | v0.2 code and tests; no production identity provider |
 | Bounded Execution Core | advait-100x-research-audit | Allowlist, budgets, risk checks, evidence-verifier contract, ledger | Offline reference implementation; no live adapters |
-| B2B Worker | advait-100x-research-audit | CSV reconciliation and exception output | CSV-only worker; no PDF/OCR or XLSX multi-sheet pipeline |
+| B2B Worker | advait-100x-research-audit | CSV reconciliation and exception output | CSV worker and CI tests exist; no labelled real-world accuracy, XLSX/PDF/OCR, Brain adapter or customer pilot |
 | PanchTatva C10 | advait_pure_sharp | Scenario and regression harness | 10 simulated scenarios; not proof of intelligence |
-| SMV | 100X blueprint hub / PR #6 | Payment events, financial ledger and owner-controlled money architecture | PR #6 open at last inspection; no live payment or PNB integration proven |
+| SMV | 100X | Payment-event ledger and financial record foundation | Offline ledger; SQLite lifecycle regression passed; no live webhook, payout, bank settlement or PNB integration |
 | Research and Evidence Ledger | 100X | Sources, confidence, tests, benchmarks and decisions | Research logs and reports exist |
 | Owner Command Centre | my-brain docs + this blueprint | Approvals, opportunity portfolio, queue, spend and status | Documentation only; no deployed dashboard verified |
 
@@ -155,17 +155,22 @@ Phase 4: review SMV PR and test provider events in test mode; design PNB only th
 Phase 5: user installs phone runtime; measure resources; run bounded soak test before 24-hour claims.
 Phase 6: controlled research and evolution with tests, owner-reviewed promotion and rollback.
 
-## 15. Consolidation checkpoint — 2026-11-26
-Verified repository metadata:
-- Recursive main-branch trees fetched for all four named repositories without truncation.
-- My Brain PR #1 is merged.
-- Advait 100X PR #6 is open and unmerged.
-- 100X report records GitHub Actions run #87 with 50/50 tests; this is hosted CI, not phone runtime.
-- PanchTatva report records 3/3 regression tests and 10/10 simulated checks; not proof of intelligence or device performance.
-- ATC is explicitly a rule-based planner with no LLM, live research or execution.
-- The SMV offline payment-event ledger foundation is merged, but no production webhook receiver, PNB provider verifier, live payment adapter, authenticated owner provider, deployed independent evidence verifier, Android runtime, 24-hour operation, live customer delivery or realized revenue is verified.
+## 15. Consolidation checkpoint — 2026-11-27
 
-Coverage: recursive trees were retrieved for all four main branches. Detailed review covered key README, governance, integration, planner, queue, gate, architecture, business, audit and test documents; this is not a line-by-line audit of every source file or historical branch.
+Verified repository metadata:
+- Current main commits: 100X `ccfca945d87766f6e9a96c976fe0fc5ee2e1e3e6`; My Brain `068a1cd2190c7665c9d25dc0c8ea3c73fb3f4b5c`; Advait OS `eeb4ce2801360b2af09b44decdf8e260118eff48`; Pure Sharp `ad78d8c7e84ffc7b77db7be65b05d9cc76089226`.
+- Recursive trees contain 206 files / 226 entries; none of the four trees was truncated. Full paths are recorded in `CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md`.
+- My Brain PR #35 is merged. `GovernedSelfBuildRuntimeV3` uses `ManagedTaskQueueV3`; worker completion/failure is fenced by the active lease owner and expiry; the ATC integration smoke uses the managed V3 bridge. CI run [45906541842](https://github.com/kautilyamehra4436-cmyk/my-brain/actions/runs/45906541842) passed.
+- My Brain PRs #33/#34 closed the SQLite connection lifecycle gaps in legacy TaskQueue and ProviderCallLedger.
+- 100X PR #20 fixed SMV SQLite connection closure. PR #21 fixed the phone diagnostic's SQLite handles and added a regression test. CI run [45906684654](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit/actions/runs/45906684654) passed.
+- B2B reconciliation code is CSV-only and its CI tests pass; labelled real-world accuracy, XLSX/PDF/OCR, Brain adapter integration, customer pilot and revenue remain unverified.
+- ATC remains a deterministic planner, not an LLM. The managed bridge executes only explicitly selected, zero-cost, local allowlisted operations.
+- SMV remains an offline event-ledger foundation; no live webhook receiver, PNB verifier, payout/withdrawal/transfer or bank settlement adapter is enabled.
+- Advait OS Gate remains a separate offline gate; authenticated production owner identity and runtime integration are not verified.
+- Living Fabric/AELI remains an architecture proposal; PanchTatva C10 remains a scenario harness, not proof of intelligence or autonomy.
+- Android/Termux, persistent scheduling, 24-hour operation, live customer delivery and realized revenue are not verified.
+
+Coverage: recursive path inventories are complete for the four recorded main commits. This is not a line-by-line semantic audit of every source file, historical branch, external setting or runtime environment. Each capability is labelled by its actual test boundary, not by its blueprint existence.
 
 ## 16. Definition of operational success
 Advait is operational only when an authorized workflow has traceable demand evidence, approved scope and customer permission, reproducible deliverable, independent acceptance verification, customer acceptance, payment receipt independently confirmed, accurate ledger reconciliation, no policy/privacy/security/cost breach, and reproducible logs plus rollback/recovery. Until then report the exact verified stage and blockers.

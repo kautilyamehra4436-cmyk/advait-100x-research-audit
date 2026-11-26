@@ -1,15 +1,15 @@
 # Advait Full Project Atlas
-**Snapshot date:** 2026-11-26  
+**Snapshot date:** 2026-11-27  
 **Purpose:** One authoritative map for the central Brain to understand all four accessible Advait repositories, their blueprints, code, tests, dependencies, status and unresolved work.
 
 ## Snapshot scope and truth boundary
-Recursive Git trees were fetched from each repository's `main` branch; none reported truncation. This inventory contains **132 tree entries** (files plus directories). It is not a claim that every historical branch, hidden GitHub setting, external account or every source line has been audited. The detailed document/code review covered the key blueprints, integration pointers, policies, queue, gates, business, server, SCEE and tests.
+Recursive Git trees were fetched from each repository's `main` branch; none reported truncation. This inventory is superseded by [CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md](CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md), which records **206 files and 226 tree entries** across the four current main branches. It is not a claim that every historical branch, hidden GitHub setting, external account or every source line has been audited. The detailed document/code review covered the key blueprints, integration pointers, policies, queue, gates, business, server, SCEE and tests.
 
 ## Canonical repositories
 | Repository | Visibility | Main SHA inspected | Primary role |
 |---|---|---|---|
-| [advait-100x-research-audit](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit) | Public | `0b6c498c075136b9192123cab70f469629480843` | Canonical cross-project hub, bounded execution, B2B, research, server, SCEE, SMV and tests |
-| [my-brain](https://github.com/kautilyamehra4436-cmyk/my-brain) | Public | `030a7f1b98751f24d6f5e13a15f28cb63d22b48c` | Central Brain / ATC planning, task queue, memory conventions and zero-cost policy |
+| [advait-100x-research-audit](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit) | Public | `ccfca945d87766f6e9a96c976fe0fc5ee2e1e3e6` | Canonical cross-project hub, bounded execution, B2B, research, server, SCEE, SMV and tests |
+| [my-brain](https://github.com/kautilyamehra4436-cmyk/my-brain) | Public | `068a1cd2190c7665c9d25dc0c8ea3c73fb3f4b5c` | Central Brain / ATC planning, task queue, memory conventions and zero-cost policy |
 | [advait_os](https://github.com/kautilyamehra4436-cmyk/advait_os) | Private | `eeb4ce2801360b2af09b44decdf8e260118eff48` | Filesystem/security Gate, fail-closed HIGH/CRITICAL actions |
 | [advait_pure_sharp](https://github.com/kautilyamehra4436-cmyk/advait_pure_sharp) | Private | `ad78d8c7e84ffc7b77db7be65b05d9cc76089226` | Governance, Master Operating Algorithm, Command Centre, Living Fabric/AELI and PanchTatva C10 |
 
@@ -17,153 +17,7 @@ The owner prefix search returned these four repositories. The separately mention
 
 ## Repository file inventories
 
-### 1. advait-100x-research-audit — 61 entries
-```text
-.devcontainer/
-.devcontainer/devcontainer.json
-.github/
-.github/workflows/
-.github/workflows/engine-regression.yml
-.github/workflows/tests.yml
-ADVAIT_SELF_CRAFTING_EVOLUTION_ENGINE.md
-ADVAIT_SOVEREIGN_SERVER_BLUEPRINT.md
-B2B_DAILY_REPORT_2026-11-24.md
-B2B_DAILY_REPORT_2026-11-25.md
-B2B_DAILY_REPORT_2026-11-26.md
-B2B_DISCOVERY_LOG.md
-B2B_ENGINE_BLUEPRINT.md
-B2B_PROTOTYPE_TEST_RESULTS.md
-BENCHMARK_PLAN.md
-CEO_CONTROL_BOARD_SETUP.md
-CODESPACES_LIVE_SERVER.md
-CONSOLIDATION_EXECUTION_REPORT_2026-11-26.md
-ENGINE_STATUS.md
-ENGINE_TEST_RESULTS.md
-LIVE_TEST_RESULTS.txt
-MASTER_AUDIT.md
-OPEN_SOURCE_MAKER_CUSTOMER_INTELLIGENCE.md
-PHONE_RUN.md
-QUEUE_EVIDENCE_HARDENING_REPORT_2026-11-26.md
-README.md
-RELATIONSHIP_INTELLIGENCE.md
-SCEE_PHONE_AND_CODESPACES.md
-SMV_SETUP.md
-SOURCE_AUDIT_ADDENDUM.md
-UNIFIED_INTEGRATION_REGISTRY.md
-UNIFIED_MASTER_BLUEPRINT.md
-advait_engine.py
-advait_self_crafting.py
-advait_sovereign_server.py
-atc_handoff.py
-b2b_reconcile.py
-b2b_sample_input.csv
-ceo_control_board.py
-open_source_intelligence.py
-phone_runtime_check.py
-relationship_intelligence.py
-reports/
-reports/ADVAIT_SERVER_TOOL_LIVE_SCAN_2026-11-26.md
-reports/ADVait_LIVE_OPEN_SOURCE_SCAN_2026-11-26.md
-scripts/
-scripts/live_server_smoke.py
-scripts/scee_live_smoke.py
-smv_core.py
-soak_test.py
-test_advait_engine.py
-test_b2b_reconcile.py
-test_harness.py
-test_smv.py
-tests/
-tests/test_advait_live_self_run.py
-tests/test_advait_self_crafting.py
-tests/test_advait_sovereign_server.py
-tests/test_ceo_control_board.py
-tests/test_open_source_intelligence.py
-tests/test_relationship_intelligence.py
-```
-
-### 2. my-brain — 48 entries
-```text
-.github/
-.github/workflows/
-.github/workflows/atc-tests.yml
-.gitignore
-CHANGELOG.md
-INTEGRATIONS.md
-LICENSE
-README.md
-RUNTIME_QUICKSTART.md
-SOUL.md
-START_HERE.md
-UNIFIED_ADVait_INTEGRATION.md
-authorization.md
-compliance.md
-config.yml
-core/
-core/__init__.py
-core/atc_handoff.py
-core/atc_planner.py
-core/task_queue.py
-core/zero_cost_guard.py
-dashboard.md
-docs/
-docs/ATC_FIR_v1.2.md
-docs/ATC_INTEGRATION_MAP.md
-docs/REPOSITORY_RECONCILIATION_2026-11-24.md
-dreams.md
-emergence.md
-errors.md
-free_limits.md
-health.md
-integrations/
-integrations/registry.json
-legacy.md
-log.md
-onboarding.md
-revenue.md
-rules.md
-security.md
-session.md
-status.md
-tasks.md
-tests/
-tests/__init__.py
-tests/test_atc_handoff.py
-tests/test_atc_planner.py
-tests/test_runtime.py
-troubleshoot.md
-```
-
-### 3. advait_os — 8 entries
-```text
-.github/
-.github/workflows/
-.github/workflows/gate-security.yml
-.github/workflows/run-gate.yml
-GATE_SECURITY_V02.md
-README.md
-UNIFIED_ADVait_INTEGRATION.md
-advait_gate_v01.py
-```
-
-### 4. advait_pure_sharp — 15 entries
-```text
-.github/
-.github/workflows/
-.github/workflows/advait-panch-tatva-c10.yml
-ADVAIT_COMMAND_CENTRE.md
-ADVAIT_LIVING_FABRIC_ARCHITECTURE.md
-ChatGPT_0.1.md
-MASTER_OPERATING_ALGORITHM.md
-README.md
-SYNC_TEST.txt
-UNIFIED_ADVait_INTEGRATION.md
-advait_panch_tatva_c10.py
-reports/
-reports/ADVait_PanchTatva_C10_GITHUB_TEST_REPORT.md
-tests/
-tests/test_advait_panch_tatva_c10.py
-```
+The detailed, current inventory is maintained in [CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md](CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md). The earlier inline inventories below are retained in the prior snapshot's history and should not be used as current file counts.
 
 ## Blueprint and policy index
 
@@ -245,3 +99,8 @@ When an actual reasoning model/runtime is connected, it must read this file, `AD
 - explicit questions that only the owner can decide.
 
 Do not mark the assignment complete merely because this document exists. The review must cite file paths and line ranges, include the exact source SHAs, and distinguish direct source facts from hypotheses.
+
+
+## 2026-11-27 synchronization checkpoint
+
+See [CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md](CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md) for current main SHAs, exact file inventory, verified integration state and remaining gaps. This replaces the 2026-11-26 repository baselines; it does not assert a line-by-line audit of every source file.
