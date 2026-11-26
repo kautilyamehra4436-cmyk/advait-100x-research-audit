@@ -23,7 +23,7 @@ Canonical design: UNIFIED_MASTER_BLUEPRINT.md
 | B2B Reconciliation | 100X | CSV worker | CSV-only; benchmark expansion required |
 | PanchTatva C10 | pure_sharp | Scenario harness | Simulated checks only |
 | Living Fabric / AELI | pure_sharp | Architecture proposal | Not a deployed orchestrator |
-| SMV | 100X PR #6 | Open PR | Inspect diff before merge; no live payment |
+| SMV | 100X PR #8 | Merged offline foundation | Synthetic tests; no live payment, webhook server or PNB verifier |
 | PNB adapter | Intended | Not implemented/verified | Official supported route; owner configured |
 | PDF/OCR/XLSX worker | 100X blueprint | Not implemented | Synthetic benchmark first |
 | Android runtime | My Brain integration register | Candidate | User installation and device test required |
