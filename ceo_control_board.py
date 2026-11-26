@@ -37,6 +37,9 @@ WORKSTREAMS = [
     ("Owner-aligned relationship intelligence", "relationship_intelligence.py", "FOUNDATION_PRESENT"),
     ("Relationship intelligence tests", "tests/test_relationship_intelligence.py", "FOUNDATION_PRESENT"),
     ("Owner-fit and work-mix report specification", "RELATIONSHIP_INTELLIGENCE.md", "DOCUMENTED"),
+    ("Open-source maker and customer intelligence", "open_source_intelligence.py", "FOUNDATION_PRESENT"),
+    ("Open-source maker/customer test suite", "tests/test_open_source_intelligence.py", "FOUNDATION_PRESENT"),
+    ("Open-source tool purpose, license and defense guide", "OPEN_SOURCE_MAKER_CUSTOMER_INTELLIGENCE.md", "DOCUMENTED"),
 ]
 
 LABELS = {
