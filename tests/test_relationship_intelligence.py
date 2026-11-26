@@ -13,7 +13,7 @@ class RelationshipIntelligenceTests(unittest.TestCase):
 
     def test_requires_evidence_before_priority(self):
         item = Opportunity("Spreadsheet cleanup", "data entry", "public listing")
-        result = score_opportunity(item)
+        result = score_opportunity(item, evidence_verifier=lambda _: True)
         self.assertEqual(result["decision"], "NEEDS_EVIDENCE")
 
     def test_owner_fit_affects_priority_and_unknown_is_reported(self):
@@ -27,7 +27,9 @@ class RelationshipIntelligenceTests(unittest.TestCase):
             verified_need=3, usefulness=3, feasibility=2,
             relationship_value=3, owner_fit=2, evidence="listing reference",
         )
-        report = build_opportunity_report([good, unknown], DEFAULT_OWNER_PROFILE)
+        report = build_opportunity_report(
+            [good, unknown], DEFAULT_OWNER_PROFILE, evidence_verifier=lambda _: True
+        )
         self.assertEqual(report["total_opportunities"], 2)
         self.assertEqual(report["unknown_work_count"], 1)
         self.assertIn("software_and_automation", report["category_counts"])
@@ -36,12 +38,38 @@ class RelationshipIntelligenceTests(unittest.TestCase):
     def test_rejects_invalid_ratings_and_bad_weights(self):
         item = Opportunity("Task", "description", "source", verified_need=6, evidence="x")
         with self.assertRaises(ValueError):
-            score_opportunity(item)
+            score_opportunity(item, evidence_verifier=lambda _: True)
         profile = dict(DEFAULT_OWNER_PROFILE)
         profile["scoring_weights"] = dict(DEFAULT_OWNER_PROFILE["scoring_weights"])
         profile["scoring_weights"]["owner_fit"] = 0.9
         with self.assertRaises(ValueError):
-            score_opportunity(Opportunity("Task", "description", "source", verified_need=1, evidence="x"), profile)
+            score_opportunity(
+                Opportunity("Task", "description", "source", verified_need=1, evidence="x"),
+                profile, evidence_verifier=lambda _: True,
+            )
+
+    def test_evidence_string_alone_is_not_accepted(self):
+        item = Opportunity(
+            "Python API automation", "integrate an API", "public source",
+            verified_need=5, usefulness=5, feasibility=4,
+            relationship_value=4, owner_fit=5, evidence="unverified claim",
+        )
+        result = score_opportunity(item)
+        self.assertEqual(result["decision"], "NEEDS_EVIDENCE")
+        self.assertIn("verifier is not configured", result["reason"])
+
+    def test_verifier_exception_fails_closed(self):
+        item = Opportunity(
+            "Python API automation", "integrate an API", "public source",
+            verified_need=5, usefulness=5, feasibility=4,
+            relationship_value=4, owner_fit=5, evidence="source reference",
+        )
+
+        def broken_verifier(_):
+            raise RuntimeError("verifier unavailable")
+
+        result = score_opportunity(item, evidence_verifier=broken_verifier)
+        self.assertEqual(result["decision"], "NEEDS_EVIDENCE")
 
     def test_avoid_list_is_fail_closed(self):
         item = Opportunity("Task", "description", "source", category="spam")

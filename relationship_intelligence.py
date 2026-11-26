@@ -10,7 +10,7 @@ from __future__ import annotations
 from collections import Counter
 from dataclasses import dataclass, asdict
 from datetime import datetime, timezone
-from typing import Iterable
+from typing import Callable, Iterable
 
 WORK_CATEGORIES = {
     "digital_operations": ("website updates", "data entry", "catalog", "spreadsheet", "admin"),
@@ -82,7 +82,11 @@ def _bounded_score(value: int) -> int:
     return value
 
 
-def score_opportunity(item: Opportunity, owner_profile: dict | None = None) -> dict:
+def score_opportunity(
+    item: Opportunity,
+    owner_profile: dict | None = None,
+    evidence_verifier: Callable[[Opportunity], bool] | None = None,
+) -> dict:
     profile = owner_profile or DEFAULT_OWNER_PROFILE
     weights = profile.get("scoring_weights", DEFAULT_OWNER_PROFILE["scoring_weights"])
     if set(weights) != set(DEFAULT_OWNER_PROFILE["scoring_weights"]):
@@ -106,6 +110,14 @@ def score_opportunity(item: Opportunity, owner_profile: dict | None = None) -> d
         return {"category": category, "score": 0.0, "decision": "NEEDS_EVIDENCE", "reason": "source is required"}
     if not item.evidence.strip() or item.verified_need == 0:
         return {"category": category, "score": 0.0, "decision": "NEEDS_EVIDENCE", "reason": "evidence and verified need are required"}
+    if evidence_verifier is None:
+        return {"category": category, "score": 0.0, "decision": "NEEDS_EVIDENCE", "reason": "independent evidence verifier is not configured"}
+    try:
+        verified = evidence_verifier(item)
+    except Exception:
+        verified = False
+    if verified is not True:
+        return {"category": category, "score": 0.0, "decision": "NEEDS_EVIDENCE", "reason": "independent evidence verification failed"}
     score = round(sum((ratings[key] / 5) * float(weights[key]) for key in weights) * 100, 2)
     if category == "unknown":
         decision = "OWNER_REVIEW_UNKNOWN_WORK"
@@ -118,13 +130,17 @@ def score_opportunity(item: Opportunity, owner_profile: dict | None = None) -> d
     return {"category": category, "score": score, "decision": decision, "reason": "rank only; owner approval required before commitments"}
 
 
-def build_opportunity_report(items: Iterable[Opportunity], owner_profile: dict | None = None) -> dict:
+def build_opportunity_report(
+    items: Iterable[Opportunity],
+    owner_profile: dict | None = None,
+    evidence_verifier: Callable[[Opportunity], bool] | None = None,
+) -> dict:
     rows = []
     category_counts = Counter()
     unknown_items = []
     decisions = Counter()
     for item in items:
-        result = score_opportunity(item, owner_profile)
+        result = score_opportunity(item, owner_profile, evidence_verifier)
         row = {**asdict(item), **result}
         rows.append(row)
         category_counts[result["category"]] += 1
