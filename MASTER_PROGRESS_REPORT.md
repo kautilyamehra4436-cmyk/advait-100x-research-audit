@@ -234,5 +234,7 @@ At the next session:
   - Advait OS: `eeb4ce2801360b2af09b44decdf8e260118eff48`
   - Pure Sharp: `ad78d8c7e84ffc7b77db7be65b05d9cc76089226`
 - My Brain main post-worker CI [45870913679](https://github.com/kautilyamehra4436-cmyk/my-brain/actions/runs/45870913679) completed successfully.
+- Hub atlas/blueprint/registry validation CI [45871232733](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit/actions/runs/45871232733) passed; the atlas validator, regression tests, HTTP smoke, phone-compatible runtime check, short SQLite soak and actual self-run steps all passed in GitHub-hosted CI.
+- Hub documentation follow-up CI [45871225774](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit/actions/runs/45871225774) also passed. Earlier branch runs [45871218871](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit/actions/runs/45871218871), [45871223748](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit/actions/runs/45871223748) and [45871223759](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit/actions/runs/45871223759) also passed.
 - Atlas and Integration Registry were refreshed on this PR branch to reflect the current My Brain worker and repository baselines. These hub documentation updates remain under PR #18 review.
 
