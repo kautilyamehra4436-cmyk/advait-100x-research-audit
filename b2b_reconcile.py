@@ -5,11 +5,15 @@ This tool flags potential issues; it does not make accounting/tax decisions or
 silently alter source data. The original CSV is never overwritten.
 """
 from __future__ import annotations
-import argparse, csv, re, sys
+import argparse, csv, io, re, sys
 from collections import Counter
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
+MAX_INPUT_BYTES = 1_048_576
+MAX_OUTPUT_BYTES = 4_194_304
+MAX_ROWS = 10_000
+MAX_COLUMNS = 100
 REQUIRED = ("invoice_id", "vendor", "amount")
 OUTPUT_FINDINGS = ("row_number", "invoice_id", "rule", "severity", "field", "observed", "expected", "detail")
 
@@ -69,6 +73,111 @@ def analyze_rows(rows):
                 detail="Vendor text differs from supplied PO vendor; may be alias/formatting, review.")
     return findings
 
+def _serialize_csv(headers, rows):
+    stream = io.StringIO(newline="")
+    writer = csv.DictWriter(stream, fieldnames=headers, extrasaction="ignore", lineterminator="\n")
+    writer.writeheader()
+    writer.writerows(rows)
+    return stream.getvalue()
+
+
+def reconcile_text(csv_text: str):
+    """Pure, bounded CSV reconciliation API; performs no filesystem or network I/O."""
+    if not isinstance(csv_text, str):
+        raise TypeError("csv_text must be a string")
+    encoded = csv_text.encode("utf-8")
+    if not encoded or len(encoded) > MAX_INPUT_BYTES:
+        raise ValueError("CSV input is empty or exceeds the 1 MiB limit")
+    csv_text = csv_text.lstrip("\ufeff")
+    if "\x00" in csv_text:
+        raise ValueError("CSV contains a NUL character")
+
+    reader = csv.DictReader(io.StringIO(csv_text, newline=""))
+    if not reader.fieldnames:
+        raise ValueError("CSV has no header row.")
+    fields = [str(name).strip() if name is not None else "" for name in reader.fieldnames]
+    if len(fields) > MAX_COLUMNS:
+        raise ValueError("CSV exceeds the 100-column limit")
+    if any(not name for name in fields):
+        raise ValueError("CSV contains a blank header")
+    normalized_headers = [name.casefold() for name in fields]
+    if len(set(normalized_headers)) != len(normalized_headers):
+        raise ValueError("CSV contains duplicate headers")
+    reader.fieldnames = fields
+    missing = [name for name in REQUIRED if name not in fields]
+    if missing:
+        raise ValueError("Missing required columns: " + ", ".join(missing))
+
+    rows = []
+    for row_number, row in enumerate(reader, start=2):
+        if None in row:
+            raise ValueError(f"CSV row {row_number} has more values than the header")
+        if any(value is None for value in row.values()):
+            raise ValueError(f"CSV row {row_number} has fewer values than the header")
+        rows.append(row)
+        if len(rows) > MAX_ROWS:
+            raise ValueError("CSV exceeds the 10000-row limit")
+
+    findings = analyze_rows(rows)
+    normalized = []
+    for row_number, row in enumerate(rows, start=2):
+        copy = {key: value.strip() if isinstance(value, str) else value
+                for key, value in row.items()}
+        for field, value in list(copy.items()):
+            if field in {"amount", "po_amount"} or not isinstance(value, str):
+                continue
+            if value.lstrip(" \u00a0").startswith(("=", "+", "-", "@", "\t", "\r")):
+                findings.append({
+                    "row_number": row_number,
+                    "invoice_id": (row.get("invoice_id") or "").strip(),
+                    "rule": "formula_injection_risk",
+                    "severity": "high",
+                    "field": field,
+                    "observed": value,
+                    "expected": "literal text",
+                    "detail": "Spreadsheet formula-like value was escaped in the normalized output.",
+                })
+                copy[field] = "'" + value
+        normalized.append(copy)
+
+    findings.sort(key=lambda item: (item["row_number"], item["field"], item["rule"]))
+    severity_counts = Counter(item["severity"] for item in findings)
+    rule_counts = Counter(item["rule"] for item in findings)
+    summary = (
+        "Advait CSV Validation Summary\n"
+        f"Rows checked: {len(rows)}\nFlags: {len(findings)}\n"
+        "Severity counts: " + ", ".join(f"{key}={value}" for key, value in sorted(severity_counts.items())) + "\n"
+        "Rule counts: " + ", ".join(f"{key}={value}" for key, value in sorted(rule_counts.items())) + "\n"
+        "Limit: flags are review suggestions, not accounting/tax conclusions.\n"
+    )
+    normalized_csv = _serialize_csv(fields, normalized)
+    safe_findings = []
+    for finding in findings:
+        safe = dict(finding)
+        for field, value in safe.items():
+            if isinstance(value, str) and value.lstrip(" \u00a0").startswith(("=", "+", "-", "@", "\t", "\r")):
+                safe[field] = "'" + value
+        safe_findings.append(safe)
+    exceptions_csv = _serialize_csv(OUTPUT_FINDINGS, safe_findings)
+    output_bytes = (
+        len(normalized_csv.encode("utf-8"))
+        + len(exceptions_csv.encode("utf-8"))
+        + len(summary.encode("utf-8"))
+    )
+    if output_bytes > MAX_OUTPUT_BYTES:
+        raise ValueError("reconciliation output exceeds the 4 MiB limit")
+    return {
+        "rows_checked": len(rows),
+        "flags": len(findings),
+        "severity_counts": dict(sorted(severity_counts.items())),
+        "rule_counts": dict(sorted(rule_counts.items())),
+        "findings": findings,
+        "normalized_csv": normalized_csv,
+        "exceptions_csv": exceptions_csv,
+        "summary": summary,
+    }
+
+
 def write_csv(path, headers, rows):
     with open(path, "w", newline="", encoding="utf-8-sig") as f:
         writer = csv.DictWriter(f, fieldnames=headers, extrasaction="ignore")
@@ -77,37 +186,29 @@ def write_csv(path, headers, rows):
 
 def run(input_path, output_prefix):
     input_path, prefix = Path(input_path), Path(output_prefix)
-    with input_path.open("r", newline="", encoding="utf-8-sig") as f:
-        reader = csv.DictReader(f)
-        if not reader.fieldnames:
-            raise ValueError("CSV has no header row.")
-        fields = reader.fieldnames
-        missing = [h for h in REQUIRED if h not in fields]
-        if missing:
-            raise ValueError("Missing required columns: " + ", ".join(missing))
-        rows = list(reader)
-    findings = analyze_rows(rows)
+    raw = input_path.read_bytes()
+    if len(raw) > MAX_INPUT_BYTES:
+        raise ValueError("CSV input exceeds the 1 MiB limit")
+    csv_text = raw.decode("utf-8-sig")
+    report = reconcile_text(csv_text)
+
     findings_path = Path(str(prefix) + "_exceptions.csv")
     clean_path = Path(str(prefix) + "_normalized.csv")
     summary_path = Path(str(prefix) + "_summary.txt")
-    normalized = []
-    for row in rows:
-        copy = dict(row)
-        for k, v in copy.items():
-            if isinstance(v, str):
-                copy[k] = v.strip()
-        normalized.append(copy)
-    write_csv(clean_path, fields, normalized)
-    write_csv(findings_path, OUTPUT_FINDINGS, findings)
-    severity_counts = Counter(x["severity"] for x in findings)
-    rule_counts = Counter(x["rule"] for x in findings)
-    with summary_path.open("w", encoding="utf-8") as f:
-        f.write("Advait CSV Validation Summary\n")
-        f.write(f"Input: {input_path.name}\nRows checked: {len(rows)}\nFlags: {len(findings)}\n")
-        f.write("Severity counts: " + ", ".join(f"{k}={v}" for k, v in sorted(severity_counts.items())) + "\n")
-        f.write("Rule counts: " + ", ".join(f"{k}={v}" for k, v in sorted(rule_counts.items())) + "\n")
-        f.write("Limit: flags are review suggestions, not accounting/tax conclusions.\n")
-    return findings, (clean_path, findings_path, summary_path)
+    targets = (clean_path, findings_path, summary_path)
+    if not prefix.parent.exists() or not prefix.parent.is_dir() or prefix.parent.is_symlink():
+        raise ValueError("output directory must be an existing non-symlink directory")
+    if any(path.exists() or path.is_symlink() for path in targets):
+        raise FileExistsError("refusing to overwrite an existing output artifact")
+
+    for path, content, encoding in (
+        (clean_path, report["normalized_csv"], "utf-8-sig"),
+        (findings_path, report["exceptions_csv"], "utf-8-sig"),
+        (summary_path, report["summary"], "utf-8"),
+    ):
+        with path.open("x", encoding=encoding, newline="") as stream:
+            stream.write(content)
+    return report["findings"], (clean_path, findings_path, summary_path)
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
