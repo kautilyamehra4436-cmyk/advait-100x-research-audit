@@ -1,15 +1,19 @@
 """CI smoke test for SCEE's actual Python API and CLI."""
 import json
+from pathlib import Path
 import subprocess
 import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
 
 from advait_self_crafting import self_test
 
 result = self_test()
 assert result["result"] == "PASS"
 proc = subprocess.run(
-    [sys.executable, "advait_self_crafting.py", "--self-test"],
-    check=True, capture_output=True, text=True, timeout=10,
+    [sys.executable, str(ROOT / "advait_self_crafting.py"), "--self-test"],
+    cwd=ROOT, check=True, capture_output=True, text=True, timeout=10,
 )
 payload = json.loads(proc.stdout)
 assert payload["result"] == "PASS"
