@@ -177,8 +177,8 @@ The hub is the canonical cross-project index and progress ledger. Specialist rep
 At the 2026-11-26 checkpoint:
 - Four repositories are inventoried in the 132-entry atlas.
 - My Brain ATC v1.2 is a deterministic planner, not an LLM reasoning runtime.
-- Task Queue stores/claims plan tasks; it is not an execution worker.
-- Queue completion requires an injected verifier and evidence; a production verifier is not deployed.
+- Task Queue stores/claims tasks; bounded worker v0.1 is now merged in My Brain and dispatches only host-allowlisted handlers for explicitly marked tasks. ATC plan-only entries remain unclaimed by the worker.
+- Worker completion requires an injected evidence verifier; no production independent verifier is deployed. No real-world external adapters or authenticated owner identity provider are shipped.
 - Zero-cost guard exists but global enforcement across every adapter is not proven.
 - Advait OS HIGH/CRITICAL gate requires an injected authenticated verifier; no production owner identity provider is configured.
 - Bounded execution core, B2B CSV reconciliation, SMV event ledger, relationship/open-source intelligence, server and self-crafting components have offline/reference foundations; live external adapters and target-phone operation are not proven.
