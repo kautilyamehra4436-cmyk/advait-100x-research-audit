@@ -51,3 +51,11 @@ This repository is the canonical cross-project blueprint and evidence hub. My Br
 - [Open-Source Maker & Customer Intelligence](OPEN_SOURCE_MAKER_CUSTOMER_INTELLIGENCE.md) — tool purpose, maker/customer matching, license/security review gates.
 - [Advait Sovereign Server Blueprint](ADVAIT_SOVEREIGN_SERVER_BLUEPRINT.md) — local-first server architecture and safety gates.
 - [Live server-tool scan](reports/ADVAIT_SERVER_TOOL_LIVE_SCAN_2026-11-26.md) — public GitHub metadata and README review.
+
+## Owner constitution and single resume point
+
+- [Advait Constitution](ADVAIT_CONSTITUTION.md) — proposed cross-project authority, operating, safety and execution rules.
+- [Master Progress Report](MASTER_PROGRESS_REPORT.md) — single checkpoint: completed work, verified evidence, conflicts, ordered backlog and exact resume point.
+- [Full Project Atlas](FULL_PROJECT_ATLAS.md) — four-repository inventory snapshot.
+
+For every new session, read the Master Progress Report first, then follow its mandatory reading order. The Constitution remains proposed until the owner explicitly accepts it. These documents do not imply that unimplemented runtime capabilities are live.
