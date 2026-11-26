@@ -42,11 +42,11 @@ Owner constraints:
 | Repository | Role | Visibility | Atlas baseline inspected |
 |---|---|---|---|
 | [advait-100x-research-audit](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit) | Cross-project hub, reports, blueprints, bounded engine, B2B, research and CI | Public | `0b6c498c075136b9192123cab70f469629480843` |
-| [my-brain](https://github.com/kautilyamehra4436-cmyk/my-brain) | Central Brain, ATC planner, task queue and zero-cost helper | Public | `030a7f1b98751f24d6f5e13a15f28cb63d22b48c` |
+| [my-brain](https://github.com/kautilyamehra4436-cmyk/my-brain) | Central Brain, ATC planner, task queue and zero-cost helper | Public | `e1b02f29a99b0267999b5e1a8cb1f2b653a57411` |
 | [advait_os](https://github.com/kautilyamehra4436-cmyk/advait_os) | Security/filesystem gate | Private | `eeb4ce2801360b2af09b44decdf8e260118eff48` |
 | [advait_pure_sharp](https://github.com/kautilyamehra4436-cmyk/advait_pure_sharp) | Personal Algorithm, governance, Living Fabric and PanchTatva C10 | Private | `ad78d8c7e84ffc7b77db7be65b05d9cc76089226` |
 
-Important: the above are the atlas snapshot SHAs, not a guarantee of the current main HEAD of every repository. Re-fetch all four main refs before the next implementation batch. The atlas lists 132 entries total; it is not a full line-by-line audit of all history, branches or external settings.
+Important: the above are the atlas snapshot SHAs, not a guarantee of the current main HEAD of every repository. Re-fetch all four main refs before the next implementation batch. The refreshed main-branch atlas lists 138 entries total; it is not a full line-by-line audit of all history, branches or external settings.
 
 ## 4. COMPLETED WORK — WITH EVIDENCE
 
@@ -224,3 +224,15 @@ At the next session:
 5. Add the first narrow local file/CSV adapter with path, size, privacy and independent-evidence tests.
 6. Owner reviews/accepts the Constitution; then merge hub PR #18.
 7. Prepare Android package and test on the user's phone; do not claim phone readiness before device evidence.
+
+### Four-repository live tree refresh — verified
+- Re-fetched all four `main` refs and recursive trees; none reported truncation.
+- Current tree entries: hub 65, My Brain 50, Advait OS 8, Pure Sharp 15; total **138**.
+- Current main SHAs:
+  - Hub: `4b13a6dab3f95370a994342f4a5b337fae858b2d`
+  - My Brain: `e1b02f29a99b0267999b5e1a8cb1f2b653a57411`
+  - Advait OS: `eeb4ce2801360b2af09b44decdf8e260118eff48`
+  - Pure Sharp: `ad78d8c7e84ffc7b77db7be65b05d9cc76089226`
+- My Brain main post-worker CI [45870913679](https://github.com/kautilyamehra4436-cmyk/my-brain/actions/runs/45870913679) completed successfully.
+- Atlas and Integration Registry were refreshed on this PR branch to reflect the current My Brain worker and repository baselines. These hub documentation updates remain under PR #18 review.
+
