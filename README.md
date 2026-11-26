@@ -4,7 +4,7 @@ Research checkpoint and offline mock harness plus a bounded execution engine.
 
 **Research status:** partial; no 100X performance or global novelty claim is proven.
 **Engine status:** hardened offline reference core; no live web/bounty/payment integrations.
-**B2B discovery status:** initial market scan recorded; no customer outreach, pilot, or revenue yet.
+**B2B code status:** CSV reconciler integrated into My Brain through a pinned submodule; synthetic CI only (5 rows / 7 flags). Financial artifact vault is unencrypted at rest; no real customer data, outreach, pilot, or revenue yet.
 
 Run:
 ```sh
@@ -38,6 +38,7 @@ All tests are offline and use mock adapters. No account credentials, network act
 
 - [Unified Advait Sovereign AI CEO Master Blueprint](UNIFIED_MASTER_BLUEPRINT.md)
 - [Cross-repository Integration Registry](UNIFIED_INTEGRATION_REGISTRY.md)
+- [Current four-repository snapshot and complete path inventory](CURRENT_REPOSITORY_SNAPSHOT_2026-11-27.md)
 
 This repository is the canonical cross-project blueprint and evidence hub. My Brain remains the central intelligence implementation; specialized modules remain in their source repositories. The blueprint explicitly separates verified capabilities from planned integrations and untested runtime claims.
 
