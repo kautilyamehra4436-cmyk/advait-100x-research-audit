@@ -40,3 +40,6 @@ All tests are offline and use mock adapters. No account credentials, network act
 - [Cross-repository Integration Registry](UNIFIED_INTEGRATION_REGISTRY.md)
 
 This repository is the canonical cross-project blueprint and evidence hub. My Brain remains the central intelligence implementation; specialized modules remain in their source repositories. The blueprint explicitly separates verified capabilities from planned integrations and untested runtime claims.
+
+- [Live consolidation execution report](CONSOLIDATION_EXECUTION_REPORT_2026-11-26.md)
+- [Queue evidence-gate hardening report](QUEUE_EVIDENCE_HARDENING_REPORT_2026-11-26.md)
