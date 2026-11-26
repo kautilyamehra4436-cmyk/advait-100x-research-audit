@@ -22,6 +22,7 @@ class ReconcilePrototypeTests(unittest.TestCase):
         )
         self.assertIn("formula_injection_risk", report["rule_counts"])
         self.assertIn("'=HYPERLINK", report["normalized_csv"])
+        self.assertIn("'=HYPERLINK", report["exceptions_csv"])
 
     def test_duplicate_headers_are_rejected(self):
         with self.assertRaisesRegex(ValueError, "duplicate headers"):
