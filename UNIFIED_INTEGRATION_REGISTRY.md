@@ -55,7 +55,7 @@ Current recursive-tree snapshot: 213 files / 235 tree entries, no truncated tree
 - My Brain PRs #33/#34: legacy TaskQueue and ProviderCallLedger SQLite lifecycle fixes merged.
 - 100X PR #20: SMV SQLite connection lifecycle fix merged and CI passed.
 - 100X PR #21: phone runtime diagnostic connection lifecycle fix merged; regression test added and CI run 45906684654 passed.
-- The B2B worker is CSV-only and not yet integrated as a Brain adapter; no labelled production accuracy, customer pilot or revenue is verified.
+- The B2B CSV worker is integrated as a pinned My Brain adapter; synthetic CI passed 5 rows / 7 flags. No real customer data, labelled production accuracy, customer pilot or revenue is verified; the financial vault is unencrypted at rest.
 - Advait OS Gate remains a separate offline security component; authenticated identity and Brain integration are pending.
 - No LLM runtime, Android/Termux validation, persistent scheduler, 24-hour operation, live payment or external customer execution is verified.
 
