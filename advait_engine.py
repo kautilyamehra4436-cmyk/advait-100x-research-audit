@@ -364,28 +364,56 @@ class Engine:
 
 
 def demo():
+    """Run a real local calculation and prove a high-risk action is blocked.
+
+    This is an offline self-run, not a live customer, network, or payment action.
+    """
     tasks = [
-        Task("T1", "Local calculation", "local", "calculate", {"x": 4}),
-        Task("T2", "Create a file (approval-gated)", "local", "write_file",
+        Task("T1", "Add two numbers", "local", "calculate",
+             {"x": 4, "y": 5}),
+        Task("T2", "Write a file (approval-gated)", "local", "write_file",
              {"name": "example.txt", "content": "demo"}, Risk.HIGH),
     ]
+
+    def local_adapter(task):
+        if task.action == "calculate":
+            value = task.payload["x"] + task.payload["y"]
+            return {"outcome": "success", "value": value,
+                    "evidence": f"sum:{value}"}
+        if task.action == "write_file":
+            # This branch must never run without an authenticated owner verifier.
+            return {"outcome": "success", "evidence": "unexpected dry-run"}
+        return {"outcome": "failure", "evidence": ""}
+
+    def verify_calculation(task, output):
+        if task.action != "calculate":
+            return False
+        expected = task.payload["x"] + task.payload["y"]
+        return output.get("value") == expected and output.get("evidence") == f"sum:{expected}"
+
     engine = Engine(
         Policy({"local": {"calculate", "write_file"}}),
-        evidence_verifier=lambda task, output: (
-            isinstance(output.get("evidence"), str) and bool(output["evidence"])
-        ),
+        evidence_verifier=verify_calculation,
     )
-    adapters = {
-        "local": lambda task: {
-            "outcome": "success",
-            "evidence": "computed result: 4" if task.action == "calculate" else "dry-run only",
-        }
+    engine.run(tasks, {"local": local_adapter})
+    report = {
+        "engine": "ADVAIT",
+        "mode": "offline_self_run",
+        "calculation": {"input": [4, 5], "actual_result": 9,
+                        "status": tasks[0].status.value},
+        "high_risk_action": {"status": tasks[1].status.value,
+                             "adapter_attempts": tasks[1].attempts},
+        "ledger_integrity": engine.ledger.verify(),
+        "summary": engine.summary(tasks),
+        "external_network_actions": False,
+        "payment_actions": False,
     }
-    engine.run(tasks, adapters)
-    print("Status:", engine.summary(tasks))
-    print("Ledger integrity:", engine.ledger.verify())
-    print(engine.ledger.export_json())
+    assert tasks[0].status == Status.DONE
+    assert tasks[1].status == Status.NEEDS_APPROVAL
+    assert tasks[1].attempts == 0
+    assert report["ledger_integrity"] is True
+    return report
 
 
 if __name__ == "__main__":
-    demo()
+    print(json.dumps(demo(), ensure_ascii=False, indent=2, sort_keys=True))
