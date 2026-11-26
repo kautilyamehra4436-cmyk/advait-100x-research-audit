@@ -5,10 +5,10 @@ Canonical design: UNIFIED_MASTER_BLUEPRINT.md
 ## Repository baselines
 | Repository | Main baseline SHA | Role |
 |---|---|---|
-| my-brain | 497b41780ad2634ca6498460e96fe3eb739c83d6 | Central Brain / ATC |
+| my-brain | a47ab5d2e1778ca3f5c44edbbe16d179db30c181 | Central Brain / ATC |
 | advait_os | 07f24f281fb89b189384112ed35530e3108b9d85 | Security Gate |
-| advait_pure_sharp | 55098ab2188f324260ca233966fc8f4c6334e478 | Governance / Living Fabric / PanchTatva |
-| advait-100x-research-audit | 67a1595bddab2b538d3d562e032d3a0de291878b | Execution / B2B / Research / Master Hub |
+| advait_pure_sharp | 9e5927935ae3f2520e606213473b61ff87596277 | Governance / Living Fabric / PanchTatva |
+| advait-100x-research-audit | e6b52df9f7e9a2e8690217ace813e2e29b65b244 | Execution / B2B / Research / Master Hub |
 
 ## Module register
 | Module | Source | State | Integration rule |
@@ -20,7 +20,7 @@ Canonical design: UNIFIED_MASTER_BLUEPRINT.md
 | ATC Handoff | my-brain/core | Managed V3 bridge to governed runtime | Explicit local allowlisted operation only; no external action |
 | Advait OS Gate v0.2 | advait_os | Offline gate | HIGH/CRITICAL blocked without authenticated verifier |
 | Bounded Execution Core v0.2 | 100X | Offline reference | No live adapters; independent verifier not deployed |
-| B2B Reconciliation | 100X | CSV worker | CSV-only; benchmark expansion required |
+| B2B Reconciliation | 100X pinned submodule → My Brain | CSV-only governed local adapter; synthetic CI passed 5 rows / 7 flags | Separate unencrypted-at-rest file vault; no real customer data; precision/recall benchmark and XLSX/PDF/OCR pending |
 | PanchTatva C10 | pure_sharp | Scenario harness | Simulated checks only |
 | Living Fabric / AELI | pure_sharp | Architecture proposal | Not a deployed orchestrator |
 | SMV | 100X PR #8, #20 | Merged offline foundation; SQLite closure regression passed | No live payment, webhook receiver, payout, bank settlement or PNB verifier |
@@ -65,3 +65,5 @@ Current recursive-tree snapshot: 213 files / 235 tree entries, no truncated tree
 - My Brain PR #37 merged: pinned 100X submodule, separate financial artifact store, B2B adapter registration in GovernedSelfBuildRuntimeV3 and explicit local consent/confirmation gates.
 - CI run [45908960326](https://github.com/kautilyamehra4436-cmyk/my-brain/actions/runs/45908960326) passed 131 tests, compile and end-to-end synthetic integration smoke: 5 rows, 7 review flags, source rows absent from operational queue.
 - The vault is permission-restricted but not encrypted at rest; explicit acknowledgement is required. Local owner flags are not authentication. Real customer data remains blocked pending encryption and owner identity.
+
+- My Brain PR #37 integrated the pinned 100X B2B CSV reconciler; CI 45908960326 passed 131 tests and synthetic smoke. No real customer data was processed; the separate financial vault is not encrypted at rest.
