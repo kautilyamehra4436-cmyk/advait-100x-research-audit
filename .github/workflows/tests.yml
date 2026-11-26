@@ -18,4 +18,6 @@ jobs:
       - run: python -m unittest -v tests.test_advait_sovereign_server
       - run: python -m unittest -v tests.test_relationship_intelligence
       - run: python -m unittest -v tests.test_open_source_intelligence
+      - name: Live HTTP smoke test
+        run: python scripts/live_server_smoke.py
       - run: python advait_engine.py
