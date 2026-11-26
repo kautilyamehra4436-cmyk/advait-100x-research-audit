@@ -16,4 +16,5 @@ jobs:
       - run: python -m unittest -v test_b2b_reconcile.py
       - run: python -m unittest -v test_smv.py
       - run: python -m unittest -v tests.test_relationship_intelligence
+      - run: python -m unittest -v tests.test_open_source_intelligence
       - run: python advait_engine.py
