@@ -32,3 +32,11 @@ B2B documents:
 Phone guidance: `PHONE_RUN.md`. Build checkpoint: `ENGINE_STATUS.md`. Benchmark proposal: `BENCHMARK_PLAN.md`. Research findings/limitations: `MASTER_AUDIT.md` and `SOURCE_AUDIT_ADDENDUM.md`.
 
 All tests are offline and use mock adapters. No account credentials, network actions, bounty submissions, money movement, or irreversible actions are performed.
+
+
+## Unified project control plane
+
+- [Unified Advait Sovereign AI CEO Master Blueprint](UNIFIED_MASTER_BLUEPRINT.md)
+- [Cross-repository Integration Registry](UNIFIED_INTEGRATION_REGISTRY.md)
+
+This repository is the canonical cross-project blueprint and evidence hub. My Brain remains the central intelligence implementation; specialized modules remain in their source repositories. The blueprint explicitly separates verified capabilities from planned integrations and untested runtime claims.
