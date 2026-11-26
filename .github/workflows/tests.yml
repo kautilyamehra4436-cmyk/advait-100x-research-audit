@@ -27,6 +27,7 @@ jobs:
       - run: python -m unittest -v test_advait_engine.py
       - run: python -m unittest -v tests.test_advait_live_self_run
       - run: python -m unittest -v test_b2b_reconcile.py
+      - run: python -m unittest -v test_ceo_control_board.py
       - run: python -m unittest -v test_smv.py
       - run: python -m unittest -v tests.test_advait_sovereign_server
       - run: python -m unittest -v tests.test_relationship_intelligence
