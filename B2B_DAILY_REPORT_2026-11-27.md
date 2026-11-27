@@ -24,7 +24,7 @@ Earlier commits in the same sequence:
 
 ## 2. Tests and CI — verified run data
 
-- 100X Offline tests [run #283](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit/actions/runs/45913116575), commit `bedeb1e`: **success**. Logs show 77 unittest cases and 10 harness checks passed; atlas validation, SCEE smoke, local HTTP smoke, phone-compatible checks, 3-tick SQLite smoke and offline self-run also completed successfully.
+- 100X Offline tests [run #283](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit/actions/runs/45913116575), commit `bedeb1e`: **success**. Logs show 86 unittest cases and 10 harness checks passed; atlas validation, SCEE smoke, local HTTP smoke, phone-compatible checks, 3-tick SQLite smoke and offline self-run also completed successfully.
 - 100X Engine Regression [run #38](https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit/actions/runs/45913116539), same commit: **success**; engine 31/31, B2B 16/16, harness 10/10, phone check and short SQLite smoke passed.
 - My Brain main [run #477](https://github.com/kautilyamehra4436-cmyk/my-brain/actions/runs/45913459104), commit `13b99f`: **success**, 158 unit tests, compilation, pinned-submodule verification and zero-network B2B integration smoke passed. Smoke processed 5 synthetic rows, emitted 7 review flags, and reported `source_rows_persisted_in_task_queue=false`.
 - Advait OS Gate [run #11](https://github.com/kautilyamehra4436-cmyk/advait_os/actions/runs/45912995831): **17/17 PASS**.
