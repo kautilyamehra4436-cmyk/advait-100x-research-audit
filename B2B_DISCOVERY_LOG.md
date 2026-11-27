@@ -108,3 +108,39 @@ Daily report: `B2B_DAILY_REPORT_2026-11-24.md`.
 - Documentation pushes triggered Actions runs #83–#87; all completed success. Latest verified run #87 (ID 45732583686), commit 5980ea3a250264116570184bc6e8d958f035e5cf, completed 26 Nov. Logs show 10 harness PASS + 31 engine tests PASS + 9 B2B tests PASS (50 total); demo ledger integrity true and high-risk task fail-closed without authenticated owner approval. Run: https://github.com/kautilyamehra4436-cmyk/advait-100x-research-audit/actions/runs/45732583686.
 - PDF/OCR, XLSX, line-item/PO matching, 20-case benchmark, precision/recall and phone runtime remain pending.
 - No outreach, bid, contract, client data processing, payment or revenue occurred.
+
+
+## Update — 2026-11-27 (new buyer signals, cross-repo integration and security checkpoint)
+
+### Genuinely new public marketplace signals
+- Upwork **AI Invoice Automation Engineer**: search result says posted last week, $1,500 fixed, 50+ proposals and 3 interviews; scope includes Azure Document Intelligence, PO/rate checks, GST/duplicate flags, Teams approval and REST/ERP integration. Direct page returned 403, so search-result evidence only. https://www.upwork.com/freelance-jobs/apply/Invoice-Automation-Engineer_~022122154733494453289/
+- Upwork **Senior Python / Exact Online audit of AI invoice processing**: posted last week, $1,000 fixed, 50+ proposals, 3 interviews; buyer describes 600 documents across three administrations and a 60% automatic-processing correctness target using held-out validation data. Direct page returned 403. https://www.upwork.com/freelance-jobs/apply/Senior-Python-Exact-Online-Engineer-Audit-and-Improve-Invoice-Processing_~022121951327487223537/
+- Upwork **Gmail invoice intake to Google Sheets via n8n/Make**: search result says $100 fixed, posted four days ago, 50+ proposals and one hire; later phases mention supplier-statement and bank-payment matching. Customer says it will cover tool running costs. Direct page returned 403. https://www.upwork.com/freelance-jobs/apply/invoice-processing-from-Gmail-Google-Sheets-n8n-Make_~022124873814467199667/
+- Freelancer **AI Three-Way Invoice Automation**: newly added to ledger, but not a fresh/open job; page says posted about one month ago and closed, 20 proposals, min ₹2,500/hour, with acceptance targets >=95% capture, <3 seconds matching and zero false auto-approvals above tolerance. https://www.freelancer.com/projects/data-processing/three-way-invoice-automation
+
+### Competitor and price intelligence (newly logged, not new-launch claims)
+- Billacle publicly advertises Indian AP/P2P, 3-way PO/GRN/invoice matching, GST/ITC, approval routing and ERP/payment integration. Its accuracy/cost claims are vendor claims, not independently validated. https://billacle.com/
+- BtechWaleTech advertises custom invoice automation from ₹40,000; UMAS Ventures from ₹50,000. These are asking prices, not verified transaction values. https://btechwaletech.in/invoice-processing-automation/ and https://umasventures.com/technology-consulting/invoice-processing
+- Zoho survey coverage reappeared but the survey was already in the Nov 25 evidence set; not counted as new.
+
+### Ranking revision vs 2026-11-26
+1. Invoice-pipeline QA / accuracy audit with evidence-linked exceptions — newly sharpened by the 600-document existing-system audit brief; CSV export-only scope may be feasible first, PDF/OCR remains missing.
+2. CSV-first invoice–PO–GRN variance/duplicate audit — remains core, but avoid competing as a full enterprise AP suite.
+3. Gmail/PDF-to-Sheets intake with reconciliation as a later phase — new candidate from the $100 listing with one hire; paid service costs and account access must be customer-authorized.
+4. Inventory/product digitization — retained, no new sufficiently verified signal today.
+5. Generic CSV cleanup — lower priority due commoditization.
+6. Full enterprise AP/ERP suite — deprioritized due incumbents and integration cost.
+
+### Repository and integration truth
+- 100X main latest commit **bedeb1e926e2** (signature verified): hardened B2B input/output against symlinks and overwrites; output mode 0600; CI permissions/timeouts/concurrency tightened. CI Offline tests #283 (45913116575) and Engine Regression #38 (45913116539) both passed on this commit.
+- 100X CI logs: 77 unittest cases + 10 harness checks passed; B2B suite 16/16, engine 31/31. Additional atlas/SCEE/HTTP/phone/short-soak/self-run checks completed. Short CI soak is not 24-hour/Android validation.
+- My Brain PR #37 is merged (merge commit 497b41780ad2634ca6498460e96fe3eb739c83d6). My Brain main run #477 (45913459104) passed 158 tests, compile and zero-network B2B smoke: 5 rows, 7 flags, no source rows persisted in operational task queue.
+- My Brain `vendor/advait_b2b` remains pinned to **e6b52df9f7e9**, behind current 100X main **bedeb1e926e2**; latest symlink/no-overwrite hardening is not yet in the submodule. No My Brain repository update was made.
+- My Brain financial artifact vault is permission-restricted but not encrypted at rest; staging requires explicit unencrypted-storage acknowledgement. No sensitive customer files should be used until encryption/Android Keystore and authenticated owner identity exist.
+- Advait OS latest security run #11: 17/17 PASS. Pure Sharp C10 run #23: 4/4 PASS.
+
+### Prototype status and remaining gaps
+- 100X CSV API bounded at 1 MiB input, 10,000 rows, 100 columns and 4 MiB output; formula-like cells flagged/escaped; latest B2B tests 16/16 PASS.
+- My Brain integration uses B2BReconciliationAdapterV1 and separate artifact vault; synthetic smoke only. No real customer data.
+- No PDF/OCR, image intake, XLSX, configurable tax/discount tolerances, fuzzy matching, 20-case benchmark, precision/recall metrics, Android runtime, 24-hour soak, customer contact, bid, paid pilot or revenue.
+- Next: create and run a 20-case labelled synthetic invoice/PO/GRN CSV benchmark before adding OCR.
