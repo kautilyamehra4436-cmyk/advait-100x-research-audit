@@ -133,7 +133,7 @@ Daily report: `B2B_DAILY_REPORT_2026-11-24.md`.
 
 ### Repository and integration truth
 - 100X main latest commit **bedeb1e926e2** (signature verified): hardened B2B input/output against symlinks and overwrites; output mode 0600; CI permissions/timeouts/concurrency tightened. CI Offline tests #283 (45913116575) and Engine Regression #38 (45913116539) both passed on this commit.
-- 100X CI logs: 77 unittest cases + 10 harness checks passed; B2B suite 16/16, engine 31/31. Additional atlas/SCEE/HTTP/phone/short-soak/self-run checks completed. Short CI soak is not 24-hour/Android validation.
+- 100X CI logs: 86 unittest cases + 10 harness checks passed; B2B suite 16/16, engine 31/31. Additional atlas/SCEE/HTTP/phone/short-soak/self-run checks completed. Short CI soak is not 24-hour/Android validation.
 - My Brain PR #37 is merged (merge commit 497b41780ad2634ca6498460e96fe3eb739c83d6). My Brain main run #477 (45913459104) passed 158 tests, compile and zero-network B2B smoke: 5 rows, 7 flags, no source rows persisted in operational task queue.
 - My Brain `vendor/advait_b2b` remains pinned to **e6b52df9f7e9**, behind current 100X main **bedeb1e926e2**; latest symlink/no-overwrite hardening is not yet in the submodule. No My Brain repository update was made.
 - My Brain financial artifact vault is permission-restricted but not encrypted at rest; staging requires explicit unencrypted-storage acknowledgement. No sensitive customer files should be used until encryption/Android Keystore and authenticated owner identity exist.
