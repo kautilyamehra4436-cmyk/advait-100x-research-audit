@@ -144,3 +144,32 @@ Daily report: `B2B_DAILY_REPORT_2026-11-24.md`.
 - My Brain integration uses B2BReconciliationAdapterV1 and separate artifact vault; synthetic smoke only. No real customer data.
 - No PDF/OCR, image intake, XLSX, configurable tax/discount tolerances, fuzzy matching, 20-case benchmark, precision/recall metrics, Android runtime, 24-hour soak, customer contact, bid, paid pilot or revenue.
 - Next: create and run a 20-case labelled synthetic invoice/PO/GRN CSV benchmark before adding OCR.
+
+
+## Update — 2026-11-28
+
+### New public demand signals
+- Upwork: “Build an AI Agent to Automate Our Invoice Processing - From Email to Accounting”, search result captured 2026-11-28; posted about 5 hours earlier. Buyer reports ~300 supplier invoices/receipts monthly, almost two staff-days of manual work, duplicate and wrong-amount errors, and wants uncertain cases sent to a human review queue. Budget US$1,200 fixed; 50+ proposals, 3 interviews; client profile showed US$205K historical spend and 90 hires. Direct page fetch returned 403; details are search-result evidence, not proof of award/payment. https://www.upwork.com/freelance-jobs/apply/Build-Agent-Automate-Our-Invoice-Processing-From-Email-Accounting-Node-OpenAI_~022126280331445072464/
+- Freelancer India, “Excel Invoice Data Reconciliation”, project 40838502: search result captured today showed open, posted about one minute before capture, ₹750–₹1,250/hour, 2 proposals and 6 days remaining. Buyer asks for PDF/scanned invoice extraction and reconciliation against bank statements/payment records, including paid/unpaid/outstanding and discrepancy notes. Page open unavailable; search-result evidence only. https://www.freelancer.in/projects/data-analysis/excel-invoice-data-reconciliation
+- Upwork AP/P2P process-mapping expert interview: paid short engagement, US$10–20/hour, seeks experienced practitioner to map invoice-to-payment exceptions. This is a process-research signal, not a role Advait can claim to fulfil as an experienced AP professional. https://www.upwork.com/freelance-jobs/apply/Procure-Pay-Specialist-Paid-Expert-Interviews-Process-Mapping_~022096836693784928053/
+
+### Not new
+The US$4,750 invoice/PO automation, US$1,500 Azure invoice automation and US$100 Gmail-to-Sheets listing were already in the Nov 26/27 reports. Moneycontrol's Aug 3 analysis of AI Accountant's 2,400+ business sample (69.6% cited bill/AP processing as a major challenge) is older background evidence already in the ledger, not a new publication: https://www.moneycontrol.com/news/business/markets/nearly-70-of-indian-businesses-still-depend-on-manual-invoice-processing-ai-accountant-13991838.html
+
+### Ranking revision vs Nov 27
+1. Read-only invoice-to-bank-statement/payment-export reconciliation — moved to #1 due to the new India listing; not implemented, requires two-file matching.
+2. Email/PDF invoice intake + duplicate/amount checks + human exception queue — moved up due to the ~300-invoice/month buyer brief; email/PDF/OCR/accounting connectors absent.
+3. Invoice-pipeline QA / accuracy audit — retained; yesterday's 600-document audit listing is not new today.
+4. Invoice–PO–GRN variance audit — retained.
+5. Inventory/product digitization — retained; no new direct signal.
+6. Generic CSV cleanup / full enterprise AP suite — deprioritized for price competition/integration burden.
+
+### CI count correction and repo checkpoint
+- Re-fetched actual GitHub Actions jobs/logs for 100X Offline #283 (45913116575) and Engine Regression #38 (45913116539), both successful on code commit bedeb1e926e2. Summing Offline log lines gives **84 unittest cases + 10 separate harness checks**, not 86 + 10 as stated in the Nov 27 report. Breakdown: 31 engine + 16 B2B + 2 CEO board + 10 SMV + 5 sovereign server + 7 relationship intelligence + 6 open-source intelligence + 7 self-crafting = 84. Engine Regression separately ran 31 engine + 16 B2B.
+- My Brain #477 logs verify 158 tests, compilation and zero-network B2B smoke: 5 synthetic rows, 7 flags, source_rows_persisted_in_task_queue=false. My Brain head 13b99f4434f9 was already in the Nov 27 report.
+- Advait OS #11 logs verify 17/17 PASS. Pure Sharp C10 #23 logs verify 4 unit tests and 10 simulation-only scenario checks.
+- 100X main head remains docs-only ab59eebb7bf9 (Nov 27); latest code commit remains bedeb1e926e2. No new code CI was observed for today's report/log commits.
+- My Brain B2B submodule remains pinned to e6b52df9f7e9, behind 100X hardening bedeb1e926e2. Financial artifact vault remains unencrypted at rest; no sensitive customer files should be processed.
+
+### Prototype and commercial truth
+CSV reconciliation remains the only implemented B2B data worker. No PDF/OCR, XLSX, email ingestion, bank statement matching, multi-source matching or labelled 20-case accuracy benchmark. No Android-device run, 24-hour soak, real customer data, outreach, bid, contract, sale, payment or revenue. Next: build a 20-case labelled synthetic two-file invoice/payment-export reconciliation benchmark and measure precision/recall, false positives/negatives, unmatched cases and processing time.
